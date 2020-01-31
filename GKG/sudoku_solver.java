@@ -16,7 +16,7 @@ public class Sudoku {
 				return false;
 		
 		//sub-grid
-		int k = N/3;
+		int k = (int) Math.sqrt(N);
 		int m = (row/k)*k;
 		int n = (col/k)*k;
 		
