@@ -44,7 +44,7 @@ public class Main {
 				if(i==0 || j==0)
 					dp[i][j] = 0;
 				
-				else if(A[i-1] == B[i-1])
+				else if(A[i-1] == B[j-1])
 					dp[i][j] = 1 + dp[i-1][j-1];
 				
 				else
