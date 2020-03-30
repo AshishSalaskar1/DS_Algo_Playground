@@ -9,10 +9,12 @@ class GFG
 		
 		for(int i=0;i<=N;i++) {
 			for(int j=0;j<=sum;j++) {
-				if(i==0)
-					dp[i][j] = false;
-				else if(j == 0)
+
+				if(j == 0)
 					dp[i][j] = true;
+
+				else if(i==0)
+					dp[i][j] = false;
 				
 				else if(arr[i-1] > j)
 					dp[i][j] = dp[i-1][j];
