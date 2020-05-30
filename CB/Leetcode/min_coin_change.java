@@ -6,6 +6,7 @@ class Solution {
         int n = coins.length;
         int[][] dp = new int[n+1][amount+1];
         
+        //u need INF coins if no coins are picked
         for(int i=0;i<=amount;i++)
             dp[0][i] = Integer.MAX_VALUE-1;
         
@@ -26,3 +27,6 @@ class Solution {
         return dp[n][amount] == Integer.MAX_VALUE-1 ? -1 : dp[n][amount];
     }
 }
+
+
+// google leetcode is what you cak as das
