@@ -1,6 +1,8 @@
 Java Max of list
 Collections.min(Arrays.asList(arr))
 
+*****************
+
 java Sort
 Arrays.sort(arr)
 Partially Sort
