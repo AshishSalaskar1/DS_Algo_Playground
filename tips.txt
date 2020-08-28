@@ -4,5 +4,7 @@ Collections.min(Arrays.asList(arr))
 java Sort
 Arrays.sort(arr)
 Partially Sort
-Arrays.sort(arr,startIndex,endIndex)]
+
+
+The Arrays.sort(arr,startIndex,endIndex)]
 
