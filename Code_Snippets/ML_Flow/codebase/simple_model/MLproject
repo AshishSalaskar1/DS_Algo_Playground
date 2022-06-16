@@ -1,0 +1,8 @@
+name: mlflow_tutorial
+
+entry_points:
+  main:
+    parameters:
+      alpha: {type: float, default: 0.5}
+      l1_ratio: {type: float, default: 0.7}
+    command: "python simple.py -a {alpha} -l1 {l1_ratio}"

@@ -1,0 +1,15 @@
+artifact_uri: file:///D:/ML/ML_Flow/codebase/simple_model/mlruns/0/5f4e59d310d440cbbf5f0a81c7028cc8/artifacts
+end_time: 1655290619507
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 5f4e59d310d440cbbf5f0a81c7028cc8
+run_uuid: 5f4e59d310d440cbbf5f0a81c7028cc8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1655290619471
+status: 3
+tags: []
+user_id: ashis

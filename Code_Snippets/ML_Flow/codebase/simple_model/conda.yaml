@@ -1,0 +1,4 @@
+name: hello_mlflow
+channels:
+  - defaults
+prefix: C:\ProgramData\Anaconda3\envs\hello_mlflow
