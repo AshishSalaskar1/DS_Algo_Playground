@@ -8,6 +8,8 @@ colab_tracker_path = "D:\Github\DS_Algo_Playground\Track"
 
 def update_push_to_gitub(commit_msg="Files changed/updated", branch_name = "master"):
     repo = Repo(repo_path)
+    repo.remotes.origin.pull()
+    
     # git add . | git add -all
     repo.git.add(all=True)
 
