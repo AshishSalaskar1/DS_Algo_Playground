@@ -1,0 +1,3 @@
+/Code_Snippets/Airflow/logs/*
+__pycache__
+*.logs
