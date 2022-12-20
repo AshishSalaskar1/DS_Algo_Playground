@@ -1,3 +1,5 @@
 /Code_Snippets/Airflow/logs/*
 __pycache__
 *.logs
+/Code_Snippets/FastApi/__pycache__/*
+/Code_Snippets/FastApi/fastapi/*
