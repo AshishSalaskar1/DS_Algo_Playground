@@ -5,6 +5,16 @@ old_tax_regime = [
     (10_00_001, ">", 0.30)
 ]
 
+# old tax regime
+new_tax_regime_v1 = [
+    (0, 2_50_000, 0.0),
+    (2_50_001, 5_00_000, 0.05),
+    (5_00_001, 7_50_000, 0.10),
+    (7_50_001, 10_00_000, 0.15),
+    (10_00_001, 12_50_000, 0.20),
+    (12_50_001, 15_00_000, 0.25),
+    (15_00_001, ">", 0.30)
+]
 
 new_tax_regime = [
     (0, 3_00_000, 0.0),
@@ -44,8 +54,8 @@ def calculate_tax(income, slabs, new_regime=True, deductions=None):
         
 
 tax_payable = calculate_tax(
-    income=17_45_000, 
-    slabs=new_tax_regime,
+    income=9_37_500, 
+    slabs=new_tax_regime_v1,
     new_regime=True
 )
 
