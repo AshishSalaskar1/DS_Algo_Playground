@@ -1,13 +1,15 @@
-# == Question
-# [1,1,2,2,2,3,3] -> output(k)=3 [[1,2,3,_,_,_,_]
-# If there are k elements after removing the duplicates,then first k elements of the arr must be final result. 
-# It does not matter what you leave beyond the first k elements.
-# == Link
-# https://www.codingninjas.com/codestudio/problems/remove-duplicates-from-sorted-array_1102307
-# == Articles:
-# 
-# == Explain
-# 
+"""
+== Question
+[1,1,2,2,2,3,3] -> output(k)=3 [[1,2,3,_,_,_,_]
+If there are k elements after removing the duplicates,then first k elements of the arr must be final result. 
+It does not matter what you leave beyond the first k elements.
+
+== Link
+https://www.codingninjas.com/codestudio/problems/remove-duplicates-from-sorted-array_1102307
+== Articles:
+
+== Explain
+"""
 
 def removeDuplicates(arr,n):
     if n==1:

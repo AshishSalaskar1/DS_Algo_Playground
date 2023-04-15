@@ -1,12 +1,12 @@
-# == Question
-# Find second largest element in array
-# == Link
-# https://www.codingninjas.com/codestudio/problems/second-largest-element-in-the-array_873375
-# == Articles:
-# 
-# == Explain
-# 
+"""
+=== Qustions
+Find second largest element in array
 
+== Link
+https://www.codingninjas.com/codestudio/problems/second-largest-element-in-the-array_873375
+
+== Articles:
+"""
 
 def findSecondLargest(arr):
     max_ele, sec_max = float("-inf"),float("-inf")
