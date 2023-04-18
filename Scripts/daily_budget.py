@@ -40,9 +40,11 @@ def process_text(content):
     for line in content:
         sym, line_text = line.split(" ",1)
         if sym  == "=====": # month line
+            # print(f"MONTH SEEN NOW: {line_text}")
             last_month_seen = line_text
             pass
         elif sym == "==": # day line
+            # print(f"DAY SEEN NOW: {line_text}")
             last_day_seen = line_text
         else: # actual spent
             if sym[-1] == "k": # 35k some_description
@@ -57,6 +59,7 @@ def process_text(content):
                     get_week(datetime.datetime.strptime(f"{last_day_seen}-{last_month_seen}-{2023}","%d-%B-%Y"))
                 )
             ) 
+            # print(line_text, line_cost)
 
     return final_res 
 
@@ -67,15 +70,15 @@ def get_monthly_average(contents, cats=False):
         month = ldate.strftime("%B-%Y")
         if month not in monthly_total:
             monthly_total[month] = []
-        else:
-            monthly_total[month].append((lcost, ltext, ldate))
+        
+        monthly_total[month].append((lcost, ltext, ldate))
 
-    
+    print(monthly_total)
     monthly_res = []
     for key,val in monthly_total.items():
         monthly_res.append((key,sum([x[0] for x in val])))
 
-    # print(monthly_total)
+    print(monthly_res)
     return monthly_res
 
 def get_weekly_totals(contents):
@@ -100,7 +103,7 @@ def get_weekly_totals(contents):
 
 content = read_multieline_input()
 processed_content = process_text(content=content)
-print(processed_content)
+# print(processed_content)
 
 # print(processed_content)
 print("\n=============MONTHLY TOTAL=============\n")
