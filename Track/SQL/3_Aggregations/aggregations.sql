@@ -2,9 +2,11 @@
 Row_ID | Order_ID | 
 Order_Date | Ship_Date | Ship_Mode | Customer_ID | Customer_Name | Segment |
 Country/Region | City | State | Postal_Code | Region | Product_ID | 
-Category | Sub_Category | Product_Name | 
+c | Sub_Category | Product_Name | 
 Sales | Quantity | Discount | Profit
 */
+
+use namaste;
 
 -- 1- write a update statement to update city as null for order ids :  CA-2020-161389 , US-2021-156909
 UPDATE orders SET city=null WHERE Order_ID IN ( 'CA-2020-161389' , 'US-2021-156909');
@@ -37,7 +39,20 @@ GROUP BY student_id, marks
 HAVING count(subject)>1;
 
 -- 6- write a query to find total number of products in each category.
+SELECT category, count(distinct product_id) as product_count
+FROM orders
+GROUP BY category;
 
 -- 7- write a query to find top 5 sub categories in west region by total quantity sold
+SELECT 
+	TOP 5 sub_category, SUM(sales) as sub_cat_sales
+FROM orders 
+WHERE region='west'
+GROUP BY sub_category
+ORDER BY sub_cat_sales DESC;
 
 -- 8- write a query to find total sales for each region and ship mode combination for orders in year 2020
+SELECT region, ship_mode, SUM(sales) as total_sales
+FROM orders
+WHERE YEAR(order_date) = '2020'
+GROUP BY region, ship_mode;
