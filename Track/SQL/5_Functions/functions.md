@@ -44,6 +44,23 @@
     as case_op
     FROM employee;
   ```
+- **Case can be applied to columns within GROUPBY just like we use Aggregate functions**
+  - ```sql
+    -- 6- write a query to print 3 columns : category, total_sales and (total sales of returned orders)
+    SELECT
+      o.category,
+      SUM(sales) as total_sales,
+      SUM(
+        CASE
+        WHEN r.return_reason is NULL then 0
+        ELSE o.sales
+        END
+      ) as total_sales_returned_orders
+    FROM 
+      orders o LEFT  JOIN oreturns r 
+      ON o.order_id = r.order_id
+    GROUP BY o.category;
+    ```
 
 ## UNION, INTERSECT and EXCEPT
 - Col(name,datatype) should have same number of columns for UNION
