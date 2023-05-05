@@ -23,6 +23,7 @@ dept_id, dep_name
 student_id, subject, exams
 
 
+
 */
 
 -- 1- write a query to get region wise count of return orders
