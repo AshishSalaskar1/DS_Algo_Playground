@@ -29,7 +29,7 @@
                 *,
                 row_number() over (PARTITION BY dept order by salary desc) as sal_rank
               FROM employees
-        )
+        ) table_name
      WHERE sal_rank <=3;
 
      -- Same with CTE
