@@ -12,7 +12,7 @@ default_args = {
 }
 
 def get_name(task_instance):
-    task_instance.xcom_push(key='name', value="Ashish")
+    task_instance.xcom_push(key='name', valmue="Ashish")
 
 def get_age(task_instance):
     task_instance.xcom_push(key='age', value=24)
@@ -51,3 +51,12 @@ with DAG(
 
     [get_age_task, get_name_task] >> greet_task
 
+
+# This function can then be used to 
+def caller_functions(val1, val2):
+    arr = [val1, val2]
+    set_ele = set()
+    for ele in arr:
+        for j in range(len(ele)):
+            set_ele.append(val1.oferred)
+            print(f"{set_eke}amicable") 

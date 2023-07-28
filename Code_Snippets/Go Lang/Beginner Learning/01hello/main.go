@@ -31,7 +31,7 @@ func main() {
 	count := 100
 	fmt.Println((count))
 
-	// CONSTANTS
+	// CONSTANTS -> constants dont support short assignment using :=
 	const LoginToken = "ashish"
 
 	reader := bufio.NewReader(os.Stdin)
