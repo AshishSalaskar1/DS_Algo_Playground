@@ -15,7 +15,6 @@ func main() {
 	// available data types - uint8|16|32, int8|16|32, float32|64, byte, rune, complex
 	fmt.Printf("The username is %T \n", username)
 	fmt.Println("HELLO FROM GOLANG")
-
 	//default values and aliases - automatically fills with default values baded on type giving
 	var defaultInt int32
 	fmt.Println((defaultInt))
