@@ -47,7 +47,7 @@ if x := get_value(12); x>12 {
 
 ```
 
-##### Functions
+#### Functions
 
 - Syntax:
 
@@ -80,7 +80,7 @@ if x := get_value(12); x>12 {
   ```
 -
 
-###### For Conditionals
+##### For Conditionals
 
 ```go
 for x:=0; x<=10; x++ {
@@ -96,7 +96,7 @@ for x<=10 {
 
 ```
 
-###### Pointers
+##### Pointers
 
 * `&var_name` -> get pointer address
 * `*pointer_variabl`e -> get value at address stored in pointer_variable
@@ -121,9 +121,9 @@ for x<=10 {
   - In Go, you can also return a pointer to a variable that’s local to a function. Even though that variable is no longer in scope, as long as you still have the pointer, Go will ensure you
     can still access the value.
 
-##### Data Structures
+#### Data Structures
 
-###### Arrays
+##### Arrays
 
 * Syntax: `var arrName [n]data_type`
 * Go arrays are fixed in size and size is fixed when they are being declared. Solution -> use `SLICES`
@@ -144,7 +144,7 @@ func main() {
 }
 ```
 
-###### Slices
+##### Slices
 
 - Syntax: `var mySlice []data_type` -> `arr = make([]data_type, size)` OR `mySlice := make([]data_type, size)`
 - Same as arrays but size isnt specified while declaring
@@ -163,7 +163,7 @@ func main() {
 }
 ```
 
-###### Maps
+##### Maps
 
 - Syntax: `myMap :=  make(map[key_type]value_type)` or `myMap := map[key_type]value_type{}`
 - Maps are unordered collection of key,value pairs. So when printed in a for range loop, the order printed maybe different from what you have entered the keys as
@@ -199,16 +199,32 @@ func main() {
 }
 ```
 
-```
-```
-
 **Type Definitions**
 
+- Define your own Custom types. Generally done on package level, so that you can use your new type in the entire code rather than in function scope only.
+
+```go
+type personType struct {
+    name string
+    age int
+    height float32
+}
+
+func main() {
+    var myPerson personType
+    fmt.Println(myPerson.name, myPerson.age, myPerson.height)
+  
+    // using struct literals
+    myPerson2 := personType{name: "ashish", age:20, height: 12}
+    fmt.Println(myPerson2)
+}
+```
 
 
 
 
-###### Useful Functions
+
+##### Useful Functions
 
 * `strings.NewReplacer` -> string replace
 * `reflect.TypeOf` -> returns data type of the object
