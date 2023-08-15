@@ -2,17 +2,32 @@
 
 * **Rune Literals**: rune literals are written with single quotation marks. Its a datatype used to store Unicode Characters (usually only one char/symbol)
 * **Go Naming rules**:
+
   * If the name of a variable, function, or type begins with a capital
     letter, `it is considered exported` and can be accessed from packages
     outside the current one. And `its considered unexported` and can be used only in the current file in case its name starts with an lowercase character
   * Generally people use CamelCase in GoLang
 * **Go Commands**
+
   * `go build file_name`: build execuutable from go files which can then be directly executed
   * `go fmt file_name`: format the code file
   * `go run file_name`: directly execute the go file without building an executable
 * **All functions and methods start with Capital letter**
 * **Import path vs name**: What you write in import clause is the package name, n what you use in the code is the package name. Both can be different also (same in case of common packages)
 * `NULL `is represented in GO as `nil`
+* `defer` -> defer keyword indicates to run a function only after outer function completes execution
+
+  * ```go
+
+    func main() {
+       defer fmt.Println("World")
+       fmt.Println("Hello")
+    }
+
+    // OUTPUT: hello -> world
+
+    ```
+*
 
 ##### Constants
 
