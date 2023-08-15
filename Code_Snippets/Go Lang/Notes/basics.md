@@ -58,13 +58,27 @@ if x := get_value(12); x>12 {
 - Function arguments in Go are **`passed-by-value`**
 - Named Return Values
 
-```go
-func add(x int, y int) (float a, float b){
-    // It automatically initialises a and b with default zeroed values and returns them at last even if you just write return
-    return
-}
+  ```go
+  func add(x int, y int) (float a, float b){
+      // It automatically initialises a and b with default zeroed values and returns them at last even if you just write return
+      return
+  }
+  ```
+- Variadic Functions
 
-```
+  ```go
+  func add(nums ...int) (sum int){
+      for _, val := range nums {
+          sum += val
+      }
+      return sum
+  }
+
+  func main() {
+    fmt.Println(add(1,2,3,4))
+  }
+  ```
+-
 
 ###### For Conditionals
 
@@ -104,10 +118,95 @@ for x<=10 {
   ```
 
 - **Returning pointers from functions:**
-  - In Go, it’s okay to return a
-    pointer to a variable that’s local to a function. Even though that variable is
-    no longer in scope, as long as you still have the pointer, Go will ensure you
+  - In Go, you can also return a pointer to a variable that’s local to a function. Even though that variable is no longer in scope, as long as you still have the pointer, Go will ensure you
     can still access the value.
+
+##### Data Structures
+
+###### Arrays
+
+* Syntax: `var arrName [n]data_type`
+* Go arrays are fixed in size and size is fixed when they are being declared. Solution -> use `SLICES`
+
+```go
+func main() {
+  var arr [3]int
+  fmt.Println(arr)
+
+  // Array literals
+  arr1 := [3]int{1,2,3}
+  fmt.Println(arr1)
+
+  // iterating using for range loop
+  for idx, value := range arr1 {
+      fmt.Println(idx, value)
+  }
+}
+```
+
+###### Slices
+
+- Syntax: `var mySlice []data_type` -> `arr = make([]data_type, size)` OR `mySlice := make([]data_type, size)`
+- Same as arrays but size isnt specified while declaring
+
+```go
+func main() {
+  arr := make([]int, 2)
+  fmt.Println(arr)
+  
+  arr1 := []int{1,2,3}
+  fmt.Println(arr1)
+  
+  // append returns new object 
+  arr1 = append(arr1, 123)
+  fmt.Println(arr1)
+}
+```
+
+###### Maps
+
+- Syntax: `myMap :=  make(map[key_type]value_type)` or `myMap := map[key_type]value_type{}`
+- Maps are unordered collection of key,value pairs. So when printed in a for range loop, the order printed maybe different from what you have entered the keys as
+
+```go
+func main() {
+  myMap := map[string]int{}
+  myMap["ashish"]=1
+  myMap["hello"]=2
+  fmt.Println(myMap) // map[ashish:1 hello:2]
+  
+  // deleting an entry
+  delete(myMap, "ashish")
+  fmt.Println(myMap) // map[hello:2]
+}
+```
+
+###### Structs
+
+* Made up of multiple data types
+
+```go
+
+func main() {
+  var myStruct struct{
+      name string
+      age int
+      height float32
+  }
+  
+  myStruct.name = "ashish"
+  fmt.Println(myStruct.name, myStruct.age, myStruct.height)
+}
+```
+
+```
+```
+
+**Type Definitions**
+
+
+
+
 
 ###### Useful Functions
 
