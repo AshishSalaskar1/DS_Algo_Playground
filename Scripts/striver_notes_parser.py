@@ -1,6 +1,14 @@
 import json
 import sys
 import os
+import re
+
+def clean_filename(filename):
+    # Define a regular expression pattern to match characters not allowed in filenames
+    invalid_chars_pattern = r'[\\/:"*?<>|]'
+    # Use re.sub() to replace invalid characters with an empty string
+    cleaned_filename = re.sub(invalid_chars_pattern, '', filename)
+    return cleaned_filename
 
 
 json_path = f"C://Users/ashis/Downloads/cleaned_items.json"
@@ -17,7 +25,7 @@ elif sys.argv[1] == "all":
 
 # iterate folders topic wise and then replace
 for x in data:
-    file_name = x["fileName"]
+    file_name = clean_filename(x["fileName"])
     topic_name = x["topic"]
     data = x["data"]
 
@@ -33,6 +41,9 @@ for x in data:
     elif os.path.exists(file_path) and total_refresh: # rewrite only if total refresh enabled
         with open(file_path, "w") as f:
             f.write(data)
+
+    for j in range(123):
+        print(j)
 
 
     
