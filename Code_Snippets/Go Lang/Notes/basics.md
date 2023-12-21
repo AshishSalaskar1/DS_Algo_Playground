@@ -1,3 +1,75 @@
+##### Basics
+
+- **Module structure**
+  - `go mod init mod_name` -> consider this as your package.json, it contains the name of your project/package and the go version which you want to use
+  - Generally, you have a `main.go` file which has function `main()` which acts like starting point of your application and is mostly stored in an `cmd` folder. Outside the `cmd `folder you have all your modules/import files
+  - **Structure of projects**
+    - `go.mod` -> contains mod "modname"
+    - `cmd/main/main.go` -> you import in your` main.go` as "modname/package_name"
+    - `package1/package1.go`, `package2/package2.go`
+- **Types**
+  - **Type conversions**: int(), float64(), float32()
+  - **Variable Basics**
+
+    ```go
+    var ash int
+    ash = 12
+
+    ash := 12 // shorthand but works only within functions
+    ```
+  - **String**
+
+    - Types
+
+      - **byte**: uint8 char representation
+      - **string**: immutable sequence of chars (UTF-8 and logical sequence of runes). Since strings are immutable they can also share memory locations (hello, hello_world, he may share memory blocks for chars)
+      - **rune**: int32 char representation, surrounded by single-quote (backticks are used for raw strings where special chars dont loose meaning)
+    - **Strings are passed by reference**
+    - Strings are immutable like python, but can be re-assigned
+    - **String Functions**
+
+      - ```go
+        s := "ashish"
+
+        strings.Contains(s, "a") // true
+        strings.HasPrefix(s, "ash") // true
+
+        strings.Index(s, "h") 
+        strings.Index("ish")
+
+        upperS = s.ToUpper() 
+        lowerS = s.ToLower()
+
+        // Split and Join
+        s := "this is an big splitter word"
+
+        splitStrings := strings.Split(s, "i") // this returns a slice split with "i" 
+        fmt.Println(splitStrings)
+
+        fmt.Println(strings.Join(splitStrings,"X")) //returns string: same as "X".join(arr) in python
+
+        ```
+    - **Special Types**: bool, error, pointers
+    - **Default Initialization**
+
+      - numerical types - `0`
+      - bool - `false`
+      - string - `""`
+      - All others - `nil`
+      - aggregate types - each member is set to 0
+    - **Constants**
+
+      - Only numbers, strings and booleans can be constant (Immutable)
+      - It can be literal or compile-time (You cant set constants on run-time dynamically)
+
+        ```go
+        const a = 12
+        const (
+            c1 = 12
+            c2 = "1234"
+        )
+        ```
+
 ##### Interesting things to note
 
 * **Rune Literals**: rune literals are written with single quotation marks. Its a datatype used to store Unicode Characters (usually only one char/symbol)
@@ -42,6 +114,8 @@
   - %d -> int
   - %s -> string
   - %f or %.2f -> float with precisions if needed
+  - %T -> type of the variable
+  -
 - `fmt.Sprintf(....)` -> form the print string but assign back to a variable
 
 ##### IF CONDITION
@@ -71,29 +145,29 @@ if x := get_value(12); x>12 {
   2. `func test_fn(x int, y string) (float, int)`
      - x,y are inputs and function returns 2 vars -> float and int type
 - Function arguments in Go are **`passed-by-value`**
-- Named Return Values
+- **Named Return Values**
 
-  ```go
-  func add(x int, y int) (float a, float b){
-      // It automatically initialises a and b with default zeroed values and returns them at last even if you just write return
-      return
-  }
-  ```
-- Variadic Functions
+```go
+func add(x int, y int) (float a, float b){
+    // It automatically initialises a and b with default zeroed values and returns them at last even if you just write return
+    return
+}
+```
 
-  ```go
-  func add(nums ...int) (sum int){
-      for _, val := range nums {
-          sum += val
-      }
-      return sum
-  }
+- **Variadic Functions**
 
-  func main() {
-    fmt.Println(add(1,2,3,4))
-  }
-  ```
--
+```go
+func add(nums ...int) (sum int){
+    for _, val := range nums {
+        sum += val
+    }
+    return sum
+}
+
+func main() {
+  fmt.Println(add(1,2,3,4))
+}
+```
 
 ##### For Conditionals
 
@@ -102,7 +176,8 @@ for x:=0; x<=10; x++ {
     fmt.Println("The value of x is %v", x)
 }
 
-// only check condition is mandatory in the for loop, rest init and post can be written inside like an while loop in case its needed -> but here scope of the variables need to be considered for incrementing and checking the condition
+// only check condition is mandatory in the for loop, 
+//rest init and post can be written inside like an while loop in case its needed -> but here scope of the variables need to be considered for incrementing and checking the condition
 x:=0
 for x<=10 {
     fmt.Println("The value of x is %v", x)
@@ -114,7 +189,7 @@ for x<=10 {
 ##### Pointers
 
 * `&var_name` -> get pointer address
-* `*pointer_variabl`e -> get value at address stored in pointer_variable
+* `*pointer_variable` -> get value at address stored in pointer_variable
 * Data type of pointers -> *float32, *int....
 * ```go
   func test_pointers() {
@@ -133,8 +208,7 @@ for x<=10 {
   ```
 
 - **Returning pointers from functions:**
-  - In Go, you can also return a pointer to a variable that’s local to a function. Even though that variable is no longer in scope, as long as you still have the pointer, Go will ensure you
-    can still access the value.
+  - In Go, you can also return a pointer to a variable that’s local to a function. Even though that variable is no longer in scope, as long as you still have the pointer, Go will ensure you can still access the value.
 
 #### Data Structures
 
@@ -234,10 +308,6 @@ func main() {
     fmt.Println(myPerson2)
 }
 ```
-
-
-
-
 
 ##### Useful Functions
 
