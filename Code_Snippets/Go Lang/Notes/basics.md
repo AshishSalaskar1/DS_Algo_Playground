@@ -70,6 +70,8 @@
         )
         ```
 
+---
+
 #### Interesting things to note
 
 * **Rune Literals**: rune literals are written with single quotation marks. Its a datatype used to store Unicode Characters (usually only one char/symbol)
@@ -97,9 +99,9 @@
     }
 
     // OUTPUT: hello -> world
-
     ```
-*
+
+---
 
 #### Constants
 
@@ -118,6 +120,8 @@
   -
 - `fmt.Sprintf(....)` -> form the print string but assign back to a variable
 
+---
+
 #### IF CONDITION
 
 Syntax
@@ -135,6 +139,8 @@ if x := get_value(12); x>12 {
 }
 
 ```
+
+---
 
 #### Functions
 
@@ -169,6 +175,9 @@ func main() {
 }
 ```
 
+
+---
+
 #### For Conditionals
 
 ```go
@@ -185,6 +194,8 @@ for x<=10 {
 }
 
 ```
+
+---
 
 #### Pointers
 
@@ -209,6 +220,9 @@ for x<=10 {
 
 - **Returning pointers from functions:**
   - In Go, you can also return a pointer to a variable that’s local to a function. Even though that variable is no longer in scope, as long as you still have the pointer, Go will ensure you can still access the value.
+
+---
+
 
 ### Data Structures
 
@@ -308,6 +322,10 @@ func main() {
     fmt.Println(myPerson2)
 }
 ```
+
+---
+
+
 
 ### Useful Functions
 
