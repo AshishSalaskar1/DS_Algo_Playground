@@ -1,4 +1,4 @@
-##### Basics
+#### Basics
 
 - **Module structure**
   - `go mod init mod_name` -> consider this as your package.json, it contains the name of your project/package and the go version which you want to use
@@ -70,7 +70,7 @@
         )
         ```
 
-##### Interesting things to note
+#### Interesting things to note
 
 * **Rune Literals**: rune literals are written with single quotation marks. Its a datatype used to store Unicode Characters (usually only one char/symbol)
 * **Go Naming rules**:
@@ -101,12 +101,12 @@
     ```
 *
 
-##### Constants
+#### Constants
 
 - You cant use short assigning syntax
 - In go your constants must get resovled during compile time -> you can assign constant variable and compute its value entirely during runtime
 
-##### Printing
+#### Printing
 
 - `fmt.PrintLn()`
 - `fmt.Printf("this is some %v", some_value)`
@@ -118,7 +118,7 @@
   -
 - `fmt.Sprintf(....)` -> form the print string but assign back to a variable
 
-##### IF CONDITION
+#### IF CONDITION
 
 Syntax
 
@@ -169,7 +169,7 @@ func main() {
 }
 ```
 
-##### For Conditionals
+#### For Conditionals
 
 ```go
 for x:=0; x<=10; x++ {
@@ -186,7 +186,7 @@ for x<=10 {
 
 ```
 
-##### Pointers
+#### Pointers
 
 * `&var_name` -> get pointer address
 * `*pointer_variable` -> get value at address stored in pointer_variable
@@ -210,9 +210,9 @@ for x<=10 {
 - **Returning pointers from functions:**
   - In Go, you can also return a pointer to a variable that’s local to a function. Even though that variable is no longer in scope, as long as you still have the pointer, Go will ensure you can still access the value.
 
-#### Data Structures
+### Data Structures
 
-##### Arrays
+#### Arrays
 
 * Syntax: `var arrName [n]data_type`
 * Go arrays are fixed in size and size is fixed when they are being declared. Solution -> use `SLICES`
@@ -233,7 +233,7 @@ func main() {
 }
 ```
 
-##### Slices
+#### Slices
 
 - Syntax: `var mySlice []data_type` -> `arr = make([]data_type, size)` OR `mySlice := make([]data_type, size)`
 - Same as arrays but size isnt specified while declaring
@@ -252,7 +252,7 @@ func main() {
 }
 ```
 
-##### Maps
+#### Maps
 
 - Syntax: `myMap :=  make(map[key_type]value_type)` or `myMap := map[key_type]value_type{}`
 - Maps are unordered collection of key,value pairs. So when printed in a for range loop, the order printed maybe different from what you have entered the keys as
@@ -270,7 +270,7 @@ func main() {
 }
 ```
 
-###### Structs
+#### Structs
 
 * Made up of multiple data types
 
@@ -309,7 +309,7 @@ func main() {
 }
 ```
 
-##### Useful Functions
+### Useful Functions
 
 * `strings.NewReplacer` -> string replace
 * `reflect.TypeOf` -> returns data type of the object
