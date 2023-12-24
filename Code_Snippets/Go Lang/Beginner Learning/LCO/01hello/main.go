@@ -1,49 +1,50 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strconv"
-	"strings"
+	"log"
+	"net/http"
+	"sync"
 )
 
-func main() {
-	// if varName starts with Capital -> public variable
-	var username string = "ahsish"
+var wg sync.WaitGroup // pointer
+var mutex sync.Mutex // pointer
 
-	// available data types - uint8|16|32, int8|16|32, float32|64, byte, rune, complex
-	fmt.Printf("The username is %T \n", username)
-	fmt.Println("HELLO FROM GOLANG")
-	//default values and aliases - automatically fills with default values baded on type giving
-	var defaultInt int32
-	fmt.Println((defaultInt))
+var statusCodeResults =  []string{}
 
-	//implicit -> if you dont tell what datatype but directly assign
-	// 		   -> it automatically picks up datatype of assingning, later you cant change that
-	var tempStr = "ASHISH"
-	fmt.Println((tempStr))
-	//tempStr = 123 // gives error as tempstr is defined as string
+func checkSite(site_url string) {
+	// wg.Done only after checkSite completes execution
+	defer wg.Done()
 
-	//no-var or WALRUS operator
-	// not allowed outside the methods in gloval variables
-	count := 100
-	fmt.Println((count))
-
-	// CONSTANTS -> constants dont support short assignment using :=
-	const LoginToken = "ashish"
-
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Enter some number")
-	input, _ := reader.ReadString('\n') // read till \n in encountered
-
-	numInput, err := strconv.ParseFloat(strings.TrimSpace(input), 64)
-
-	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println("Added 1 to number: ", numInput+1)
+	res, err := http.Get(site_url)
+	if err != nil{
+		log.Fatal(err)
 	}
 
-	fmt.Println("The value that you have read is: ", numInput)
+	fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
+
+	// use mutex to lock in case multiple goroutines try to access same memory address
+	mutex.Lock()
+	statusCodeResults = append(statusCodeResults,site_url)
+	mutex.Unlock()
+}
+
+func main() {
+	sites := []string{
+		"https://google.com",
+		"https://go.dev",
+		"https://github.com",
+	}
+
+	fmt.Println("EXECUTION STARTS")
+
+	for _, site_url := range sites {
+		go checkSite(site_url)
+		wg.Add(1) //add one go routine to wait group
+	}
+
+	
+	wg.Wait()
+	fmt.Println("FINAL LIST", statusCodeResults)
+
 }

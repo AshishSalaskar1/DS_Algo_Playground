@@ -47,3 +47,4 @@ func main() {
 	wg.Wait()
 	fmt.Println("FINAL LIST", statusCodeResults)
 }
+

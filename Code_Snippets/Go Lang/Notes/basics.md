@@ -245,9 +245,6 @@ for x<=10 {
 
 // list
 arr := []int{1,2,3,4,5}
-for val := range arr {
-    fmt.Println(index, val)
-}
 
 for index, val := range arr {
     fmt.Println(index, val)
@@ -260,26 +257,23 @@ for index, val := range arr {
     
     ```go
     func main() {
-    	arr1 := []int{1, 2, 7}
-    	arr2 := []int{1, 2, 3, 4, 5}
+        arr1 := []int{1, 2, 7}
+        arr2 := []int{1, 2, 3, 4, 5}
     
-    	outer:
-    		for val := range arr1 {
-    			for item := range arr2 {
-    				println("Checking ", item)
-    				if val == item {
-    					fmt.Printf("val %d found in second arr2\n", val)
-    					continue outer
-    				}
-    			}
-    			fmt.Printf("Element %d not found in arr2", val)
-    		}
+        outer:
+            for val := range arr1 {
+                for item := range arr2 {
+                    println("Checking ", item)
+                    if val == item {
+                        fmt.Printf("val %d found in second arr2\n", val)
+                        continue outer
+                    }
+                }
+                fmt.Printf("Element %d not found in arr2", val)
+            }
     
     }
-    
     ```
-    
-    
 
 ---
 
@@ -403,20 +397,20 @@ func main() {
 func usingOk(){
     // print the values for keys u want to check
     var m = map[string]int{
-		"ash": 1,
-		"ben": 2,
-	}
+        "ash": 1,
+        "ben": 2,
+    }
 
-	reqKeys := []string{"ash", "ben", "some"}
-	for _, key := range reqKeys { // iterate through splice created
-		if value, ok := m[key]; ok { // set 2 temp vars val, ok -> if ok=True {} else {}
-			fmt.Printf("Key %v was found in map with value %v\n", key, value)
-		} else {
-			fmt.Printf("Key %v was not found in map \n", key)
-		}
-	}
-    
-    
+    reqKeys := []string{"ash", "ben", "some"}
+    for _, key := range reqKeys { // iterate through splice created
+        if value, ok := m[key]; ok { // set 2 temp vars val, ok -> if ok=True {} else {}
+            fmt.Printf("Key %v was found in map with value %v\n", key, value)
+        } else {
+            fmt.Printf("Key %v was not found in map \n", key)
+        }
+    }
+
+
 }
 ```
 
@@ -469,10 +463,6 @@ func main() {
 * `bufio.NewReader(os.Stdin)` ->`input, error = reader.ReadString('\n')`: read everything user has typed until the separator that u pass, here its \n or newline
 * `strconv.ParseFloat()` -> string or integer to float
 
-
-
-
-
 ### Some Examples
 
 - **Read words from input, and sort based on frequency**
@@ -481,32 +471,99 @@ func main() {
     
     ```go
     func main() {
-    	type keyValue struct {
-    		key string
-    		val int
-    	}
+        type keyValue struct {
+            key string
+            val int
+        }
     
-    	reader := bufio.NewReader(os.Stdin)
-    	words := make(map[string]int)
-    	var pairs []keyValue // slice of keyValue type
+        reader := bufio.NewReader(os.Stdin)
+        words := make(map[string]int)
+        var pairs []keyValue // slice of keyValue type
     
-    	fmt.Printf("Enter you sentence: ")
-    	input, _ := reader.ReadString('\n') // delimit based on new line (ITS A RUNE - SINGLE QUOTES)
+        fmt.Printf("Enter you sentence: ")
+        input, _ := reader.ReadString('\n') // delimit based on new line (ITS A RUNE - SINGLE QUOTES)
     
-    	for _, scannedWord := range strings.Split(input, " ") { // read all words and add to map
-    		words[scannedWord]++
-    	}
+        for _, scannedWord := range strings.Split(input, " ") { // read all words and add to map
+            words[scannedWord]++
+        }
     
-    	// add key,vals to pairs
-    	for k, v := range words {
-    		pairs = append(pairs, keyValue{k, v})
-    	}
+        // add key,vals to pairs
+        for k, v := range words {
+            pairs = append(pairs, keyValue{k, v})
+        }
     
-    	// sort by count in decreasing
-    	sort.Slice(pairs, func(i, j int) bool { // i,j are indexes of item in slice
-    		return pairs[i].val > pairs[j].val
-    	})
-    	fmt.Println("Sorted in decreasing order: ", pairs)
+        // sort by count in decreasing
+        sort.Slice(pairs, func(i, j int) bool { // i,j are indexes of item in slice
+            return pairs[i].val > pairs[j].val
+        })
+        fmt.Println("Sorted in decreasing order: ", pairs)
     
     }
+    ```
+
+
+
+
+
+### Concurrency
+
+- **Wait Groups**
+  
+  - Make sure number of times `add()` and `done()` called are same. This may cause a deadlock
+  
+  - Aways pass `wg` as reference as pointer (Not by value)
+  
+  - ```go
+    package main
+    
+    import (
+    	"fmt"
+    	"log"
+    	"net/http"
+    	"sync"
+    )
+    
+    
+    var statusCodeResults =  []string{}
+    
+    func checkSite(site_url string, wg *sync.WaitGroup, mutex *sync.Mutex) {
+    	// wg.Done only after checkSite completes execution
+    	defer wg.Done()
+    
+    	res, err := http.Get(site_url)
+    	if err != nil{
+    		log.Fatal(err)
+    	}
+    
+    	fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
+    
+    	// use mutex to lock in case multiple goroutines try to access same memory address
+    	mutex.Lock()
+    	statusCodeResults = append(statusCodeResults,site_url)
+    	mutex.Unlock()
+    }
+    
+    func main() {
+    	sites := []string{
+    		"https://google.com",
+    		"https://go.dev",
+    		"https://github.com",
+    	}
+    
+    	fmt.Println("EXECUTION STARTS")
+    
+    	var wg sync.WaitGroup // pointer
+    	var mutex sync.Mutex // pointer
+    
+    	for _, site_url := range sites {
+    		go checkSite(site_url, &wg, &mutex)
+    		wg.Add(1) //add one go routine to wait group
+    	}
+    	
+    	wg.Wait()
+    	fmt.Println("FINAL LIST", statusCodeResults)
+    }
+    
+    
+    
     ```
