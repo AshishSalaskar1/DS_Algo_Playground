@@ -507,63 +507,125 @@ func main() {
 
 ### Concurrency
 
-- **Wait Groups**
+#### Wait Groups
+
+- Make sure number of times `add()` and `done()` called are same. This may cause a deadlock
+
+- Aways pass `wg` as reference as pointer (Not by value)
+
+- ```go
+  package main
   
-  - Make sure number of times `add()` and `done()` called are same. This may cause a deadlock
+  import (
+  	"fmt"
+  	"log"
+  	"net/http"
+  	"sync"
+  )
   
-  - Aways pass `wg` as reference as pointer (Not by value)
   
-  - ```go
+  var statusCodeResults =  []string{}
+  
+  func checkSite(site_url string, wg *sync.WaitGroup, mutex *sync.Mutex) {
+  	// wg.Done only after checkSite completes execution
+  	defer wg.Done()
+  
+  	res, err := http.Get(site_url)
+  	if err != nil{
+  		log.Fatal(err)
+  	}
+  
+  	fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
+  
+  	// use mutex to lock in case multiple goroutines try to access same memory address
+  	mutex.Lock()
+  	statusCodeResults = append(statusCodeResults,site_url)
+  	mutex.Unlock()
+  }
+  
+  func main() {
+  	sites := []string{
+  		"https://google.com",
+  		"https://go.dev",
+  		"https://github.com",
+  	}
+  
+  	fmt.Println("EXECUTION STARTS")
+  
+  	var wg sync.WaitGroup // pointer
+  	var mutex sync.Mutex // pointer
+  
+  	for _, site_url := range sites {
+  		go checkSite(site_url, &wg, &mutex)
+  		wg.Add(1) //add one go routine to wait group
+  	}
+  	
+  	wg.Wait()
+  	fmt.Println("FINAL LIST", statusCodeResults)
+  }
+  
+  
+  
+  ```
+
+#### Channels
+
+Blog: https://medium.com/goturkiye/concurrency-in-go-channels-and-waitgroups-25dd43064d1
+
+- **Unbuffered Channels**
+  
+  - When you create an unbuffered channel, it has a **capacity of zero**. This means that every **send operation** on the channel **blocks** until **another goroutine is ready** to receive the value. 
+  
+  - Likewise, every **receive operation** **blocks** until **another goroutine is ready** to send a value.
+  
+  - Unbuffered channels ensure that the sender and receiver goroutines are **synchronized**
+  
+  - <u>Example</u>: *In this example, the main goroutine then blocks at the line* `*<-ch*`*, waiting for a value to be received from the channel. Once the value is received, it is printed to the console.*
+  
+  ```go
+  package main
+  
+  import (
+   "fmt"
+   "time"
+  )
+  
+  func main() {
+   ch := make(chan int) // Creating an unbuffered channel
+  
+   go func() {
+    time.Sleep(time.Second) // Simulating some work
+    ch <- 5 // Sending a value to the channel
+   }()
+  
+   x := <-ch // Receiving the value from the channel
+   fmt.Println(x) // Output: 5
+  }
+  ```
+
+- **Buffered Channels**
+  
+  - Buffered channels, on the other hand, have a **specified capacity greater than zero**. This means that they can hold a **certain number of values** before **blocking send operations**. 
+  
+  - Buffered channels decouple the sender and receiver, allowing for asynchronous communication.
+  
+  - <u>Example</u>: *In this example, we receive the values from the channel in the order they were sent. Since the channel has a buffer, it doesn't block the send operations.*
+    
+    ```go
     package main
     
-    import (
-    	"fmt"
-    	"log"
-    	"net/http"
-    	"sync"
-    )
-    
-    
-    var statusCodeResults =  []string{}
-    
-    func checkSite(site_url string, wg *sync.WaitGroup, mutex *sync.Mutex) {
-    	// wg.Done only after checkSite completes execution
-    	defer wg.Done()
-    
-    	res, err := http.Get(site_url)
-    	if err != nil{
-    		log.Fatal(err)
-    	}
-    
-    	fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
-    
-    	// use mutex to lock in case multiple goroutines try to access same memory address
-    	mutex.Lock()
-    	statusCodeResults = append(statusCodeResults,site_url)
-    	mutex.Unlock()
-    }
+    import "fmt"
     
     func main() {
-    	sites := []string{
-    		"https://google.com",
-    		"https://go.dev",
-    		"https://github.com",
-    	}
+     ch := make(chan int, 2) // Creating a buffered channel with a capacity of 2
     
-    	fmt.Println("EXECUTION STARTS")
+     ch <- 1 // Sending the value 1 to the channel
+     ch <- 2 // Sending the value 2 to the channel
     
-    	var wg sync.WaitGroup // pointer
-    	var mutex sync.Mutex // pointer
+     x := <-ch // Receiving the value from the channel
+     fmt.Println(x) // Output: 1
     
-    	for _, site_url := range sites {
-    		go checkSite(site_url, &wg, &mutex)
-    		wg.Add(1) //add one go routine to wait group
-    	}
-    	
-    	wg.Wait()
-    	fmt.Println("FINAL LIST", statusCodeResults)
+     y := <-ch // Receiving the value from the channel
+     fmt.Println(y) // Output: 2
     }
-    
-    
-    
     ```
