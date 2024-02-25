@@ -2,6 +2,7 @@ import json
 import sys
 import os
 import re
+import shutil
 
 def clean_filename(filename):
     # Define a regular expression pattern to match characters not allowed in filenames
@@ -29,6 +30,21 @@ for x in data:
     topic_name = x["topic"]
     data = x["data"]
 
+    print("FILE: ",file_name)
+    print("TOPIC: ",topic_name)
+
+    # preprocess topic name
+    topic_name = topic_name.replace("Solve Problems on ","")
+    if "[" in topic_name:
+        topic_name = topic_name[:topic_name.find("[")].strip()
+
+    if "/" in topic_name:
+        topic_name = "others"
+    else:
+        dir_path = f"{code_path}/{topic_name}"
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+
     dir_path = f"{code_path}/{topic_name}"
     file_path = f"{dir_path}/{file_name}.py"
     if not os.path.exists(dir_path): # create topic folder if it doesnt exist
@@ -41,10 +57,6 @@ for x in data:
     elif os.path.exists(file_path) and total_refresh: # rewrite only if total refresh enabled
         with open(file_path, "w") as f:
             f.write(data)
-
-    for j in range(123):
-        print(j)
-
 
     
 

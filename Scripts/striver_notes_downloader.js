@@ -1,7 +1,8 @@
 let processNotes = (openNoteBtn) => {
+	// console.log(openNoteBtn)
 	// get fileName before clicking on notesOpen button
 	let fileName = openNoteBtn.parentElement.parentElement.getElementsByTagName('td')[1].textContent
-	let topicName = openNoteBtns[1].parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByTagName("summary")[0].textContent
+	let topicName = openNoteBtn.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.getElementsByTagName("summary")[0].textContent.trim()
 	topicName = topicName.match(/:\s*(.+)\s*\(\d+\/\d+\)/)[1];
 
 

@@ -62,7 +62,7 @@ def upload_image_to_linkedin(oauth_token, upload_url, image_path):
         'Content-Type': content_type    
     }
 
-    # console.log(payload, )
+    # print(img_content)
 
     response = requests.request("POST", url, headers=headers, data=payload)
 
