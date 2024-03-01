@@ -16,7 +16,7 @@ Output: 3
 """
 
 class Solution:
-    def findCircleNum(self, arr: List[List[int]]) -> int:
+    def findCircleNum(self, arr) -> int:
         n = len(arr) 
         vis = set()
         provinces = 0

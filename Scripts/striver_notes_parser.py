@@ -14,7 +14,7 @@ def clean_filename(filename):
 
 json_path = f"C://Users/ashis/Downloads/cleaned_items.json"
 code_path = "D:\Github\DS_Algo_Playground\Track\Striver_180"
-with open(json_path) as f:
+with open(json_path, encoding='utf-8') as f:
     data = json.load(f)
 
 total_refresh = False
