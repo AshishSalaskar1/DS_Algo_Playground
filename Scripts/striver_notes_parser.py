@@ -13,7 +13,7 @@ def clean_filename(filename):
 
 
 json_path = f"C://Users/ashis/Downloads/cleaned_items.json"
-code_path = "D:\Github\DS_Algo_Playground\Track\Striver_180"
+code_path = "D:\Github\DS_Algo_Playground\Track\DSA_A_to_Z"
 with open(json_path, encoding='utf-8') as f:
     data = json.load(f)
 
