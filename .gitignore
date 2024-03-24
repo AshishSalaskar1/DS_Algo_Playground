@@ -3,3 +3,5 @@ __pycache__
 *.logs
 /Code_Snippets/FastApi/__pycache__/*
 /Code_Snippets/FastApi/fastapi/*
+dsa.py
+Code_Snippets/LinkedIn_API/UPLOADFILE_API
