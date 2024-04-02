@@ -1,25 +1,25 @@
 """
 INTUITION:
 inorder = [40,20,50,10,60,30] -> Left-Node-Right
-postorder = [40,50,20,60,30,10] -> Left-Right-Node
+preorder = [10,20,40,50,30,60] -> Node-Left-Right
 
 FIRST CALL
 IN = [40,20,50,10,60,30]
-POST = [40,50,20,60,30,10] 
+PRE = [10,20,40,50,30,60] 
 - First node or PRE=root
 - Root: 10
 - IN [40,20,50,10,60,30] => [LTreeNodes <-10-> RTreeNodes]
     - IN-LTreeNodes:[ 40, 20, 50]
     - IN-RTreeNodes:[ 60, 30]
-- POST [40,50,20,60,30,10] # root is removed=10
-    - wkt POST  visit all left tree nodes -> visit all right tree nodes -> print Node
-    - [(LEFT_TREE:40,50,20), (RIGHT_TREE:30,10) (Root: 10)]
+- PRE [20,40,50,30,60] # root is removed
+    - [(Root: 10), (LEFT_TREE:20,40,50), (RIGHT_TREE:30,60)]
+    - wkt PRE you visit node -> visit all left tree nodes -> visit all right tree nodes
     - Here root is printed (10)
     - LeftSubTree has 3 nodes, RightSubTree has 2 nodes
-    - POST-LTreeNodes:[40,50,20]
-    - POST-RTreeNodes:[30,10]
+    - PRE-LTreeNodes:[20,40,50]
+    - PRE-RTreeNodes:[30,60]
 
-Here you need find index of POST[-1]=ROOT in inorder
+Here you need find index of preorder[0]=ROOT in inorder
 - For this instead of iterating you maintan a hashmap for O(1) index retrieval
 
 """
@@ -33,12 +33,10 @@ class TreeNode:
 
 
 
-def build_tree(inorder, postorder):
-    inorder = inorder.copy()
-    postorder = postorder.copy()
-    if len(postorder) == 1:
-        return TreeNode(postorder[0])
-    elif len(postorder) == 0:
+def build_tree(inorder, preorder):
+    if len(preorder) == 1:
+        return TreeNode(preorder[0])
+    elif len(preorder) == 0:
         return None
 
     # GIVEN: node values are always unique
@@ -46,46 +44,38 @@ def build_tree(inorder, postorder):
     for i, x in enumerate(inorder):
         inorder_hmap[x] = i 
     
-    root = TreeNode(postorder.pop())
+    root = TreeNode(preorder.pop(0))
 
     # left subtree
     ls_inorder = inorder[:inorder_hmap.get(root.val)]
-    ls_postorder = postorder[:len(ls_inorder)]
+    ls_preorder = preorder[:len(ls_inorder)]
+    
     root.left = build_tree(
         inorder= ls_inorder,
-        postorder= ls_postorder
+        preorder= ls_preorder
     )
 
     # right subtree
     rs_inorder = inorder[inorder_hmap.get(root.val)+1:]
-    rs_postorder = postorder[len(ls_postorder):]
+    rs_preorder = preorder[len(ls_inorder):]
     root.right = build_tree(
         inorder=rs_inorder,
-        postorder=rs_postorder
+        preorder=rs_preorder
     )
 
     return root
 
-def postorder_print(node):
+def preorder_print(node):
     if node is None:
         return
 
-    postorder_print(node.left)
-    postorder_print(node.right)
     print(node.val, end="|")
+    preorder_print(node.left)
+    preorder_print(node.right)
 
 inorder = [40,20,50,10,60,30]
-postorder = [40,50,20,60,30,10]
-
-
-inorder=[3,2,1]
-postorder=[3,2,1]
-
-inorder= [9,3,15,20,7]
-postorder=[9,15,7,20,3]
-
-
-root = build_tree(inorder, postorder)
+preorder = [10,20,40,50,30,60]
+root = build_tree(inorder, preorder)
 
 # print(root.val)
-postorder_print(root)
+preorder_print(root)
