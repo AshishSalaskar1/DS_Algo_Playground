@@ -6,20 +6,18 @@ MORRIS INORDER TRAVERSAL
 
 
 SOLUTION:
-- PREORDER: PRINT -> LEFT -> RIGHT
+- INORDER: LEFT -> PRINT -> RIGHT
 - CUR = ROOT
     - if cur.left is None (Nothing in left to print) -> PRINT ->  GO RIGHT
     - If you have a left subtree
         1. Find right most node in that left subtree (start from cur.left and only go right)
         2. If you find a node which has right = cur (Its already threaded)
-            - Just ignore and move RIGHT
-            - Since this is alread threaded, u must have printed it while the thread was made
+            - This happens when u have threaded node x->cur, u go visit all left subtree and then
+              you reach right_most_node.right -> and reach root/cur again
+            - This means u previously visited this left subtree (from the same node)
+            - You can consider this left subtree as visited -> PRINT -> MOVE RIGHT
         3. right_mode_node.RIGHT = curr
-            - In this case you PRINT the curr node (PRINT -> LEFT -> RIGHT)
-            - For every node you visit 
-                - either left is NULL -> PRINT -> MOVE RIGHT
-                - you find some node and thread it: right_most_node.right = cur
-        4. MOVE RIGHT
+        4. MOVE LEFT (Visit left subtree now since you have thread to return back to curr node later)
 """
 
 
@@ -30,23 +28,21 @@ class TreeNode:
         self.right = right 
 
 
-def preorder(node):
+def inorder(node):
     if node is None:
         return
 
+    inorder(node.left)
     print(node.val, end=" ")
-    preorder(node.left)
-    preorder(node.right)
+    inorder(node.right)
 
 
-def morris_preorder(root):
+def morris_inorder(root):
     res = []
-    threaded_node_roots = set()
 
     cur = root
     while cur is not None:
-        # this root has been visited already (you printed this and the made right_most.right=root)
-        # print("curr: ", cur.val)
+        print("curr: ", cur.val)
         # left subtree is empty -> no need to visit
         if cur.left is None:
             res.append(cur.val)
@@ -69,11 +65,12 @@ def morris_preorder(root):
         
         # check if right-most node is already threaded -> all left nodes are visited
         if right_most_node == -1:
+            res.append(cur.val)
             cur = cur.right
         else: # add thread to current node -> move left
             right_most_node.right = cur
-            res.append(cur.val)
             cur = cur.left
+
     
     print(res)
     return res
@@ -86,6 +83,6 @@ root.left.left = TreeNode(4)
 root.left.right = TreeNode(5)
 root.left.right.right = TreeNode(6)
 
-preorder(root) # 4 2 5 6 1 3
+inorder(root) # 4 2 5 6 1 3
 print()
-morris_preorder(root) # 4 2 5 6 1 3
+morris_inorder(root) # 4 2 5 6 1 3

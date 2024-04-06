@@ -41,12 +41,9 @@ def preorder(node):
 
 def morris_preorder(root):
     res = []
-    threaded_node_roots = set()
 
     cur = root
     while cur is not None:
-        # this root has been visited already (you printed this and the made right_most.right=root)
-        # print("curr: ", cur.val)
         # left subtree is empty -> no need to visit
         if cur.left is None:
             res.append(cur.val)
@@ -68,14 +65,12 @@ def morris_preorder(root):
                 break
         
         # check if right-most node is already threaded -> all left nodes are visited
-        if right_most_node == -1:
-            cur = cur.right
-        else: # add thread to current node -> move left
-            right_most_node.right = cur
-            res.append(cur.val)
-            cur = cur.left
+        if right_most_node == -1: # add thread to current node -> move left
+            right_most_node.right = cur.right
+            left_subtree = cur.left
+            cur = left_subtree
+            cur.left = None
     
-    print(res)
     return res
 
 
