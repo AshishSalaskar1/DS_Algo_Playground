@@ -1,7 +1,7 @@
 """
 PBLM: Flatten the tree like a linked list in PREORDER: RIGHT SKEWED TREE
 
-SOLUTION:
+INTUITION:
 - Modification of MORRIS
 - For each node root:
     0. If root.left is None -> continue

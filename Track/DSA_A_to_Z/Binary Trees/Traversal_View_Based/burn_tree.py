@@ -5,7 +5,6 @@ Graph Based Solution:
 3. Max lvl reached  = time taken to burn entire tree
 """
 
-setrecursionlimit(10**7)
 
 # Binary tree node class for reference.
 class BinaryTreeNode :
