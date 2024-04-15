@@ -16,9 +16,6 @@
 #             if dist_to_reach_nbr < dist[nbr] and min_dist_to_reach_node!=INF:
 #                 update dist[nbr] and update same in heap to pick up next iteration
 
-# LIMITATIONS OF DIJSTRAS
-# - Cant work with negative weights/cycles (will start going into infinite loops)
-
 # PriorityQueue Doc
 #  length = pq.qsize()
 # - You can any comparable types in PQ (tuples, list..)
@@ -68,13 +65,13 @@ def dijkstra(edges: List[List[int]], V: int, E: int, src: int):
     dist[src] = 0
 
     while pq.qsize() != 0:
-        dist_frm_src, node = pq.get() # pick node at least distance in PQ from src
+        udist, u = pq.get() # pick node at least distance in PQ from src
 
         # visit all nbrs of node and update
-        for nbr, wt in adj[node]:
-            if dist[node] != float("inf") and dist[node]+wt < dist[nbr]: # shorter path found  from src->nbr
-                dist[nbr] = dist[node]+wt
-                pq.put((dist[nbr], nbr))
+        for v, wt in adj[u]:
+            if udist + wt < dist[v]: # shorter path found  from src->nbr
+                dist[v] = udist+wt
+                pq.put((udist+wt, v))
 
     return dist
 
