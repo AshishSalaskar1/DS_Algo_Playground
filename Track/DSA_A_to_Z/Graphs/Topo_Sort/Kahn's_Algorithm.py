@@ -7,6 +7,10 @@ LOGIC
 - When u visit nbrs, u do indegree[nbr] -= 1 (Because the parent node was already added to topo order n will come before this)
 - Now when u visit nbrs n decrement them, u add them to Q in case its indegree = 0
   (Means parents of this node is added in order, so now consider this as psuedo-root)
+
+SOLID ASSUMPTION:
+- If after running Kahns algo on your graph if all nodes are not visited -> GRAPH HAS CYCLE
+- Kahsn algo doesnt work with Cycles. It works only on DIRECTED-ACYCLIC-GRAPH
 """
 
 # USING KAHNS

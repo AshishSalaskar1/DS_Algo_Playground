@@ -56,3 +56,33 @@ def sortTwoLists(first, second):
     return new_head
 
 
+# IN-PLACE and faster
+def sortTwoLists(first, second):
+    if first is None:
+        return second
+
+    if second is None:
+        return first
+    
+    if first.data <= second.data:
+        sptr,lptr = first, second
+    else:
+        sptr, lptr = second, first
+
+    # this is needed to return
+    res = sptr
+
+    while sptr is not None and lptr is not None:
+        # point one point behind sptr
+        temp = None
+
+        # increment sptr untill its greater than lptr (STABLE)
+        while sptr and sptr.data <= lptr.data:
+            temp = sptr
+            sptr = sptr.next
+        
+        # point last node in smaller LL to LPTR node
+        temp.next = lptr
+        lptr, sptr =  sptr, lptr
+    
+    return res
