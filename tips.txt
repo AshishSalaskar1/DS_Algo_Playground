@@ -9,5 +9,3 @@ Partially Sort
 
 
 The Arrays.sort(arr,startIndex,endIndex)]
-
-https://astral-field-294621.firebaseapp.com/__/auth/action?apiKey=AIzaSyBdy3O3S9hrdayLJxJ7mriBR4qgUaUygAs&mode=signIn&oobCode=M0JCq-CZwBDqcD2KWRLn9mXwYUvDX1qnmQTVSpvK0GMAAAGPDpoSdg&continueUrl=https://app.warp.dev/login/remote?scheme%3Dwarp&lang=en
