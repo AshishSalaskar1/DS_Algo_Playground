@@ -1,5 +1,5 @@
 """
-PROBLEM: You are given ‘n’ items with certain ‘profit’ and ‘weight’ and a knapsack with weight capacity ‘w’.
+PROBLEM: You are given ï¿½nï¿½ items with certain ï¿½profitï¿½ and ï¿½weightï¿½ and a knapsack with weight capacity ï¿½wï¿½.
 You need to fill the knapsack with the items in such a way that you get the maximum profit. You are allowed to take one item multiple times.
 
 
@@ -22,8 +22,7 @@ def unboundedKnapsack(n: int, w: int, profit: List[int], weight: List[int]) -> i
             if j==0:
                 dp[i][j] = 0
             elif i==0: # only first element is left
-                if j % weight[i] == 0: # you can pick this
-                    dp[i][j] =  (j//weight[0]) * profit[0] # pick as many as you can
+                dp[i][j] =  (j//weight[0]) * profit[0] # pick as many as you can
             elif weight[i] > j: # weight of curr ele is more
                 dp[i][j] = dp[i-1][j]
             else: # either pick+pick again, dont pick current
@@ -31,3 +30,5 @@ def unboundedKnapsack(n: int, w: int, profit: List[int], weight: List[int]) -> i
     
 
     return dp[-1][-1]
+
+
