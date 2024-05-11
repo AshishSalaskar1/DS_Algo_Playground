@@ -1,29 +1,28 @@
-def balancedStringSplit(s: str) -> int:
-    count = 0
-    balance = {char: 0 for char in set(s)}
-    partition_indices = [0]
-    
-    # Calculate the balance and mark partition indices
-    for i, char in enumerate(s):
-        balance[char] += 1
-        
-        balanced = all(count == balance[char] for count in balance.values())
-        
-        if balanced:
-            partition_indices.append(i + 1)
-    
-    # Count the partitions
-    for i in range(1, len(partition_indices)):
-        count += 1
-    
-    return count
+def isvalid(s1, s2):
+    """
+    Return is s1 is PREDECESSOR of s2
+    -> s2 can be created by inserting exactly one more char in s1
 
-# Example usage:
-s1 = "fabccddg"
-print(balancedStringSplit(s1))  # Output: 3
+    "ab","axx" = False
+    "ab","abx" = True
+    """
+    n1,n2 = len(s1), len(s2)
 
-s2 = "abababaccddb"
-print(balancedStringSplit(s2))  # Output: 2
+    if n1 != n2-1:
+        return False
 
-s3 = "tboht"
-print(balancedStringSplit(s3))  # Output: 1
+    p1,p2 = 0,0
+
+    while p2<n2:
+        if p1 < n1 and s1[p1] == s2[p2]:
+            p1 += 1
+            p2 += 1
+        else:
+            p2   += 1
+
+    
+    return p1==n1 and p2==n2
+
+
+print(isvalid("ab","axx"))
+                
