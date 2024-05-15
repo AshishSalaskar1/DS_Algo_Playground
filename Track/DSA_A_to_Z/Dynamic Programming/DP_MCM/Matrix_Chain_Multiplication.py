@@ -42,6 +42,18 @@ Example 1:
 - i=1,j=3 ==> k=1
 - [A(4x5)]x[BC(5x2)] => 4x5x2 = 40
 - rows_in_first_matrix_left X cols_in_last_matrix_left X cols_in_last_matrix_right
+
+GENERAL MCM IDEAS
+1. Run some function initially on entire array/partition
+   But here init of i,j changes
+2. Try all possible partitions in (i,j) and memoize recursively
+3. Needs memoization
+
+- There is also some trick to init [i,j] or to pad values
+Example
+- MCM: You take i=1, since you consider arr[i-1],arr[i] as one MATRIX CORDS
+- Stick Cut: [0, *cuts, n] -> Use this so that arr[j+1]-arr[i-1] always gives you length before cutting
+
 """
 
 from functools import cache
