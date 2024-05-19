@@ -47,8 +47,7 @@
 - Ways False: leftT*rightT + leftF*rightF
     
 
-""""
-
+"""
 class Solution:
     def fn(self, i: int, j:int, needTrue:bool) -> int:
         if i>j:
