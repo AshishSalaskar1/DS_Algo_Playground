@@ -1,3 +1,22 @@
+"""
+PROBLEM: https://leetcode.com/problems/partition-array-for-maximum-sum/
+- Partition the array into (contiguous) subarrays of length at most k. 
+- After partitioning, each subarray has their values changed to become the maximum value of that subarray.
+
+
+SOLUTION: FRONT PARTITIONING
+=> solve(start, k)
+    - max res if you start partioning at i (before i)
+    - You can at max make k partitions starting at i
+    - for end: i -> i+k: # keep on storing length and max_ele to reduce TC
+        - make sure end < n
+        - res = length_of_cur_partition * max(cur_partition)
+                + solve(start+1)
+        - res = len * max_eleme + solve(start+1)
+
+
+"""
+
 from functools import cache
 class Solution:
     @cache

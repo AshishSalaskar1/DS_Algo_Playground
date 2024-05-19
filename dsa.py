@@ -1,28 +1,29 @@
-def isvalid(s1, s2):
-    """
-    Return is s1 is PREDECESSOR of s2
-    -> s2 can be created by inserting exactly one more char in s1
+def isArraySpecial(arr, queries):
+    n = len(arr)
+    bads = []
 
-    "ab","axx" = False
-    "ab","abx" = True
-    """
-    n1,n2 = len(s1), len(s2)
+    for x in range(n):
+        if (arr[x]%2==1 and arr[x-1]%2==1) or (arr[x]%2==0 and arr[x-1]%2==0):
+            # print(arr[x-1], arr[x])
+            bads.append([x-1,x])
 
-    if n1 != n2-1:
-        return False
+    res = []
+    # print(bads)
+    for [u,v] in queries:
+        curres = None
+        for x,y in bads:
+            if x>=u and y<=v:
+                curres = False
+                break
+        if curres is None:
+            curres = True
+        
+        res.append(curres)
 
-    p1,p2 = 0,0
+    return res
 
-    while p2<n2:
-        if p1 < n1 and s1[p1] == s2[p2]:
-            p1 += 1
-            p2 += 1
-        else:
-            p2   += 1
-
-    
-    return p1==n1 and p2==n2
+print(isArraySpecial( [4,3,1,6],  [[0,2],[2,3]]))
+print(isArraySpecial( [1,4],  [[0,1]]))
 
 
-print(isvalid("ab","axx"))
-                
+
