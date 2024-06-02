@@ -1,45 +1,69 @@
 """
-Explained: https://takeuforward.org/data-structure/preorder-inorder-postorder-traversals-in-one-traversal/
+BRUTE FORCE
+1. Iterate through each node, calculate left and right depths -> False if diff > 1
+2. Current tree is balanced, now check if both subtrees are balanced also
+TC: O(N*N) -> Your calling depth on each N and depth itself takes O(N)
 
-Core Logic:
-1. In PRE-ORDER you visit the node and save it first time
-2. In IN-ORDER you visit the node 2nd time and then save it 
-    (Visit once -> Go left -> come back -> print on second visit -> GO RIGHT)
-3. In POST-ORDER you visit the node 3rd time and then save it  
-    (Visit once -> Go left -> come back -> VISIT second  -> GO RIGHT -> come back -> Print on third visit)
+FASTER -> modify height function
+function returns -1 -> IF subtree is IMBALANCED
+function returns != -1 -> height/depth of the subtree
+1. For each node, 
+    1. find left height -> if its -1 return -1
+    2. find right height -> if its -1 return -1
+2. If abs(diff) > 1: return -1
+3. return height = 1 + max(left, right)  # THIS MEANS subtree is balanced and the height is returned
 
 """
 
-# Following is the Binary Tree node structure:
-class BinaryTreeNode :
-    def __init__(self, data) :
+class BinaryTreeNode:
+    def __init__(self, data):
         self.data = data
         self.left = None
         self.right = None
 
-def getTreeTraversal(root):
-    inorder, preorder, postorder = [], [], [] 
+def depth(root):
+    if root is None:
+        return 0
 
-    q = [(root,1)]
-    vis = {}
+    return 1 + max(depth(root.left), depth(root.right))
 
-    while len(q) != 0:
-        curr_node, counter = q.pop()
-        curr_val = curr_node.data
-        
+# BRUTE FORCE: O(n*n) approach since depth is calculated each time
+def is_balanced(root) -> bool:
+    if root is None:
+        return True
 
-        if counter == 1: # this is part of pre-order (PRINT, LEFT, RIGHT)
-            preorder.append(curr_val)
-            q.append((curr_node, 2)) # add back to Q
-            if curr_node.left: # add only left (PREORDER)
-                q.append((curr_node.left, 1))
-        elif counter == 2: # this is part of in-order (LEFT, PRINT, RIGHT)
-            inorder.append(curr_val)
-            q.append((curr_node, 3)) # add back to Q
-            if curr_node.right: # add only right (INORDER)
-                q.append((curr_node.right, 1))
-        elif counter == 3:  # this is part of post-order (LEFT, RIGHT, PRINT)
-            postorder.append(curr_val)
+    left_height = depth(root.left)
+    right_height = depth(root.right)
 
-        
-    return [inorder, preorder, postorder]
+    # IMBALANCED: No need to check lower sub-trees
+    if abs(left_height-right_height) > 1:
+        return False
+    
+    # now check if lower subtrees are balanced
+    return is_balanced(root.left) and is_balanced(root.right)
+
+
+def is_balanced_depth(root):
+    if root is None:
+        return 0
+    
+    left_height = is_balanced_depth(root.left)
+    if left_height == -1:
+        return -1
+    
+    right_height = is_balanced_depth(root.right)
+    if right_height == -1:
+        return -1
+
+    if abs(left_height-right_height) > 1:
+        return -1
+    
+    return 1 + max(left_height, right_height)
+    
+
+def isBalancedBT(root: BinaryTreeNode) -> bool:
+    if is_balanced_depth(root) == -1:
+        return False
+    else:
+        return True
+    
