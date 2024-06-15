@@ -34,7 +34,7 @@ SOLUTION 2: Prefix Sum
 """
 
 class Solution:
-    def maxScore(self, arr: List[int], k: int) -> int:
+    def maxScore(self, arr: list[int], k: int) -> int:
         n = len(arr)
         res = 0
         prefix = [0] * n
@@ -75,7 +75,7 @@ class Solution:
                 
 
 
-    def maxScoreSlidingWindow(self, arr: List[int], k: int) -> int:
+    def maxScoreSlidingWindow(self, arr: list[int], k: int) -> int:
         n = len(arr)
 
         if n==k: # you can pick all array elements
