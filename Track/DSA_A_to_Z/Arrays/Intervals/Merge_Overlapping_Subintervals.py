@@ -14,7 +14,6 @@ def mergeIntervals(arr):
             res[-1][1] = cur_end
         else: # cur interval cant be extended
             res.append(x)
-    
     return res
     
 
