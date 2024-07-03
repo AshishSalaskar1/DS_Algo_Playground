@@ -2,23 +2,61 @@
 
 - **Module structure**
   
+  - `main` vs `other` packages
+    
+    - `main` package consists of code which is executed when you do `go run`. You can have multiple files belonging to main package but atleast one needs to have a `main()` method which acts like a starting point of execution
+    
+    - Packages names other than main are considered util packages, which are being used by some other package or main package somewhere else 
+  
   - Generally, you have a`main.go` file which has function`main()` which acts like starting point of your application and is mostly stored in an`cmd` folder. Outside the`cmd `folder you have all your modules/import files.
+  
   - `go mod init mod_name` -> consider this as your package.json, it contains the name of your project/package and the go version which you want to use
+  
   - **Structure of projects**
+    
     - `go.mod` -> contains mod "modname"
     - `cmd/main/main.go` -> you import in your` main.go` as "modname/package_name"
     - `package1/package1.go`,`package2/package2.go`
 
 - **Types**
   
+  - **Pass by VALUE or REFERENCE**
+    
+    - **Passed by Value:** int, float, string, bool, structs
+    
+    - **Passed by Reference**: slices, maps, channels, pointers, functions
+  
   - **Type conversions**: int(), float64(), float32()
+    
+    - `dest_data_type(src_variable)`<- Assuming src_var can be auto converted to dest_data_type
+    
+    - **Float -> string**
+      
+      ```go
+      x := 12.23
+      // FormatFloat(var, 'float', 2 (precision), 64 (base 64)
+      xStr := strconv.FormatFloat(x, 'f', 2, 64)
+      
+      
+      xStr2 := fmt.Sprintf("%.2f", x)
+      ```
+    
+    - **Int -> String**
+      
+      ```go
+      
+      x := 12
+      
+      xStr := strconv.Itoa(x, 'f', 2, 64)
+      xStr2 := fmt.Sprintf("%d", x)
+      
+      ```
   
   - **Variable Basics**
     
     ```go
     var ash int
     ash = 12
-    
     ash := 12 // shorthand but works only within functions
     ```
   
@@ -436,10 +474,57 @@ func main() {
 - Define your own Custom types. Generally done on package level, so that you can use your new type in the entire code rather than in function scope only.
 
 ```go
+
+type dob struct {
+    day int
+    month int
+    year int
+}
+
+
 type personType struct {
     name string
     age int
     height float32
+    dob // equivalent of saying dob dob
+}
+
+// It can be a primitive datatype as well
+type deckOfCards []string // deck = ["Spade 1", "Ace 2"....]
+
+// RECEIVER FUNCTIONS (Consider this as class methods)
+func (p personType) print() string {
+	return p.name + fmt.Sprintf("%d", p.age) + fmt.Sprintf("%.2f", p.height)
+}
+
+
+
+// Here p is passedByValue -> So you cant update it
+func (p personType) udpateName(newName str) {
+    p.name = newName
+}
+
+// Update using Pointer
+func (pointerToPerson *personType) udpateNamePtr(newName str) {
+    // set the value of person.nam
+    (*pointerToPerson).name = newName
+}
+
+func testUpdateName() {
+
+    p := personType{name: "ashish", age:20, height: 12}
+    p.updateName("harry") 
+    fmt.Printf("%+v",p) // {name: "ashish", age:20, height: 12}
+
+    personPointer := &p
+    personPointer.udpateNamePtr("harry")
+    fmt.Printf("%+v",p) // {name: "harry", age:20, height: 12}
+
+    // Go auto converts receivers to its object ptr even if not specified
+    // U passed object, but receiver expects ptr (IT AUTO CONVERTS)
+    p.udpateNamePtr("hermoine")
+    fmt.Printf("%+v",p) // {name: "hermoine", age:20, height: 12}
+
 }
 
 func main() {
@@ -450,7 +535,11 @@ func main() {
     myPerson2 := personType{name: "ashish", age:20, height: 12}
     myPerson2 := personType{"ashish",20,12} // pass by position
 
-    fmt.Println(myPerson2)
+    fmt.Println(myPerson2) // ashish 20 12
+    fmt.Printf("%+v",myPerson2) // {name: ashish, age: 20, height: 12}
+
+    // Calling receiver functions
+    myPerson2.print() // ashish 20 12
 }
 ```
 
@@ -501,10 +590,6 @@ func main() {
     }
     ```
 
-
-
-
-
 ### Concurrency
 
 #### Wait Groups
@@ -517,91 +602,92 @@ func main() {
   package main
   
   import (
-  	"fmt"
-  	"log"
-  	"net/http"
-  	"sync"
+      "fmt"
+      "log"
+      "net/http"
+      "sync"
   )
-  
-  
-  var statusCodeResults =  []string{}
-  
-  func checkSite(site_url string, wg *sync.WaitGroup, mutex *sync.Mutex) {
-  	// wg.Done only after checkSite completes execution
-  	defer wg.Done()
-  
-  	res, err := http.Get(site_url)
-  	if err != nil{
-  		log.Fatal(err)
-  	}
-  
-  	fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
-  
-  	// use mutex to lock in case multiple goroutines try to access same memory address
-  	mutex.Lock()
-  	statusCodeResults = append(statusCodeResults,site_url)
-  	mutex.Unlock()
-  }
-  
-  func main() {
-  	sites := []string{
-  		"https://google.com",
-  		"https://go.dev",
-  		"https://github.com",
-  	}
-  
-  	fmt.Println("EXECUTION STARTS")
-  
-  	var wg sync.WaitGroup // pointer
-  	var mutex sync.Mutex // pointer
-  
-  	for _, site_url := range sites {
-  		go checkSite(site_url, &wg, &mutex)
-  		wg.Add(1) //add one go routine to wait group
-  	}
-  	
-  	wg.Wait()
-  	fmt.Println("FINAL LIST", statusCodeResults)
-  }
-  
-  
-  
   ```
 
+  var statusCodeResults =  []string{}
+
+  func checkSite(site_url string, wg *sync.WaitGroup, mutex *sync.Mutex) {
+      // wg.Done only after checkSite completes execution
+      defer wg.Done()
+
+      res, err := http.Get(site_url)
+      if err != nil{
+          log.Fatal(err)
+      }
+    
+      fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
+    
+      // use mutex to lock in case multiple goroutines try to access same memory address
+      mutex.Lock()
+      statusCodeResults = append(statusCodeResults,site_url)
+      mutex.Unlock()
+
+  }
+
+  func main() {
+      sites := []string{
+          "https://google.com",
+          "https://go.dev",
+          "https://github.com",
+      }
+
+```go
+  fmt.Println("EXECUTION STARTS")
+
+  var wg sync.WaitGroup // pointer
+  var mutex sync.Mutex // pointer
+
+  for _, site_url := range sites {
+      go checkSite(site_url, &wg, &mutex)
+      wg.Add(1) //add one go routine to wait group
+  }
+
+  wg.Wait()
+  fmt.Println("FINAL LIST", statusCodeResults)
+```
+
+  }
+
+```go
 #### Channels
 
 Blog: https://medium.com/goturkiye/concurrency-in-go-channels-and-waitgroups-25dd43064d1
 
 - **Unbuffered Channels**
-  
-  - When you create an unbuffered channel, it has a **capacity of zero**. This means that every **send operation** on the channel **blocks** until **another goroutine is ready** to receive the value. 
-  
-  - Likewise, every **receive operation** **blocks** until **another goroutine is ready** to send a value.
-  
-  - Unbuffered channels ensure that the sender and receiver goroutines are **synchronized**
-  
-  - <u>Example</u>: *In this example, the main goroutine then blocks at the line* `*<-ch*`*, waiting for a value to be received from the channel. Once the value is received, it is printed to the console.*
-  
-  ```go
-  package main
-  
-  import (
-   "fmt"
-   "time"
-  )
-  
-  func main() {
-   ch := make(chan int) // Creating an unbuffered channel
-  
-   go func() {
-    time.Sleep(time.Second) // Simulating some work
-    ch <- 5 // Sending a value to the channel
-   }()
-  
-   x := <-ch // Receiving the value from the channel
-   fmt.Println(x) // Output: 5
-  }
-  ```
+
+- When you create an unbuffered channel, it has a **capacity of zero**. This means that every **send operation** on the channel **blocks** until **another goroutine is ready** to receive the value. 
+
+- Likewise, every **receive operation** **blocks** until **another goroutine is ready** to send a value.
+
+- Unbuffered channels ensure that the sender and receiver goroutines are **synchronized**
+
+- <u>Example</u>: *In this example, the main goroutine then blocks at the line* `*<-ch*`*, waiting for a value to be received from the channel. Once the value is received, it is printed to the console.*
+
+```go
+package main
+
+import (
+ "fmt"
+ "time"
+)
+
+func main() {
+ ch := make(chan int) // Creating an unbuffered channel
+
+ go func() {
+  time.Sleep(time.Second) // Simulating some work
+  ch <- 5 // Sending a value to the channel
+ }()
+
+ x := <-ch // Receiving the value from the channel
+ fmt.Println(x) // Output: 5
+}
+```
 
 - **Buffered Channels**
   
