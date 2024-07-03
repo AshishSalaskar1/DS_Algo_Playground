@@ -36,88 +36,89 @@
       x := 12.23
       // FormatFloat(var, 'float', 2 (precision), 64 (base 64)
       xStr := strconv.FormatFloat(x, 'f', 2, 64)
-      
+      ```
       
       xStr2 := fmt.Sprintf("%.2f", x)
+      
+      ```
+      
       ```
     
     - **Int -> String**
       
       ```go
-      
       x := 12
       
       xStr := strconv.Itoa(x, 'f', 2, 64)
       xStr2 := fmt.Sprintf("%d", x)
+      ```
+
+- **Variable Basics**
+  
+  ```go
+  var ash int
+  ash = 12
+  ash := 12 // shorthand but works only within functions
+  ```
+
+- **String**
+  
+  - Types
+    
+    - **byte**: uint8 char representation
+    - **string**: immutable sequence of chars (UTF-8 and logical sequence of runes). Since strings are immutable they can also share memory locations (hello, hello_world, he may share memory blocks for chars)
+    - **rune**: int32 char representation, surrounded by single-quote (backticks are used for raw strings where special chars dont loose meaning)
+  
+  - **Strings are passed by reference**
+  
+  - Strings are immutable like python, but can be re-assigned
+  
+  - **String Functions**
+    
+    - ```go
+      s := "ashish"
       
+      strings.Contains(s, "a") // true
+      strings.HasPrefix(s, "ash") // true
+      
+      strings.Index(s, "h") 
+      strings.Index("ish")
+      
+      upperS = s.ToUpper() 
+      lowerS = s.ToLower()
+      
+      // Split and Join
+      s := "this is an big splitter word"
+      
+      splitStrings := strings.Split(s, "i") // this returns a slice split with "i" 
+      fmt.Println(splitStrings)
+      
+      fmt.Println(strings.Join(splitStrings,"X")) //returns string: same as "X".join(arr) in python
       ```
   
-  - **Variable Basics**
-    
-    ```go
-    var ash int
-    ash = 12
-    ash := 12 // shorthand but works only within functions
-    ```
+  - **Special Types**: bool, error, pointers
   
-  - **String**
+  - **Default Initialization**
     
-    - Types
+    - numerical types -`0`
+    - bool -`false`
+    - string -`""`
+    - All others -`nil`
+    - aggregate types - each member is set to 0
+  
+  - **Constants**
+    
+    - Only numbers, strings and booleans can be constant (Immutable)
+    
+    - It can be literal or compile-time (You cant set constants on run-time dynamically)
       
-      - **byte**: uint8 char representation
-      - **string**: immutable sequence of chars (UTF-8 and logical sequence of runes). Since strings are immutable they can also share memory locations (hello, hello_world, he may share memory blocks for chars)
-      - **rune**: int32 char representation, surrounded by single-quote (backticks are used for raw strings where special chars dont loose meaning)
-    
-    - **Strings are passed by reference**
-    
-    - Strings are immutable like python, but can be re-assigned
-    
-    - **String Functions**
-      
-      - ```go
-        s := "ashish"
-        
-        strings.Contains(s, "a") // true
-        strings.HasPrefix(s, "ash") // true
-        
-        strings.Index(s, "h") 
-        strings.Index("ish")
-        
-        upperS = s.ToUpper() 
-        lowerS = s.ToLower()
-        
-        // Split and Join
-        s := "this is an big splitter word"
-        
-        splitStrings := strings.Split(s, "i") // this returns a slice split with "i" 
-        fmt.Println(splitStrings)
-        
-        fmt.Println(strings.Join(splitStrings,"X")) //returns string: same as "X".join(arr) in python
-        ```
-    
-    - **Special Types**: bool, error, pointers
-    
-    - **Default Initialization**
-      
-      - numerical types -`0`
-      - bool -`false`
-      - string -`""`
-      - All others -`nil`
-      - aggregate types - each member is set to 0
-    
-    - **Constants**
-      
-      - Only numbers, strings and booleans can be constant (Immutable)
-      
-      - It can be literal or compile-time (You cant set constants on run-time dynamically)
-        
-        ```go
-        const a = 12
-        const (
-            c1 = 12
-            c2 = "1234"
-        )
-        ```
+      ```go
+      const a = 12
+      const (
+          c1 = 12
+          c2 = "1234"
+      )
+      ```
 
 ---
 
@@ -469,12 +470,11 @@ func main() {
 }
 ```
 
-**Type Definitions**
+#### **Type Definitions**
 
 - Define your own Custom types. Generally done on package level, so that you can use your new type in the entire code rather than in function scope only.
 
 ```go
-
 type dob struct {
     day int
     month int
@@ -494,10 +494,8 @@ type deckOfCards []string // deck = ["Spade 1", "Ace 2"....]
 
 // RECEIVER FUNCTIONS (Consider this as class methods)
 func (p personType) print() string {
-	return p.name + fmt.Sprintf("%d", p.age) + fmt.Sprintf("%.2f", p.height)
+    return p.name + fmt.Sprintf("%d", p.age) + fmt.Sprintf("%.2f", p.height)
 }
-
-
 
 // Here p is passedByValue -> So you cant update it
 func (p personType) udpateName(newName str) {
@@ -542,6 +540,114 @@ func main() {
     myPerson2.print() // ashish 20 12
 }
 ```
+
+#### Interfaces
+
+- Interfaces are `reverse implicit` in Go. 
+  
+  - In other languages, you define interfaces and then each class implements it
+  
+  - Here, you define interface and automatically all structs that meet this interface definition are considered to have implemented this interface
+
+```go
+package main
+
+import "fmt"
+
+type EnglishBot struct{}
+type SpanishBot struct{}
+
+func (eb EnglishBot) getGreeting() string {
+	// some complex logic to fetch greeting specific to English
+	return "Hello World..."
+}
+
+func (eb SpanishBot) getGreeting() string {
+	// some complex logic to fetch greeting specific to Spanish
+	return "Hola Mundo..."
+}
+
+/*
+- ASSUME getGreeting() functions have some language specific code and cant be merged
+1. You want a printGreeting() method with just calls getGreeting() method of each bot
+2. This is method which takes bots as arguments (NOT RECEIVER METHOD)
+
+Go doesnt support METHOD OVERLOADING
+- You CANT HAVE functions with SAME NAME BUT DIFFERENT SIGNATURES
+
+func printGreeting(eb EnglishBot) {
+	fmt.Println(eb.getGreeting())
+}
+func printGreeting(sb SpanishBot) {
+	fmt.Println(sb.getGreeting())
+}
+
+GIVES ERROR
+*/
+
+/*
+SOLUTION: INTERFACES
+
+Here we mean that, any type in this package having method getGreeting() and returns string is a subclass of interface Bot
+*/
+type Bot interface {
+	getGreeting() string
+}
+
+func printGreeting(b Bot) {
+	fmt.Println(b.getGreeting())
+}
+
+func main() {
+
+	eb := EnglishBot{}
+	sb := SpanishBot{}
+
+	printGreeting(eb)
+	printGreeting(sb)
+
+}
+
+```
+
+- **Interfaces can extend other interfaces also**
+  
+  ```go
+  package main
+  
+  // Interface extending another interface
+  // This means that this needs to have all methods defined in Reader and Writer Interface
+  type FileSystem interface {
+  	Reader
+  	Writer
+  }
+  
+  type Reader interface {
+  	readDataStream(string) []byte
+  }
+  type Writer interface {
+  	writeDataStream([]byte) string
+  }
+  
+  /*
+  EQUIVALENT:
+  type FileSystem interface {
+  	readDataStream(string) []byte
+  	writeDataStream([]byte) string
+  }
+  */
+  
+  func main() {
+  
+  	eb := EnglishBot{}
+  	sb := SpanishBot{}
+  
+  	printGreeting(eb)
+  	printGreeting(sb)
+  
+  }
+  
+  ```
 
 ---
 
@@ -607,86 +713,110 @@ func main() {
       "net/http"
       "sync"
   )
+  
+  var statusCodeResults = []string{}
+  
+  func checkSite(site_url string, wg *sync.WaitGroup, mutex *sync.Mutex){} {
+    // wg.Done only after checkSite completes execution
+    defer wg.Done()
+    res, err := http.Get(site_url)
+    if err != nil{
+        log.Fatal(err)
+    }
+  
+    fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
+  
+    // use mutex to lock in case multiple goroutines try to access same memory address
+    mutex.Lock()
+    statusCodeResults = append(statusCodeResults,site_url)
+    mutex.Unlock()
+  
+  }
+  
+  func main() {
+    sites := []string{
+       "https://google.com",
+       "https://go.dev",
+       "https://github.com",
+    }
+  
+    fmt.Println("EXECUTION STARTS")
+  
+    var wg sync.WaitGroup // pointer
+    var mutex sync.Mutex // pointer
+  
+    for _, site_url := range sites {
+        go checkSite(site_url, &wg, &mutex)
+        wg.Add(1) //add one go routine to wait group
+    }
+  
+    wg.Wait()
+    fmt.Println("FINAL LIST", statusCodeResults)
+  
+  }
   ```
 
-  var statusCodeResults =  []string{}
-
-  func checkSite(site_url string, wg *sync.WaitGroup, mutex *sync.Mutex) {
-      // wg.Done only after checkSite completes execution
-      defer wg.Done()
-
-      res, err := http.Get(site_url)
-      if err != nil{
-          log.Fatal(err)
-      }
-    
-      fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
-    
-      // use mutex to lock in case multiple goroutines try to access same memory address
-      mutex.Lock()
-      statusCodeResults = append(statusCodeResults,site_url)
-      mutex.Unlock()
-
-  }
-
-  func main() {
-      sites := []string{
-          "https://google.com",
-          "https://go.dev",
-          "https://github.com",
-      }
-
-```go
-  fmt.Println("EXECUTION STARTS")
-
-  var wg sync.WaitGroup // pointer
-  var mutex sync.Mutex // pointer
-
-  for _, site_url := range sites {
-      go checkSite(site_url, &wg, &mutex)
-      wg.Add(1) //add one go routine to wait group
-  }
-
-  wg.Wait()
-  fmt.Println("FINAL LIST", statusCodeResults)
-```
-
-  }
-
-```go
 #### Channels
 
-Blog: https://medium.com/goturkiye/concurrency-in-go-channels-and-waitgroups-25dd43064d1
+**Unbuffered Channels**
 
-- **Unbuffered Channels**
+- When you create an unbuffered channel, it has a **capacity of zero**. This means that every **send operation** on the channel **blocks** until **another goroutine is ready** to receive the value.
 
-- When you create an unbuffered channel, it has a **capacity of zero**. This means that every **send operation** on the channel **blocks** until **another goroutine is ready** to receive the value. 
+- Likewise, every **receive operation** **blocks** until **another goroutine is ready** to send a value.
 
-- Likewise, every **receive operation** **blocks** until **another goroutine is ready** to send a value.
+- Unbuffered channels ensure that the sender and receiver goroutines are **synchronized**
 
-- Unbuffered channels ensure that the sender and receiver goroutines are **synchronized**
-
-- <u>Example</u>: *In this example, the main goroutine then blocks at the line* `*<-ch*`*, waiting for a value to be received from the channel. Once the value is received, it is printed to the console.*
+- <u>Example</u>: *In this example, the main goroutine then blocks at the line* `*<-ch*`*, waiting for a value to be received from the channel. Once the value is received, it is printed to the console. So as soon as one value is pushed into the channel it terminates the program*
 
 ```go
+/*
+Blog: https://medium.com/goturkiye/concurrency-in-go-channels-and-waitgroups-25dd43064d1
+*/
+
 package main
 
 import (
- "fmt"
- "time"
+	"fmt"
+	"log"
+	"net/http"
 )
 
-func main() {
- ch := make(chan int) // Creating an unbuffered channel
+func checkSite(site_url string, ch chan string) {
+	res, err := http.Get(site_url)
+	if err != nil {
+		log.Fatal(err)
+	}
 
- go func() {
-  time.Sleep(time.Second) // Simulating some work
-  ch <- 5 // Sending a value to the channel
- }()
-
- x := <-ch // Receiving the value from the channel
- fmt.Println(x) // Output: 5
+	fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
+	ch <- fmt.Sprintf("Site %v has status code as %d", site_url, res.StatusCode)
 }
+
+func main() {
+	ch := make(chan string) // Creating an unbuffered channel
+
+	sites := []string{
+		"https://google.com",
+		"https://go.dev",
+		"https://github.com",
+	}
+
+	fmt.Println("EXECUTION STARTS")
+
+	for _, site := range sites {
+		go checkSite(site, ch)
+	}
+
+	for i := 0; i < len(sites); i++ {
+		x := <-ch
+		fmt.Println("Received from channel:", x)
+	}
+
+	// Hangs infintely, since its expected a 4th value, but we put only 3
+	x := <-ch
+	fmt.Println("Received from channel:", x)
+
+}
+
 ```
 
 - **Buffered Channels**
@@ -703,15 +833,15 @@ func main() {
     import "fmt"
     
     func main() {
-     ch := make(chan int, 2) // Creating a buffered channel with a capacity of 2
+         ch := make(chan int, 2) // Creating a buffered channel with a capacity of 2
     
-     ch <- 1 // Sending the value 1 to the channel
-     ch <- 2 // Sending the value 2 to the channel
+         ch <- 1 // Sending the value 1 to the channel
+         ch <- 2 // Sending the value 2 to the channel
     
-     x := <-ch // Receiving the value from the channel
-     fmt.Println(x) // Output: 1
+         x := <-ch // Receiving the value from the channel
+         fmt.Println(x) // Output: 1
     
-     y := <-ch // Receiving the value from the channel
-     fmt.Println(y) // Output: 2
+         y := <-ch // Receiving the value from the channel
+         fmt.Println(y) // Output: 2
     }
     ```
