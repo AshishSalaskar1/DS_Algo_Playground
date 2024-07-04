@@ -17,6 +17,12 @@
     - `go.mod` -> contains mod "modname"
     - `cmd/main/main.go` -> you import in your` main.go` as "modname/package_name"
     - `package1/package1.go`,`package2/package2.go`
+  
+  - Importing external modules
+    
+    - `go mod tidy` -> Downloads all packages already imported in your codes
+    
+    - `go get package_name/path` -> Individually downoad each module that you want to import
 
 - **Types**
   
@@ -470,6 +476,39 @@ func main() {
 }
 ```
 
+- **Struct Tags**
+
+- In Go, the strings within backticks in a struct definition are known as struct tags. These tags provide metadata about the struct fields, often used for purposes such as serialization, validation, or ORM mapping.
+
+```go
+package main
+
+type request struct {
+  URL         string        `json:"url"`
+  CustomShort string        `json:"short"`
+  Expiry      time.Duration `json:"expiry"`
+}
+
+type response struct {
+  URL             string        `json:"url"`
+  CustomShort     string        `json:"short"`
+  Expiry          time.Duration `json:"expiry"`
+  XRateRemaining  int           `json:"rate_limit"`
+}
+```
+
+- In the below example, the struct tags are used for JSON serialization. Here's a breakdown of what each tag means:
+
+-  **`json:"url"`**: This tag specifies that the `URL` field in the struct should be serialized to/from JSON with the key `url`.
+
+- **`json:"short"`**: This tag specifies that the `CustomShort` field in the struct should be serialized to/from JSON with the key `short`.
+
+- **`json:"expiry"`**: This tag specifies that the `Expiry` field in the struct should be serialized to/from JSON with the key `expiry`.
+
+- **`json:"rate_limit"`**: This tag specifies that the `XRateRemaining` field in the struct should be serialized to/from JSON with the key `rate_limit`.
+
+- These tags are used by the JSON marshaling and unmarshaling functions in Go's `encoding/json` package. When you convert a struct to JSON (marshaling) or from JSON (unmarshaling), these tags help to map struct fields to JSON object keys and vice versa.
+
 #### **Type Definitions**
 
 - Define your own Custom types. Generally done on package level, so that you can use your new type in the entire code rather than in function scope only.
@@ -558,13 +597,13 @@ type EnglishBot struct{}
 type SpanishBot struct{}
 
 func (eb EnglishBot) getGreeting() string {
-	// some complex logic to fetch greeting specific to English
-	return "Hello World..."
+    // some complex logic to fetch greeting specific to English
+    return "Hello World..."
 }
 
 func (eb SpanishBot) getGreeting() string {
-	// some complex logic to fetch greeting specific to Spanish
-	return "Hola Mundo..."
+    // some complex logic to fetch greeting specific to Spanish
+    return "Hola Mundo..."
 }
 
 /*
@@ -576,10 +615,10 @@ Go doesnt support METHOD OVERLOADING
 - You CANT HAVE functions with SAME NAME BUT DIFFERENT SIGNATURES
 
 func printGreeting(eb EnglishBot) {
-	fmt.Println(eb.getGreeting())
+    fmt.Println(eb.getGreeting())
 }
 func printGreeting(sb SpanishBot) {
-	fmt.Println(sb.getGreeting())
+    fmt.Println(sb.getGreeting())
 }
 
 GIVES ERROR
@@ -591,23 +630,22 @@ SOLUTION: INTERFACES
 Here we mean that, any type in this package having method getGreeting() and returns string is a subclass of interface Bot
 */
 type Bot interface {
-	getGreeting() string
+    getGreeting() string
 }
 
 func printGreeting(b Bot) {
-	fmt.Println(b.getGreeting())
+    fmt.Println(b.getGreeting())
 }
 
 func main() {
 
-	eb := EnglishBot{}
-	sb := SpanishBot{}
+    eb := EnglishBot{}
+    sb := SpanishBot{}
 
-	printGreeting(eb)
-	printGreeting(sb)
+    printGreeting(eb)
+    printGreeting(sb)
 
 }
-
 ```
 
 - **Interfaces can extend other interfaces also**
@@ -618,35 +656,34 @@ func main() {
   // Interface extending another interface
   // This means that this needs to have all methods defined in Reader and Writer Interface
   type FileSystem interface {
-  	Reader
-  	Writer
+      Reader
+      Writer
   }
   
   type Reader interface {
-  	readDataStream(string) []byte
+      readDataStream(string) []byte
   }
   type Writer interface {
-  	writeDataStream([]byte) string
+      writeDataStream([]byte) string
   }
   
   /*
   EQUIVALENT:
   type FileSystem interface {
-  	readDataStream(string) []byte
-  	writeDataStream([]byte) string
+      readDataStream(string) []byte
+      writeDataStream([]byte) string
   }
   */
   
   func main() {
   
-  	eb := EnglishBot{}
-  	sb := SpanishBot{}
+      eb := EnglishBot{}
+      sb := SpanishBot{}
   
-  	printGreeting(eb)
-  	printGreeting(sb)
+      printGreeting(eb)
+      printGreeting(sb)
   
   }
-  
   ```
 
 ---
@@ -758,6 +795,8 @@ func main() {
 
 #### Channels
 
+| Youtube Video Tutorial: https://youtu.be/qyM8Pi1KiiM
+
 **Unbuffered Channels**
 
 - When you create an unbuffered channel, it has a **capacity of zero**. This means that every **send operation** on the channel **blocks** until **another goroutine is ready** to receive the value.
@@ -776,72 +815,71 @@ Blog: https://medium.com/goturkiye/concurrency-in-go-channels-and-waitgroups-25d
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
+    "fmt"
+    "log"
+    "net/http"
 )
 
 func checkSite(site_url string, ch chan string) {
-	res, err := http.Get(site_url)
-	if err != nil {
-		log.Fatal(err)
-	}
+    res, err := http.Get(site_url)
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
-	ch <- fmt.Sprintf("Site %v has status code as %d", site_url, res.StatusCode)
+    fmt.Printf("%v --> %v \n", site_url, res.StatusCode)
+    ch <- fmt.Sprintf("Site %v has status code as %d", site_url, res.StatusCode)
 }
 
 func main() {
-	ch := make(chan string) // Creating an unbuffered channel
+    ch := make(chan string) // Creating an unbuffered channel
 
-	sites := []string{
-		"https://google.com",
-		"https://go.dev",
-		"https://github.com",
-	}
+    sites := []string{
+        "https://google.com",
+        "https://go.dev",
+        "https://github.com",
+    }
 
-	fmt.Println("EXECUTION STARTS")
+    fmt.Println("EXECUTION STARTS")
 
-	for _, site := range sites {
-		go checkSite(site, ch)
-	}
+    for _, site := range sites {
+        go checkSite(site, ch)
+    }
 
-	for i := 0; i < len(sites); i++ {
-		x := <-ch
-		fmt.Println("Received from channel:", x)
-	}
+    for i := 0; i < len(sites); i++ {
+        x := <-ch
+        fmt.Println("Received from channel:", x)
+    }
 
-	// Hangs infintely, since its expected a 4th value, but we put only 3
-	x := <-ch
-	fmt.Println("Received from channel:", x)
+    // Hangs infintely, since its expected a 4th value, but we put only 3
+    x := <-ch
+    fmt.Println("Received from channel:", x)
 
 }
-
 ```
 
 - **Buffered Channels**
+
+- Buffered channels, on the other hand, have a **specified capacity greater than zero**. This means that they can hold a **certain number of values** before **blocking send operations**. 
+
+- Buffered channels decouple the sender and receiver, allowing for asynchronous communication.
+
+- <u>Example</u>: *In this example, we receive the values from the channel in the order they were sent. Since the channel has a buffer, it doesn't block the send operations.*
   
-  - Buffered channels, on the other hand, have a **specified capacity greater than zero**. This means that they can hold a **certain number of values** before **blocking send operations**. 
+  ```go
+  package main
   
-  - Buffered channels decouple the sender and receiver, allowing for asynchronous communication.
+  import "fmt"
   
-  - <u>Example</u>: *In this example, we receive the values from the channel in the order they were sent. Since the channel has a buffer, it doesn't block the send operations.*
-    
-    ```go
-    package main
-    
-    import "fmt"
-    
-    func main() {
-         ch := make(chan int, 2) // Creating a buffered channel with a capacity of 2
-    
-         ch <- 1 // Sending the value 1 to the channel
-         ch <- 2 // Sending the value 2 to the channel
-    
-         x := <-ch // Receiving the value from the channel
-         fmt.Println(x) // Output: 1
-    
-         y := <-ch // Receiving the value from the channel
-         fmt.Println(y) // Output: 2
-    }
-    ```
+  func main() {
+        ch := make(chan int, 2) // Creating a buffered channel with a capacity of 2
+  
+        ch <- 1 // Sending the value 1 to the channel
+        ch <- 2 // Sending the value 2 to the channel
+  
+        x := <-ch // Receiving the value from the channel
+        fmt.Println(x) // Output: 1
+  
+        y := <-ch // Receiving the value from the channel
+        fmt.Println(y) // Output: 2
+  }
+  ```
