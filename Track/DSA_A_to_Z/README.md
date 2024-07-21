@@ -10,7 +10,7 @@ def fn():
     pass
 ```
 
-##E PriorityQueue
+## PriorityQueue
 ```python
 from queue import PriorityQueue # MIN HEAP BY DEFAULT
 
@@ -56,6 +56,13 @@ q[0] #  first element
 q[-1] # last element
 
 len(q) # length of the queue
+```
+
+### Python STR <-> ASCII VALUE
+```python
+ord('a') # 97 => CHAR -> ASCII
+chr('97') # a => ASCII -> CHAR
+
 ```
 
 ### Python Magic Methods

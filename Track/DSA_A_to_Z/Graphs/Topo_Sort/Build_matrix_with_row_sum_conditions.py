@@ -1,4 +1,6 @@
 """
+PROBLEM: https://leetcode.com/problems/build-a-matrix-with-conditions
+
 Input: k = 3, rowConditions = [[1,2],[3,2]], colConditions = [[2,1],[3,2]]
 Output: [[3,0,0],[0,0,1],[0,2,0]]
 
