@@ -62,8 +62,34 @@ len(q) # length of the queue
 ```python
 ord('a') # 97 => CHAR -> ASCII
 chr('97') # a => ASCII -> CHAR
+```
+
+### Tree to Graph Conversion
+- Here we are storing `Node` object and not the `Node` value (since in some cases Node value can repeat)
+```python
+def countPairs(root: TreeNode, max_distance: int) -> int:
+    if root is None:
+        return 0
+    
+    adj = defaultdict(list)
+    leaves = set()
+    pairs = set()
+
+    def dfs(node, parent=None):
+        if node:
+            if parent:
+                if node.left is None and node.right is None:
+                    leaves.add(node)
+                adj[node].append(parent)
+                adj[parent].append(node)
+            dfs(node.left, node)
+            dfs(node.right, node)
+    
+    dfs(root)
 
 ```
+
+
 
 ### Python Magic Methods
 1. **__gt__(self, other)**:
