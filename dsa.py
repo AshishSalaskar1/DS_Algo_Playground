@@ -1,85 +1,112 @@
-"""
-Input: k = 3, rowConditions = [[1,2],[3,2]], colConditions = [[2,1],[3,2]]
-Output: [[3,0,0],[0,0,1],[0,2,0]]
-
-Input: k = 3, rowConditions = [[1,2],[2,3],[3,1],[2,3]], colConditions = [[2,1]]
-Output: []
+# def solve(s1: str, s2: str, s3: str) -> bool:
+#     return False
 
 
-Input: k = 4, rowConditions = [[1,3],[4,3],[3,2]], colConditions = [[1,2],[4,2],[4,3]]
-Output: [[1,0,0,0], [0,4,0,0], [0,0,0,3], [0,0,2,0]]
-
-COL ORDER: 1 4 2 3
-ROW ORDER: 1 4 3 2
-# 1 4 2 3
-
-# 1 x x x     1
-# x 4 x x     4
-# x x x 3     3
-# x x 2 x     2
-"""
+# s1 = "aabcc"
+# s2 = "dbbca"
+# s3 = "aadbbbaccc"
 
 
-
-from queue import deque
-
-def create_adj_matrix(n, conditions):
-    adj = {key:[] for key in range(1,n+1)}
-    for src, dest in conditions:
-        adj[src].append(dest)
-
-    return adj
-
-def topological_sort(adj: list[list[int]]) -> list[int]:
-    """
-    Returns None->Cycle, else toposort
-    """
-    indegrees = {}
-    q = deque()
-    topo_sort = []
-
-    for src, dests in adj.items():
-        if src not in indegrees:
-            indegrees[src] = 0
-        for dest in dests:
-            indegrees[dest] = indegrees.get(dest,0) + 1
+class UF:
+    def __init__(self, n) -> None:
+        self.par = [i for i in range(n)]
+        self.size = [1 for i in range(n)]
     
-    for node, degs in indegrees.items():
-        if degs == 0:
-            q.append(node)
-    
-    while len(q)!=0:
-        node = q.popleft()
-        topo_sort.append(node)
-
-        for nbr in adj[node]:
-            indegrees[nbr] -= 1
-            if indegrees[nbr] == 0:
-                q.append(nbr)
-    
-    return topo_sort if len(topo_sort) == len(adj) else None
-
-class Solution:
-    def buildMatrix(self, k: int, rowConditions: List[List[int]], colConditions: List[List[int]]) -> List[List[int]]:
-        row_adj = create_adj_matrix(k, rowConditions)
-        col_adj = create_adj_matrix(k, colConditions)
-
-        row_orders = topological_sort(row_adj)
-        col_orders = topological_sort(col_adj)
-
-        # You cant have this order - SOME CYCLE EXISTS
-        if row_orders is None or col_orders is None:
-            return []
-
-        print(row_orders, col_orders)
-        arr = [[0 for _ in range(k)] for _ in range(k)]
-
-        for i in range(k):
-            for j in range(k):
-                if row_orders[i] == col_orders[j]:
-                    arr[i][j] = row_orders[i]
-
-
-        return arr
+    def find_parent(self, node: int) -> int:
+        if self.par[node] == node:
+            return node
         
+        self.par[node] = self.find_parent(self.par[node])
+        return self.par[node]
 
+    def union(self, u:int, v: int) -> None:
+        upar, vpar = self.find_parent(u), self.find_parent(v)
+        if upar == vpar:
+            return 
+
+        if self.size[vpar] < self.size[upar]: # add upar in vpar
+            self.par[upar] = vpar
+            self.size[vpar] += self.size[upar]
+        else: # add vpar into upar
+            self.par[vpar] = upar
+            self.size[upar] += self.size[vpar]
+
+def solve(xr: int, yr: int, circles: list[list[int]]) -> bool:
+    # TODO: Filter out circles with centres outside the rectange
+
+    bounds = {
+        "left": 0,
+        "right": 1,
+        "top": 2,
+        "bottom": 3
+    }
+
+    n = len(circles)
+    uf = UF(n+4)
+
+    for i, circle in enumerate(circles):
+        x, y, r = circle[0], circle[1], circle[2]
+        if x-r <= 0:
+            print(f"{x} {y} {r} conneted to left")
+            uf.union(i, n+bounds["left"])
+        if y-r <= 0:
+            print(f"{x} {y} {r} conneted to bottom")
+            uf.union(i, n+bounds["bottom"])
+        if x+r >= xr:
+            print(f"{x} {y} {r} conneted to right")
+            uf.union(i, n+bounds["right"])
+        if y+r >= yr:
+            print(f"{x} {y} {r} conneted to top")
+            uf.union(i, n+bounds["top"])
+        
+        print("PARENTS")
+        for I in range(n+4):
+            print(I,"=>", uf.find_parent(I))
+        print("PARENTS END\n")
+        
+        for j in range(i):
+            x2,y2,r2 = circles[j][0], circles[j][1], circles[j][2]
+            print(f"Circles {i} and {j} intersect?")
+            if (x-x2)**2 + (y-y2)**2 <= (r+r2)**2: # they coincide
+                print("YES")
+                uf.union(i,j)
+    
+    if uf.find_parent(n+bounds["left"]) == uf.find_parent(n+bounds["right"]) \
+        or uf.find_parent(n+bounds["top"]) == uf.find_parent(n+bounds["bottom"]) \
+        or uf.find_parent(n+bounds["left"]) == uf.find_parent(n+bounds["bottom"]) \
+        or uf.find_parent(n+bounds["top"]) == uf.find_parent(n+bounds["right"]):
+        return False
+
+    print(uf.find_parent(n+bounds["left"]) == uf.find_parent(n+bounds["right"]))
+    print(uf.find_parent(n+bounds["top"]) == uf.find_parent(n+bounds["bottom"]))
+    print(uf.find_parent(n+bounds["left"]) == uf.find_parent(n+bounds["bottom"]))
+    print(uf.find_parent(n+bounds["top"]) == uf.find_parent(n+bounds["right"]))
+
+    for i in range(n+4):
+        print(i,"=>", uf.find_parent(i))
+
+    return True
+
+
+
+
+
+X = 3
+Y = 3
+circles = [[2,1,1],[1,2,1]]
+print("RES")
+print(solve(X, Y, circles)) # FALSE
+
+
+
+# X = 5
+# Y = 7
+# circles = [[2,1,7],[4,5,2],[4,6,7]]
+# print("RES")
+# print(solve(X, Y, circles)) # FALSE
+
+# X = 8
+# Y = 9
+# circles = [[3,1,1],[1,5,1],[4,8,2]]
+# print("RES")
+# print(solve(X, Y, circles)) # TRUE

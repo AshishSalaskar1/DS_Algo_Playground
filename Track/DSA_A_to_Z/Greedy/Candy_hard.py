@@ -65,3 +65,40 @@ class Solution:
             res += max(left[i], right[i])
         
         return res
+
+# SAME LOGIC -> BUT ELIMINATE THIRD LOOP (Does same thing as MAX(left, right))
+class SolutionVerbose:
+    def candy(self, ratings: List[int]) -> int:
+        n = len(ratings)
+        res = [1]*n
+
+        if n == 1:
+            return 1
+
+        for i in range(n):
+            if i==0:
+                if ratings[i] > ratings[i+1] and res[i] <= res[i+1]:
+                    res[i] = res[i+1]+1
+            elif i==n-1:
+                if ratings[i] > ratings[i-1] and res[i] <= res[i-1]:
+                    res[i] = res[i-1]+1
+            else:
+                if ratings[i] > ratings[i+1] and res[i] <= res[i+1]:
+                    res[i] = res[i+1]+1
+                if ratings[i] > ratings[i-1] and res[i] <= res[i-1]:
+                    res[i] = res[i-1]+1
+        print(res)
+        for i in reversed(range(n)):
+            if i==0:
+                if ratings[i] > ratings[i+1] and res[i] <= res[i+1]:
+                    res[i] = res[i+1]+1
+            elif i==n-1:
+                if ratings[i] > ratings[i-1] and res[i] <= res[i-1]:
+                    res[i] = res[i-1]+1
+            else:
+                if ratings[i] > ratings[i+1] and res[i] <= res[i+1]:
+                    res[i] = res[i+1]+1
+                if ratings[i] > ratings[i-1] and res[i] <= res[i-1]:
+                    res[i] = res[i-1]+1
+        # print(res)
+        return sum(res)
