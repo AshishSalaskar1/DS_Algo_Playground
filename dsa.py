@@ -1,112 +1,83 @@
-# def solve(s1: str, s2: str, s3: str) -> bool:
-#     return False
+from typing import List
+from queue import PriorityQueue
 
+class Solution:
+    def findMaximizedCapital(self, k: int, w: int, profits: List[int], capitals: List[int]) -> int:
+        n = len(profits)
+        jobs_done = 0
 
-# s1 = "aabcc"
-# s2 = "dbbca"
-# s3 = "aadbbbaccc"
-
-
-class UF:
-    def __init__(self, n) -> None:
-        self.par = [i for i in range(n)]
-        self.size = [1 for i in range(n)]
-    
-    def find_parent(self, node: int) -> int:
-        if self.par[node] == node:
-            return node
+        max_heap = PriorityQueue()
+        for profit, capital in zip(profits, capitals):
+            max_heap.put( (capital, -profit) )
         
-        self.par[node] = self.find_parent(self.par[node])
-        return self.par[node]
+        while k>0 and not max_heap.empty() and jobs_done<n:
+            best_cap, best_profit = max_heap.get()
+            if best_cap > w:
+                return w
+            print(f"Picked up job {(best_cap, -best_profit)}")
+            w += -best_profit
+            jobs_done += 1
+            k -= 1
 
-    def union(self, u:int, v: int) -> None:
-        upar, vpar = self.find_parent(u), self.find_parent(v)
-        if upar == vpar:
-            return 
+        return w
 
-        if self.size[vpar] < self.size[upar]: # add upar in vpar
-            self.par[upar] = vpar
-            self.size[vpar] += self.size[upar]
-        else: # add vpar into upar
-            self.par[vpar] = upar
-            self.size[upar] += self.size[vpar]
 
-def solve(xr: int, yr: int, circles: list[list[int]]) -> bool:
-    # TODO: Filter out circles with centres outside the rectange
 
-    bounds = {
-        "left": 0,
-        "right": 1,
-        "top": 2,
-        "bottom": 3
-    }
 
-    n = len(circles)
-    uf = UF(n+4)
 
-    for i, circle in enumerate(circles):
-        x, y, r = circle[0], circle[1], circle[2]
-        if x-r <= 0:
-            print(f"{x} {y} {r} conneted to left")
-            uf.union(i, n+bounds["left"])
-        if y-r <= 0:
-            print(f"{x} {y} {r} conneted to bottom")
-            uf.union(i, n+bounds["bottom"])
-        if x+r >= xr:
-            print(f"{x} {y} {r} conneted to right")
-            uf.union(i, n+bounds["right"])
-        if y+r >= yr:
-            print(f"{x} {y} {r} conneted to top")
-            uf.union(i, n+bounds["top"])
+sol = Solution()
+
+k,w = 1,2 # 5
+profits, capital = [1,2,3], [1,1,2] 
+print(sol.findMaximizedCapital(k, w, profits, capital))
+print()
+
+# k,w = 2,0 # 1
+# profits, capital = [1,2,3], [0,9,10] 
+# print(sol.findMaximizedCapital(k, w, profits, capital))
+# print()
+
+# k,w = 2,0 # 4
+# profits, capital = [1,2,3], [0,1,1] 
+# print(sol.findMaximizedCapital(k, w, profits, capital))
+# print()
+
+# k,w = 3,0 # 6
+# profits, capital = [1,2,3], [0,1,2 ]
+# print(sol.findMaximizedCapital(k, w, profits, capital))
+# print()
+
+
+
+"""
+TLE SOLUTION
+"""
+
+
+class SolutionTLE:
+    def findMaximizedCapital(self, k: int, w: int, profits: List[int], capital: List[int]) -> int:
+        n = len(profits)
+        res = w
+        jobs = list(zip(profits, capital, list(range(n))))
+        remaining_jobs = set(list(range(n)))
+
+        while k>0 and len(remaining_jobs)>0: 
+            max_heap = PriorityQueue()
+            for i in remaining_jobs:
+                if jobs[i][1] <= w:
+                    print(f"valid job: {jobs[i]}")
+                    max_heap.put( (-jobs[i][0],jobs[i][1],jobs[i][2]) )
+            
+            if max_heap.empty():
+                return res
+
+            most_profit, most_capital, job_index = max_heap.get()
+            most_profit = -most_profit
+            w += most_profit
+            remaining_jobs.remove(job_index)
+
+            print(f"Did job {jobs[job_index]} and rem: {remaining_jobs}")
+            k -= 1
+            print(k>0 and len(remaining_jobs)>0)
         
-        print("PARENTS")
-        for I in range(n+4):
-            print(I,"=>", uf.find_parent(I))
-        print("PARENTS END\n")
-        
-        for j in range(i):
-            x2,y2,r2 = circles[j][0], circles[j][1], circles[j][2]
-            print(f"Circles {i} and {j} intersect?")
-            if (x-x2)**2 + (y-y2)**2 <= (r+r2)**2: # they coincide
-                print("YES")
-                uf.union(i,j)
-    
-    if uf.find_parent(n+bounds["left"]) == uf.find_parent(n+bounds["right"]) \
-        or uf.find_parent(n+bounds["top"]) == uf.find_parent(n+bounds["bottom"]) \
-        or uf.find_parent(n+bounds["left"]) == uf.find_parent(n+bounds["bottom"]) \
-        or uf.find_parent(n+bounds["top"]) == uf.find_parent(n+bounds["right"]):
-        return False
-
-    print(uf.find_parent(n+bounds["left"]) == uf.find_parent(n+bounds["right"]))
-    print(uf.find_parent(n+bounds["top"]) == uf.find_parent(n+bounds["bottom"]))
-    print(uf.find_parent(n+bounds["left"]) == uf.find_parent(n+bounds["bottom"]))
-    print(uf.find_parent(n+bounds["top"]) == uf.find_parent(n+bounds["right"]))
-
-    for i in range(n+4):
-        print(i,"=>", uf.find_parent(i))
-
-    return True
-
-
-
-
-
-X = 3
-Y = 3
-circles = [[2,1,1],[1,2,1]]
-print("RES")
-print(solve(X, Y, circles)) # FALSE
-
-
-
-# X = 5
-# Y = 7
-# circles = [[2,1,7],[4,5,2],[4,6,7]]
-# print("RES")
-# print(solve(X, Y, circles)) # FALSE
-
-# X = 8
-# Y = 9
-# circles = [[3,1,1],[1,5,1],[4,8,2]]
-# print("RES")
-# print(solve(X, Y, circles)) # TRUE
+        return w
