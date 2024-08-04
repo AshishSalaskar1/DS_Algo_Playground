@@ -13,6 +13,25 @@ WALL OF BRICKS II:
     (You can lay bricks in upward + downward direction in subarray fashion)
 -https://leetcode.com/problems/minimum-operations-to-make-array-equal-to-target/solutions/5509009/Really-Simple-Wall-of-Bricks-solution-(Python)/
 
+
+
+SOLUTION: (Here both refers to diffs[i-1], diffs[i])
+- Both are +ve: add diff if increasing trend
+- Both are -ve: add diff if increasing trend in reverse direction
+- If mixed (-ve -> +ve OR +ve -> -ve) = abs(diffs[i])
+
+Explaination for mixed:
+1 2 -4 5 2
+1 => 1
+2 => 1+ (2-1) = 2
+
+Now 2,-4 MIXED => 2+ abs(4)
+- Why 4 got added?
+Imagine you have laid 2 rows of bricks -> (first you one base: [1][1], then lay one more row only on 2:[1][1+1] = 1 2)
+Now you lay 4 more rows in negative direction THATS WHY +4
+
+5 => -4,5 = res+5
+- You will just lay the bricks in the direction you want to pillar upon (older one cant be a surface since its in reverse direction)
 """
 class Solution:
     def minimumOperations(self, nums: List[int], target: List[int]) -> int:
@@ -28,7 +47,7 @@ class Solution:
                 if abs(diffs[i]) > abs(diffs[i-1]): # downward increasing trend -> upwards increasing already taken care of
                     res += abs(diffs[i])-abs(diffs[i-1])
             else: # MIXED TREND
-                res += abs(diffs[i]) # why diff only? You will come to base=0 first and then lay these in upward/downward direction
+                res += abs(diffs[i]) # why diff only? You will start from base=0 first and then lay these in upward/downward direction
         return res
 """
 1 -5 -2 4
