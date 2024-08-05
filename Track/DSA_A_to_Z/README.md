@@ -98,3 +98,17 @@ def countPairs(root: TreeNode, max_distance: int) -> int:
 
 2. **__repr__(self)**:
 - return string representation of your object
+
+
+## Docs
+- CSES Problem set: https://cses.fi/problemset/list/
+- Euler Tour: 
+    - Explainations with variations: https://www.youtube.com/playlist?list=PL-Jc9J83PIiHymm1DHZBkac0_hhFBXryO
+    - Questions:
+        1. Subtree sum with node value updates: https://cses.fi/problemset/task/1137/
+        2. Depth of tree given subtree deletions: https://leetcode.com/problems/height-of-binary-tree-after-subtree-removal-queries/?envType=problem-list-v2&envId=my4z5092
+- Fenwick Trees: 
+    - Explaination: https://www.youtube.com/watch?v=pTg7NezkV28
+     - Questions:
+        1. Subtree sum with node value updates: https://cses.fi/problemset/task/1137/
+    
