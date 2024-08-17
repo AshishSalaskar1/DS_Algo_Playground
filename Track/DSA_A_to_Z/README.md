@@ -1,8 +1,10 @@
 ## Python References
 
 ### @cache
+- `@cache` works in Python > 3.9
+- `@lru_cache` for lower versions < 3.9 
 ```python
-from functools import cache
+from functools import cache, lru_cache 
 
 # all arguments to cached function must be immutable - tuple, string, dict
 @cache
