@@ -35,3 +35,4 @@ class Solution:
             max_eq1 = max(max_eq1, arr[j]+j)
 
         return res        
+    

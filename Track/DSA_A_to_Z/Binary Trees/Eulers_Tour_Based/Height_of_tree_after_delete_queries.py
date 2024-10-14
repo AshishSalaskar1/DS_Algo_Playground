@@ -13,23 +13,41 @@ SOLUTION: Euler Tour
 # euler tour array is [(1,0),(2,1),(4,2),(4,2),(2,1),(3,1),(3,1),(1,0)]
 - If you observe between (NODE, lvl) ..... (NODE, lvl), you will have all nodes which are subtrees under given NODE
 
-- Now query comes in [2]
+- Now query comes in [2] -> YOU DELETE NODE (2) -> All sub nodes of (2) will be gone
     start, end = 1, 4
-    [(1,0) | (2,1),(4,2),(4,2),(2,1) | (3,1),(3,1),(1,0)]
+    [(1,0) | (2,1),(4,2),(4,2),(2,1) | (3,1),(3,1),(1,0)] ==> these are subnodes of (2) = (2,1),(4,2),(4,2),(2,1)
     - res = max_height([(1,0)]) OR max_height([(3,1),(3,1),(1,0)]])
-    - res = max(  max_depth_till_here[start-1],  max_depth_till_here[end-1] )
+    - res = max(  max_depth_till_here[start-1],  max_depth_till_here[end+1] )
     Note: 
     - Handle cases when start=0 and end=n 
     - Here 0 to n indicate index in Euler tours array - NOT NODE THEMSELVES
 
+==> Problem boils down to finding max [0: start-1] and max of [end+1: n] ===> YOU DO THIS ON THE EULERS TOUR ARRAY
+- So for this we utilize concept of monotonic stack to create 2 arrays
+ 1. max_till_now_from_start
+ 2. max_from_here_to_end
+
+ Now you can find max [0: start-1] and max of [end+1: n] in O(1)
+
+
+==> Storing start-end indexes of each node in a map,
+Here you do this:
+start_end_map = defaultdict(list)
+for i, tour_ele in enumerate(tour): # saving index of each node in the tour array
+    start_end_map[tour_ele[0]].append(i)
+
+BETTER: Pass a start,end,idx array in your tour itself. So that each time u start -> end a node tour you udpate it automatically
+[REFER CSES SUBTREE SUM]
+
 """
 
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 from collections import defaultdict
 
 class EulerTour:

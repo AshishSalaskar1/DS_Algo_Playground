@@ -53,7 +53,7 @@ def main():
         values[i] = int(data[idx])
         idx += 1
     
-    graph = [[] for _ in range(n + 1)]
+    graph = [[] for _ in range(n + 1)] # 1-based indexing used here for NODES
     for _ in range(n - 1):
         a = int(data[idx])
         b = int(data[idx + 1])
@@ -76,7 +76,8 @@ def main():
     entry = [0] * (n + 1)
     exit = [0] * (n + 1)
     tour = [0] * (2 * n + 1)
-    timer = [0]
+    # TIMER => INDEX IN TOUR ARRAY
+    timer = [0] # pass as list since LIST is PASS_BY_REFERENCE (Only 0 would be pass by value)
     
     euler_tour(1, -1, graph, values, entry, exit, tour, timer)
     
