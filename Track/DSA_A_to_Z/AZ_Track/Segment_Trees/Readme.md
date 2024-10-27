@@ -48,13 +48,17 @@ Use normal segment tree.
 - **MARKING NODE AS LAZY** -> `apply_lazy(i,l,r,val)`
 	- **If node is Lazy -> its st[i].val is updated -> but childrens are not**
     1. Calculate correct val of current node: For example in simple range sum,
+    ```py
       - node.val = (r-l+1)*val [UPDATE = REPLACE VALUES]
-      - node.val += (r-l+1)*val [UpDATE = ADD VAl to all ranges]
+      - node.val += (r-l+1)*val [UPDATE = ADD VAl to all ranges]
+    ```
     2. Mark Current Node as lazy
     3. Store Lazy val -> so that it can propagated later
+    ```py
       - self.lazy = val [UPDATE = REPLACE VALUES]
       - self.lazy += val [UpDATE = ADD VAl to all ranges]
-        - Here, you also add existing lazy value (THIS NODE MIGHT HAVE BEEN MARKED AS LAZY BEFORE ALSO => Take into account previous lazy/unpropagated values also)
+    ```
+    - Here, you also add existing lazy value (THIS NODE MIGHT HAVE BEEN MARKED AS LAZY BEFORE ALSO => Take into account previous lazy/unpropagated values also)
 <br><br>
 -   **PUSHING DOWN LAZY NODE** -> `push(i,l,r)
 	- Lets say a node is marked as Lazy (means its val is proper but has unpropagated values)
@@ -83,9 +87,40 @@ Use normal segment tree.
 
 ---
 ## K-th Segment Tree
+**Use Case**: <br>
+You want a data structure, where you can `add`, `delete` elements. And you can query to get the `kth smallest element` (kth position element in case the array is sorted)
 
-This called
+**Overall Time Complexity**
+- Initialization (__init__): O(n)
+- Operation (add or remove): O(log⁡n)
+- Query (k-th smallest): O(log⁡n)
 
+**Solution**
+- st[i] = (l,r) => saves number of elements added in DS which fall in range (l,r) inclusive
+- Query Logic:
+  1. **if k >= left_sub_tree.val: search in left_space, k=k**
+  2. **if k < left_sub_tree.val: search in left_space, k= k-left_sub_tree.val:**
+- Add logic: Go on reducing (l,r) until l==r, then self.st[i].val = 1
+- Remove logic: Go on reducing (l,r) until l==r, then self.st[i].val = 0
+- `n` = 1 + max of elements that can be added
+- You dont mantain an `arr` array here. Instead vals are stored at indexes
+
+<br><br>
+**Case 1**<br>
+lets say k=3, You are at (l,r), (l,mid)=4, (mid+1,r)=3
+1. Left subtree has val = 4 (means 4 values fall between l->mid)
+2. Right subtree has val = 3 (means 3 values fall between mid+1 -> r)
+- Now, you want to find 3rd number. And you know that (l,mid) has 4, so surely your 3rd will also lie there
+- Because, (mid+1,r) is greater than mid. That means (l,mid) will have till 4th element
+
+<br><br>
+**Case 2**<br>
+lets say k=4, You are at (l,r), (l,mid)=2, (mid+1,r)=5
+1. Left subtree has val = 2 (means 2 values fall between l->mid)
+2. Right subtree has val = 5 (means 5 values fall between mid+1 -> r)
+- Now, you want to find 3rd number. And you know that (l,mid) has 2, so surely your 3rd will lie in right side
+- left range (l,mid) has 2 items and 5 are left in right (mid+1,r)
+- K = k-2 = 4-2 = 2. Why? You wanted 4th, out of which smallest 2 are already there in left range. Now in the right range you need to find 2nd, hence k=4-2=2
 
 ---
 ## Problem Examples
