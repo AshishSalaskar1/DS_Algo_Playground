@@ -7,6 +7,7 @@
 
 **Note**
 1. Most of sweep line problems can be done using `Merge Overlap Intervals` using sorting and some sort of combination. But, hard to find a common pattern in this approach and requires ad-hoc thinking
+2. Dont use this to solve `Merge Intervals Problem` - Might become a bit complex. Better to do that using sort + iteration approach
 
 ---
 ## Q1: Meeting room duration with atleast `k` occupancy
@@ -53,3 +54,5 @@
 ### Question Bank
 - Leetcode Discussion Refs: https://leetcode.com/discuss/study-guide/2166045/line-sweep-algorithms
 - [SIMPLE] CSES-Restaurant Customers: https://cses.fi/problemset/task/1619
+- [SIMPLE] My Calendar II - https://leetcode.com/problems/my-calendar-ii/description/
+- [SIMPLE] Car Pooling - https://leetcode.com/problems/car-pooling/submissions/1436410743/
