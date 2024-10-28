@@ -4,6 +4,8 @@ PROBLEM: https://leetcode.com/problems/rectangle-area-ii/
 SOLUTION: Sweep Lines on Horizontal + Vertical
 YT Video: https://www.youtube.com/watch?v=xm5-u_l8tTY
 
+DRY RUN IMAGE: https://imgur.com/a/rectangle-area-ii-MHt0mcV
+
 
 INTUITION:
 - HORIZONTAL SWEEP LINE: Will find you CUR_X and PREV_X (assume X_left and X_right) => this gives you width
