@@ -114,3 +114,8 @@ def countPairs(root: TreeNode, max_distance: int) -> int:
      - Questions:
         1. Subtree sum with node value updates: https://cses.fi/problemset/task/1137/
     
+## CP tips in Python
+- Codeforces Blog: https://codeforces.com/blog/entry/21851
+- `input()` is slower, so use `sys.stdin.readline()`. (`sys.stdin.read()` is fastest, but it reads all input at once)
+- Puttting your code in a function and calling it is 1.5-3x better than putting in outside ( Something to do with Python interpreter reserving Memory)
+- For strings, `s1 += s2` is faster than doing `s1 = s1+s2`
