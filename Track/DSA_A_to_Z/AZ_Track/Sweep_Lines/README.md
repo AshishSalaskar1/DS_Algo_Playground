@@ -56,3 +56,14 @@
 - [SIMPLE] CSES-Restaurant Customers: https://cses.fi/problemset/task/1619
 - [SIMPLE] My Calendar II - https://leetcode.com/problems/my-calendar-ii/description/
 - [SIMPLE] Car Pooling - https://leetcode.com/problems/car-pooling/submissions/1436410743/
+
+
+- [x] Non destructive file upload: whenever you upload a kitt.yml file, you pick whatever you want to parse BUT then you should alter the existing schema (now it doesnt work in this way. Upload -> get input -> populate our own kitt template)
+- [] Akeyless Integration (one common vs stage-wise)
+- [] Testing/Automaton gates for each env
+[] Service Mesh config for each dev (also add those keys if needed)
+[] istio-sidecar enabled/disabled (if enabled -> show options for port whitelisting)
+[] `/health` and `/metrics` endpoint 
+[] Pod scaling and memory/cpu allocation
+[] Timeouts: liveness, readiness, deploy timeout
+[] stage release refs - release, pr
