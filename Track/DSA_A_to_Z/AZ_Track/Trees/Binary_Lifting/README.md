@@ -38,15 +38,19 @@ TC and SC: O(QlogN)
 
     Example:
     - Moving from node to 2^2 = moving from node to 2^1 + from there move 2^1<br>
-        node -> 2^1 = 2 : half = lift[node][i-1]<br>
-        half -> 2^1 = 2: final = lift[half][i-1]<br>
+        1. node -> 2^1 = 2 : half = lift[node][i-1]<br>
+        2. half -> 2^1 = 2: final = lift[half][i-1]<br>
     - Moving from node to 2^3 = moving from node to 2^2 + from there move 2^2<br>
-        node -> 2^2 = 4 : half = lift[node][i-1]<br>
-        half -> 2^2 = 4 : final = lift[half][i-1]<br>
+        1. node -> 2^2 = 4 : half = lift[node][i-1]<br>
+        2. half -> 2^2 = 4 : final = lift[half][i-1]<br>
     - So ideally, you each 2^i can be split into node->2^(i-1) and the another 2^(i-1) from there
     Ex: 2^3 = 8 => First 2^2=4 steps from node , then another 4 steps
 <br><br>
-- **Conclusion**: Given any node `node` you can move in increments of 2 (1,2,4,8...). This gives you `logN` traversal time instead of `N` in older approach
+- 💡 **Conclusion**: Given any node `node` you can move in increments of 2 (1,2,4,8...). This gives you `logN` traversal time instead of `N` in older approach
+
+![binary_jumps](https://zarif98sjs.github.io/mindcraft/BinaryLifting/Binary%20Lifting%202.png)
+
+
 
 **Query Stage**
 - Lets say you want to move `k` steps after `node` but **YOU CAN ONLY MOVE IN iterations of 2 power**
