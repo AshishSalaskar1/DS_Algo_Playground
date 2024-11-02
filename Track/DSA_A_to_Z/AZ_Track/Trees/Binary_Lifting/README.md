@@ -1,6 +1,11 @@
 # Binary Lifting
 
 
+🎯 Wherever you see any question on Trees and **some queries are given** => 90% it can be solved using BINARY LIFTING
+
+Codeforces Blog: https://codeforces.com/blog/entry/100826
+
+
 ## Why you need Binary Lifting
 Lets say you have a data structure which holds only the next item in its memory. But you have each of the elements directly accessible (Ex: stored in a hashmap)
 Ex: LinkedList having `n` nodes, each node stores the next node details. But you have a hash map with all nodes stored such that u can return it
@@ -77,6 +82,10 @@ Why? If you check ancestral chain, from root -> LCA it will have same nodes, the
 3. End of (2) you will be at the highest(lowest level) nodes `u`,`v` such that every levels above them are SAME
 - LCA = parent[u] or parent[v] == lift[u][0]
 
+
+🔴💡 **NOTE**: Here you follow `1-Based Indexing`. We assume 0th node node is like some blank space. For `0-Based Indexing` we assume -1 node as blank (**CHECK: Kth Ancestor of Node for this** )
+
+
 ```py
 
 from collections import deque
@@ -146,10 +155,11 @@ print(tree.lca(5,9)) # 1
 ```
 
 
-## 2. Some Aggregates between nodes `u` and `v`
+## 2. Some PATH Aggregates between nodes `u` and `v`
 - Find GCD of all nodes in path between `u` and `v`
 - Find Max/Min/Sum of Nodes in path between `u` and `v`
 
+💡Check **Path_GCD_Queries.py** for template
 
 ## Docs
 - Leetcode ref: https://leetcode.com/discuss/study-guide/4299594/Binary-Lifting-Technique-A-Beginners-Guide/

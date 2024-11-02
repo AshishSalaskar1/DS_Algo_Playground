@@ -1,5 +1,6 @@
 ## Trees (Not BINARY TREES, more like graphs)
 
+
 - Here we assume trees are given in graph representation. Like src->dest (not in Node, root format)
 - `adj[i]=j` -> `i` is the **node index**, and indicates an edge from **node-i to node-j**
 - `val[i]=some_val` -> in case the tree nodes store some value (like string or number)
