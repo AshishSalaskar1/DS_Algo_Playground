@@ -110,7 +110,7 @@ class Tree:
                 self.dfs(child, node, depth+1)
 
     def lca(self, u, v):
-        print(u,v)
+        print(u,v) *
         # make sure depth of u>v =>
         if self.depth[u]<self.depth[v]: u,v= v,u
         print(u,v)

@@ -33,3 +33,31 @@ def indfs(self, node, par):
 ans = max(tree.dp[1][0], tree.dp[1][1])
 
 ```
+
+💡 Same thing is done in **House-Robber-III** (But with TreeNode concept)
+- Since we see that you assign dp[node][0/1] only once in each call => you can use dict for same
+
+```py
+class Solution:
+    def indfs(self, node):
+        if node is None:    return
+        self.dp[node] = {
+            1: node.val,
+            0: 0
+        }
+
+        childs = [node.left, node.right]
+        for child in [x for x in childs if x is not None]:
+            self.indfs(child)
+            self.dp[node][1] += self.dp[child][0]
+            self.dp[node][0] += max(self.dp[child][0],self.dp[child][1])
+
+    def rob(self, root: Optional[TreeNode]) -> int:
+        self.dp = {}
+        self.indfs(root)
+
+        return max(
+            self.dp[root][0],
+            self.dp[root][1]
+        )
+```
