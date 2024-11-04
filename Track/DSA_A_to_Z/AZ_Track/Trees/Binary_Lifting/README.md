@@ -161,5 +161,8 @@ print(tree.lca(5,9)) # 1
 
 💡Check **Path_GCD_Queries.py** for template
 
+## 3. When (2) is an overkill, use prefix sums if possible
+Ex: Path sum between two nodes
+
 ## Docs
 - Leetcode ref: https://leetcode.com/discuss/study-guide/4299594/Binary-Lifting-Technique-A-Beginners-Guide/

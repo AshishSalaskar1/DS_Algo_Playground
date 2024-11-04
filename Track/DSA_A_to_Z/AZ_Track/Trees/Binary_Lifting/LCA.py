@@ -12,8 +12,8 @@ class Tree:
         self.depth[node] = depth
         self.lift[node][0] = parent
 
-        # lift from 0->19 : 2^0 -> 2^19 (2^19 is approx equal to 10^6)
-        for i in range(1,20):
+        # lift from 1->19 : 2^0 -> 2^19 (2^19 is approx equal to 10^6)
+        for i in range(1,20): # VVVVVVIMP (1->20)
             self.lift[node][i] = self.lift[self.lift[node][i-1]][i-1]
 
         for child in self.adj[node]:
