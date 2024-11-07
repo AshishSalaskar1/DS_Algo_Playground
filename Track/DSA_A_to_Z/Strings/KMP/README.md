@@ -44,7 +44,7 @@ Consider \( S = \text{"abbaabbab"} \):
   - `kmp[5]` is `2`, which suggests the longest prefix-suffix length up to `S[0:5]`.
   - If \( S[6] == S[kmp[5]] \), we increment to extend the match; otherwise, we adjust using `kmp` values.
 
-## Use Case 1: Find occurences of Pattern in String
+# Use Case 1: Find occurences of Pattern in String
 - Let `S` be string in which you want to mathch pattern `p`
 
 1. Find KMP array of `P` + # + `S`
@@ -61,6 +61,16 @@ print(res)
 #       s  a  d  #  s  a  d  b  u  t  s  a  d
 #  [-1, 0, 0, 0, 0, 1, 2, 3, 0, 0, 0, 1, 2, 3]
 
-match_ends =  [6, 12]
+class Solution: #KMP ALGO
+    def strStr(self, s: str, p: str) -> int:
+        ns, np = len(s), len(p)
+        kmp_arr = get_kmp_array(f"{p}#{s}")
+
+
+        for i in range(np, len(kmp_arr)):
+            if kmp_arr[i] == np: # why -2*np-1? -2np (one np before # + # + np till i)
+                return (i-2*np-1, i-np-1)
+
+        return -1
 
 ```
