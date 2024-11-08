@@ -10,7 +10,7 @@ Codeforces Blog: https://codeforces.com/blog/entry/100826
 Lets say you have a data structure which holds only the next item in its memory. But you have each of the elements directly accessible (Ex: stored in a hashmap)
 Ex: LinkedList having `n` nodes, each node stores the next node details. But you have a hash map with all nodes stored such that u can return it
 
-**Task**: Return the `k`th node after a given node lets say `x`. You have huge number of such queries lets say `Q` (Q - 10^6, K - close to N)
+**Task**: Return the `k`th node after a given node lets say `x`. You have huge number of such queries lets say `Q` (Q - 10<sup>6</sup>, K - close to N)
 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
 queries: (2,4) -> 6 (4th element after 2)
 
@@ -27,29 +27,29 @@ queries: (2,4) -> 6 (4th element after 2)
 - TC: PreStep=O(N*N) Query=O(1)
 - SC: O(N*N)
 
-**Mentos Zindagi logic: BINARY LIFTING**
+💡 **Mentos Zindagi logic: BINARY LIFTING**
 TC and SC: O(QlogN)
 
 ## Binary Lifting
 - To reach `k` elements after `node`, what if we only have to do at max `logn` jumps/moves?
-- We always move from `node` to next `2^i`th node
+- We always move from `node` to next 2<sup>i</sup>th node
 
 **PreCompute Step**
 - `lift[node][i]` = `2^i`th node after/before `node`
-- For each `node` you calculate `lift[node][i]` where `i`:0->19 (2^0 -> 2^19=10^6)
+- For each `node` you calculate `lift[node][i]` where `i`:0->19 (2<sup>0</sup> -> 2<sup>19</sup>10<sup>6</sup>)
 
 - Compute `next` for each node i.e `lift[node][0]` = parent[node]
 - `lift[node][i]` = lift[`lift[node][i-1]`][i-1]
 
     Example:
-    - Moving from node to 2^2 = moving from node to 2^1 + from there move 2^1<br>
-        1. node -> 2^1 = 2 : half = lift[node][i-1]<br>
-        2. half -> 2^1 = 2: final = lift[half][i-1]<br>
-    - Moving from node to 2^3 = moving from node to 2^2 + from there move 2^2<br>
-        1. node -> 2^2 = 4 : half = lift[node][i-1]<br>
-        2. half -> 2^2 = 4 : final = lift[half][i-1]<br>
-    - So ideally, you each 2^i can be split into node->2^(i-1) and the another 2^(i-1) from there
-    Ex: 2^3 = 8 => First 2^2=4 steps from node , then another 4 steps
+    - Moving from node to 2<sup>2</sup> = moving from node to 2<sup>1</sup> + from there move 2<sup>1</sup><br>
+        1. node -> 2<sup>1</sup> = 2 : half = lift[node][i-1]<br>
+        2. half -> 2<sup>1</sup> = 2: final = lift[half][i-1]<br>
+    - Moving from node to 2<sup>3</sup> = moving from node to 2<sup>2</sup> + from there move 2<sup>2</sup><br>
+        1. node -> 2<sup>2</sup> = 4 : half = lift[node][i-1]<br>
+        2. half -> 2<sup>2</sup> = 4 : final = lift[half][i-1]<br>
+    - So ideally, you each 2<sup>i</sup> can be split into node->2<sup>(i-1)</sup> and the another 2<sup>(i-1)</sup> from there
+    Ex: 2<sup>3</sup> = 8 => First 2<sup>2</sup>=4 steps from node , then another 4 steps
 <br><br>
 - 💡 **Conclusion**: Given any node `node` you can move in increments of 2 (1,2,4,8...). This gives you `logN` traversal time instead of `N` in older approach
 
@@ -69,7 +69,7 @@ TC and SC: O(QlogN)
 <br><br>
 # Applications of binary lifting
 ## 1. LCA
-1. PreCompute your `lift` array: lift = len(nodes) X 19 (we want to store 2^0 to 2^19 for each node)
+1. PreCompute your `lift` array: lift = len(nodes) X 19 (we want to store 2<sup>0</sup> to 2<sup>19</sup> for each node)
 2. Also, calculate your `depth` array
 
 **LCA Logic** - LCA(u,v)
