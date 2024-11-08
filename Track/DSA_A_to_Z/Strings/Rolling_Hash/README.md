@@ -2,7 +2,7 @@
 
 Time Complexity:
 - Hash Creation: O(n)
-- Subsequent queries are almost O(n)
+- Subsequent queries are almost O(1)
 
 💡 PRIME IDEA: Can you somehow represent strings as a number => N then hash it for checking
 
@@ -42,7 +42,7 @@ a b c d e f<br>
 
 hash(0) = a      = a ( because ak<sup>0</sup> = a) <br>
 hash(1) = ab     = ak<sup></sup>  + b<br>
-hash(2) = abc    = ak<sup>2</sup> + bk>  + c<br>
+hash(2) = abc    = ak<sup>2</sup> + bk  + c<br>
 hash(3) = abcd   = ak<sup>3</sup> + bk<sup>2</sup> + ck  + d<br>
 hash(4) = abcde  = ak<sup>4</sup> + bk<sup>3</sup> + ck<sup>2</sup> + dk  + e<br>
 hash(5) = abcdef = ak<sup>5</sup> + bk<sup>4</sup> + ck<sup>3</sup> + dk<sup>2</sup> + ek + f<br><br>
@@ -70,10 +70,17 @@ HASH(4) - HASH(1) = (ak<sup>4</sup> + bk<sup>3</sup> + ck<sup>2</sup> + dk  + e)
 
 ### FINAL FORMULAE ⚡💀
 
-1. **HASH[i] = (HASH[i-1] * K) + val(s[i])**
-2. **HASH[l,r] = HASH[r] - HASH[l-1] * K<sup>(r-l+1)</sup>
-3. **REV_HASH[l,r] = HASH[r] - HASH[l-1] * K<sup>(r-l+1)</sup>
-(This is Considering 0-based indexing)**
+``0-based indexing``<br>
+1. **HASH[i] = (HASH[i-1] \* K) + val(s[i])**
+2. **HASH[l,r] = HASH[r] - HASH[l-1] \* K<sup>(r-l+1)</sup>**
+3. **REV_HASH[l,r] = HASH[l-1] - HASH[r] \* K<sup>(r-l+1)</sup>**<br>
+
+
+``1-based indexing`` <- Actually Used<br>
+1. **HASH[i] = (HASH[i-1] \* K) + val(s[i-1])**
+2. **HASH[l,r] = HASH[r+1] - HASH[l] \* K<sup>(r-l+1)</sup>**
+3. **REV_HASH[l,r] = HASH[l] - HASH[r+1] \* K<sup>(r-l+1)</sup>**
+(This is Considering 1-based indexing)
 
 
 #  Implementation
@@ -288,6 +295,7 @@ def is_k_substring_palindrome(hasher, size):
     for i in range(0, n - size + 1):
         if hasher.get_hash(i, i + size - 1) == hasher.get_rev_hash(i, i + size - 1):
             return True  # Found a palindromic substring of the given size
+            # return hasher.s[i: i + size] # in case you want to print
     return False
 
 
@@ -297,4 +305,5 @@ def lps(s):
     for size in range(len(s),-1,-1):
         if is_k_substring_palindrome(hasher, size):
             return size
+
 ```

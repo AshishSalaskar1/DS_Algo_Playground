@@ -60,6 +60,7 @@ def is_k_substring_palindrome(hasher, size):
     for i in range(0, n - size + 1):
         if hasher.get_hash(i, i + size - 1) == hasher.get_rev_hash(i, i + size - 1):
             return True  # Found a palindromic substring of the given size
+            # return hasher.s[i: i + size] # in case you want to print
     return False
 
 
