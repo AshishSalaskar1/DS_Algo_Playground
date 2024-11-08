@@ -19,7 +19,6 @@ str = mbadm, lps=mam (u wont touch mam since its already a palindrome)
 - Since we can insert anything anywhere so MIN INSERTIONS = len(str) - len(lps)
 """
 
-LPS = mam
 
 class Solution:
     def find_lcs(self, s1, s2):
