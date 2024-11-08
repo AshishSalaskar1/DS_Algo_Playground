@@ -184,12 +184,12 @@ print(find_pattern(s,p))
 - Lets say you want to check if particular substring is palindrome: `h.get_hash(i,j)` == `h.get_rev_hash(i,j)`
 
 ## Double Hashing
-💡** Use Double Hashing whenever you are dealing with substrings, possibilities**. In case of linear traversal then its not needed
+💡 **Use Double Hashing whenever you are dealing with substrings, possibilities**. In case of linear traversal then its not needed
 
 - We use a `base-k` number system and then a `modprime` number to not let values go too high
 - But, there maybe a case where Different strings can give same hash value for a `base-k` + `modprime` combination (VERY VERY LESS CHANCES THOUGH)
 
-💡Solution: Use 2 hashers<br>
+💡**Solution: Use 2 hashers**<br>
 - Here you will have 2 hashers, `h1` and `h2` having same string `s` but different `base-k` + `modprime` values
 - This will return a tuple of hash_values when called, You will compare tuples now
   
@@ -238,6 +238,7 @@ print("Reverse Hash:", reverse_hash)
 - s1 = "ashishsomeashish"
 - s2 = "some"
 <br>
+
 - Here, we know that at max the LCS can be of size `min(n1,n2)`
 1. So consider lo=0, hi=min(n1,n2)
 2. generate hashes for all subtrings of size `mid` from both s1 and s2 (This is done in O(n) time since we have range hashes already computed)
