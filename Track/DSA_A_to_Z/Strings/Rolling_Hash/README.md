@@ -308,3 +308,17 @@ def lps(s):
             return size
 
 ```
+
+
+### Min chars to add at end/start such that the resultant string is palindrome
+1. **Min Chars add at start**
+    1. 💡Find longest palindrome substring starting for 0
+    2. If you have this palindrome [0,k] then since [0,k] is already a palindrome, 
+        you will add reverse of remanining items to front
+    3. res = reverse(s[k+1:n]) + s
+
+2. **Min Chars add at end**
+    1. 💡Find longest palindrome substring ending at n-1
+    2. If you have this palindrome [k,n-1] then since [k,n-1] is already a palindrome, 
+        you will add reverse of remanining items to end
+    3. res = s + reverse(s[0:k-1]) 
