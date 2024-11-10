@@ -40,8 +40,8 @@ class Hasher:
 def find_pattern(s, p):
     ns, np = len(s), len(p)
 
-    shash = Hasher(s, 31, (10**8)+7)
-    phash = Hasher(p, 31, (10**8)+7)
+    shash = Hasher(s, 151, (10**8)+7)
+    phash = Hasher(p, 151, (10**8)+7)
 
     pat_hash_val = phash.get_hash(0,np-1) #  O(1)
 

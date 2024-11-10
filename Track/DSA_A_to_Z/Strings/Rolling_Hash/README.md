@@ -338,3 +338,24 @@ def lps(s):
     2. If you have this palindrome [k,n-1] then since [k,n-1] is already a palindrome, 
         you will add reverse of remanining items to end
     3. res = s + reverse(s[0:k-1]) 
+
+
+
+### Why `mod` doesnt work on negative numbers?
+- In Python (and many programming languages), if you perform a modulo operation on a negative number, it still returns a negative result. 
+- For example: -3 % 5  # This will yield -3, not 2
+- So this expression will fail: `self.revhash[l]` - `self.revhash[r+1]` * `self.pow[r-l+1]`
+
+**Solution:**<br>
+- To handle this, you need to ensure that the result of the subtraction is positive before taking modulo. This is achieved by adding self.modnum to the result before applying % self.modnum, like this:
+```py
+return (self.revhash[l] - (self.revhash[r+1] * self.pow[r-l+1]) % self.modnum + self.modnum) % self.modnum
+
+```
+
+<br>
+Here’s how this solves the issue: <br><br>
+
+1. Subtraction: self.revhash[l] - (self.revhash[r+1] * self.pow[r-l+1]) % self.modnum might yield a negative result.
+2. Adding self.modnum: By adding self.modnum, you ensure that the result becomes non-negative, even if the initial subtraction was negative.
+3. Final Modulo: Applying % self.modnum after adding ensures the result wraps correctly within the range [0, self.modnum - 1].
