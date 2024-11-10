@@ -42,8 +42,8 @@ class Hasher:
 class DoubleHasher:
     def __init__(self, s) -> None:
         self.s = s
-        self.h1 = Hasher(s, 31, (10**8)+7)
-        self.h2 = Hasher(s, 47, (10**8)+21)
+        self.h1 = Hasher(s, 151, (10**8)+7)
+        self.h2 = Hasher(s, 181, (10**8)+21)
     
     def get_hash(self, l, r) -> (int, int):
         return (
@@ -59,7 +59,7 @@ class DoubleHasher:
 
 s = "abcabc"
 print(s)
-hsh = Hasher(s, 31, (10**8)+7)
+hsh = Hasher(s, 151, (10**8)+7)
 
 print(hsh.get_hash(0,2)) # |abc|abc => 97347
 print(hsh.get_hash(1,3)) # a|bca|bc => 98337
@@ -68,7 +68,7 @@ print(hsh.get_hash(3,5)) # abc|abc| => 97347
 
 s = "racecar"
 print(s)
-hsh = Hasher(s, 31, (10**8) + 7)
+hsh = Hasher(s, 151, (10**8) + 7)
 
 forward_hash = hsh.get_hash(0, len(s) - 1)
 reverse_hash = hsh.get_rev_hash(0, len(s) - 1)
@@ -79,7 +79,7 @@ print("Reverse Hash:", reverse_hash)
 
 s = "abcabacbc"
 print(s)
-hsh = Hasher(s, 31, (10**8)+7)
+hsh = Hasher(s, 151, (10**8)+7)
 
 forward_hash = hsh.get_hash(2,6)
 reverse_hash = hsh.get_rev_hash(2,6)

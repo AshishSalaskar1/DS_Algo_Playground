@@ -91,6 +91,22 @@ HASH(4) - HASH(1) = (ak<sup>4</sup> + bk<sup>3</sup> + ck<sup>2</sup> + dk  + e)
      3. `pow` -> simple K<sup>i</sup>
         - We also calculate this since we may need K<sup>0</sup> -> K<sup>n</sup> (for our range based calculation)
 - **Here out precomputes are 1-based, String is 0 based**
+
+<br><br>**IMPORTANT NOTE**<br><br>
+- We dont convert `a` -> 1. (BETTER USE ord(ch) which is > 100, so you wont see -ve mods)
+    - Why?
+  
+    ```py
+    return (self.rev_hash[l] - (self.rev_hash[r+1] * self.pow[r-l+1])) % self.p
+    ```
+    - **In this code in case you do mod of -ve numbers, then it doesnt work correctly in python (Check last)**
+    - **SOLUTION**: 
+  
+    ```py
+    return (self.revhash[l] - (self.revhash[r + 1] * self.pow[r - l + 1]) % self.modnum + self.modnum) % self.modnum
+    ```
+
+
 ```py
 class Hasher:
     def __init__(self, s, base_system, modnum) -> None:
@@ -107,7 +123,7 @@ class Hasher:
         self.hash[0] = 0
         self.pow[0] = 1
         for i in range(1, self.n+1):
-            num = ord(s[i-1]) + 1 # you want to map a:1, b:2 ...
+            num = ord(s[i-1])  - ord('a') + 1 # you want to map a:1, b:2 ...
 
             #h[i] = h[k-1]*k + val(s[i])
             self.hash[i] = ((self.hash[i-1]*self.k) + num ) % self.p # hash(upto i-1) * k + num(s[i])
@@ -135,7 +151,7 @@ class Hasher:
 
 s = "abcabc"
 print(s)
-hsh = Hasher(s, 31, (10**8)+7)
+hsh = Hasher(s, 151, (10**8)+7)
 
 print(hsh.get_hash(0,2)) # |abc|abc => 97347
 print(hsh.get_hash(1,3)) # a|bca|bc => 98337
@@ -144,7 +160,7 @@ print(hsh.get_hash(3,5)) # abc|abc| => 97347
 
 s = "racecar"
 print(s)
-hsh = Hasher(s, 31, (10**8) + 7)
+hsh = Hasher(s, 151, (10**8) + 7)
 
 forward_hash = hsh.get_hash(0, len(s) - 1)
 reverse_hash = hsh.get_rev_hash(0, len(s) - 1)
@@ -158,8 +174,8 @@ print("Reverse Hash:", reverse_hash)
 def find_pattern(s, p):
     ns, np = len(s), len(p)
 
-    shash = Hasher(s, 31, (10**8)+7)
-    phash = Hasher(p, 31, (10**8)+7)
+    shash = Hasher(s, 151, (10**8)+7)
+    phash = Hasher(p, 151, (10**8)+7)
 
     pat_hash_val = phash.get_hash(0,np-1) #  O(1)
 
@@ -198,8 +214,8 @@ print(find_pattern(s,p))
 class DoubleHasher:
     def __init__(self, s) -> None:
         self.s = s
-        self.h1 = Hasher(s, 31, (10**8)+7)
-        self.h2 = Hasher(s, 47, (10**8)+21)
+        self.h1 = Hasher(s, 151, (10**8)+7)
+        self.h2 = Hasher(s, 181, (10**8)+21)
     
     def get_hash(self, l, r) -> (int, int):
         return (

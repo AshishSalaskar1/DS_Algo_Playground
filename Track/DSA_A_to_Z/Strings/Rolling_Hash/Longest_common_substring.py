@@ -25,8 +25,8 @@ class Hasher:
 class DoubleHasher:
     def __init__(self, s) -> None:
         self.s = s
-        self.h1 = Hasher(s, 31, (10**8)+7)
-        self.h2 = Hasher(s, 47, (10**8)+21)
+        self.h1 = Hasher(s, 151, (10**8)+7)
+        self.h2 = Hasher(s, 181, (10**8)+21)
     
     def get_hash(self, l, r) -> (int, int):
         return (
