@@ -9,9 +9,9 @@ Time Complexity:
 
 💡 **STUPID QUESTION**: is doing `s[l1:r1] == s[l2:r2]` same as `hsh.get_hash(l1,r1) == hsh.get_hash(l2,r2)` ?<br>
 - Direct string comparison =` O(length of shortest string)`, Hashing approach = `O(1)`<br>
-- So for huge string length Hashes work way way better
+- So for huge string length Hashes work way way better<br><br>
 
-💡 **Another USEFUL IDEA**: Can you use an integer array instead of string and use hashing? YES<br><br>
+💡 **Another USEFUL IDEA**: Can you use an integer array instead of string and use hashing? YES<br>
 - Make sure your `k` is a prime number greater than the range of your `arr[i]`
 - With this you can use this to check patterns in array of numbers
 - Check `Rolling_hash_on_numbers.py`
