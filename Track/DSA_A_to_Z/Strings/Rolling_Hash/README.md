@@ -4,8 +4,12 @@ Time Complexity:
 - Hash Creation: O(n)
 - Subsequent queries are almost O(1)
 
-💡 PRIME IDEA: Can you somehow represent strings as a number => N then hash it for checking
+💡 **PRIME IDEA**: Can you somehow represent strings as a number => N then hash it for checking<br><br>
 
+
+💡 **STUPID QUESTION**: is doing `s[l1:r1] == s[l2:r2]` same as `hsh.get_hash(l1,r1) == hsh.get_hash(l2,r2)` ?<br>
+- Direct string comparison =` O(length of shortest string)`, Hashing approach = `O(1)`<br>
+- So for huge string length Hashes work way way better
 
 
 # Intuition Behind Algo
