@@ -11,6 +11,12 @@ Time Complexity:
 - Direct string comparison =` O(length of shortest string)`, Hashing approach = `O(1)`<br>
 - So for huge string length Hashes work way way better
 
+💡 **Another USEFUL IDEA**: Can you use an integer array instead of string and use hashing? YES<br><br>
+- Make sure your `k` is a prime number greater than the range of your `arr[i]`
+- With this you can use this to check patterns in array of numbers
+- Check `Rolling_hash_on_numbers.py`
+
+
 
 # Intuition Behind Algo
 
