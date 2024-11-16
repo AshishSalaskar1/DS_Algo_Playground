@@ -45,7 +45,7 @@ class DoubleHasher:
     def get_hash(self, l, r) -> (int, int):
         return (
             self.h1.get_hash(l,r),
-             self.h1.get_hash(l,r)
+             self.h2.get_hash(l,r)
         )
 
 class Solution:

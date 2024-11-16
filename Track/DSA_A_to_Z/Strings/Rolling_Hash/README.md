@@ -104,18 +104,21 @@ HASH(4) - HASH(1) = (ak<sup>4</sup> + bk<sup>3</sup> + ck<sup>2</sup> + dk  + e)
 
 <br><br>**IMPORTANT NOTE**<br><br>
 - We dont convert `a` -> 1. (BETTER USE ord(ch) which is > 100, so you wont see -ve mods)
-    - Why?
-  
-    ```py
-    return (self.rev_hash[l] - (self.rev_hash[r+1] * self.pow[r-l+1])) % self.p
-    ```
-    - **In this code in case you do mod of -ve numbers, then it doesnt work correctly in python (Check last)**
-    - **SOLUTION**: 
-  
-    ```py
-    return (self.revhash[l] - (self.revhash[r + 1] * self.pow[r - l + 1]) % self.modnum + self.modnum) % self.modnum
-    ```
+- Why?
 
+```py
+return (self.rev_hash[l] - (self.rev_hash[r+1] * self.pow[r-l+1])) % self.p
+```
+- **In this code in case you do mod of -ve numbers, then it doesnt work correctly in python (Check last)**
+- This happens only in the `get_hash(l,r)` functions. Because you do `r`-`l` here and chances of getting negative numbers are high on which mod wont work
+- **SOLUTIONS**: 
+1. Use this formulae which handles negative numbers while doing a mod
+```py
+return (self.revhash[l] - (self.revhash[r + 1] * self.pow[r - l + 1]) % self.modnum + self.modnum) % self.modnum
+```
+2. Make sure you never encounter -ve number
+- This can be done by taking `ord(char)` instead of `ord(char)`-`ord(a)` (this will fix range from 1-27).
+- If
 
 ```py
 class Hasher:
