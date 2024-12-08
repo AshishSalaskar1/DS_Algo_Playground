@@ -2,6 +2,13 @@
 - https://liuzhenglaichn.gitbook.io/algorithm/
 - Notion DSA Tracker: https://languid-knife-878.notion.site/DSA-038b19d91806431ea085bfdc7b11e945?pvs=74
 
+## Leetcode Lists
+- Compilation of Topic lists: https://leetcode.com/discuss/study-guide/1612475/all-leetcode-discuss-lists-and-my-lists-so-far-topic-wisedifficulty-wise
+  
+- Two Pointer: https://leetcode.com/problem-list/two-pointers/
+- Sweep Line: https://leetcode.com/problem-list/o1qf3c31/
+- Rolling Hash: https://leetcode.com/problem-list/rolling-hash/ 
+
 ## Python References
 
 ### @cache
