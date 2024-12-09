@@ -1,10 +1,14 @@
 """
+REF: https://takeuforward.org/data-structure/allocate-minimum-number-of-pages/
+
 PROBLEM:
 - You are given a list of books and "m" students
 - You need to distribute books among these "m" students such that
 	1. Each students gets atleast one book
-	2. Student can pick up consecutive books
+	2. Student can pick up consecutive books <- IMPORTANT
 	3. Max pages held by any student is GLOBALLY MINIMIZED
+- You have to allocate the book to `m`` students such that the maximum number of pages assigned to a student is minimum. 
+If the allocation of books is not possible. return -1 => return the max number of pages in such cases
 
 
 SOLUTION:
@@ -13,12 +17,12 @@ SOLUTION:
 	2) max_pages_held_by_student
 - We will perform BINARY SEARCH on (2) max_pages_held_by_student
 - check_nstudents_needed(arr, max_pages_held)
-	- This will check how many students you need  such that max_pages_held_by_each is max_pages_held
+	- This will check how many students you need such that max_pages_held_by_each is max_pages_held
 
 - BIN CONDITIONS
 1. if students_needed > ns -> search in RIGHT 
 	- lets say ur mid needs 10 studs which is more then given students.
-	- then you need to increase ur mid (if nstudents are decreased, then they will get more pages per student to read)
+	- MAIN LOGIC: then you need to increase ur mid (if nstudents are decreased, then they will get more pages per student to read)
 2. else -> search in LEFT
 	- Also save this as res -> since you can distribute books among students (or lesser) with max_pages_held=mid
 
@@ -29,10 +33,10 @@ def check_nstudents_needed(arr, max_pages_held):
 	n_students = 1
 	cpages = 0
 	for x in arr:
-		if cpages+x <= max_pages_held:
+		if cpages+x <= max_pages_held: # current student can hold at max - max_pages_held pages
 			cpages += x
 		else:
-			cpages = x
+			cpages = x # give this book to the new student now
 			n_students += 1
 	return n_students
 		

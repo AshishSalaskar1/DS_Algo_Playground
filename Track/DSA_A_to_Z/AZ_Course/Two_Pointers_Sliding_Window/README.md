@@ -4,7 +4,7 @@
 
 
 
-## Main Template
+## Main Template - For (2) pattern - Mostly Asked
 **Important things to remember here** <br>
 1. INIT ->  `l,r = 0, -1  # WINDOW LENGTH = 0`
 2. RESETTING WINDOW -> `if l>r: l++, r=l-1` ( this is needed in case you cant take anything in the current window )
@@ -39,5 +39,26 @@ def largest_subarray_1_with_k_flips(arr, k):
 ```
 
 ## Variations
-1. <= k, >=k, ==k
+|  **PROBLEM**: Given an array, find the number of subarrays having distinct elements <= `k` in them
+ ( Solved in 2_Num_subarrays_with_distinct_elements_less_k.py)
+
+**Variations that can be formed**<br>
+1. <= k, >k, ==k
 2. Sum of length/length^2 of possible subarrays
+
+
+**Solutions** 
+1. **Follow up: `>=k`**
+    - Num of subarrays `>=k` => Num of subarrays `<=N` - Num of subarrays `<=k-1` (will be <k in case its `>k`)
+    - => `n*(n+1)//2` - Num of subarrays `<=N`
+2. **Follow up: `>k`**
+    - Num of subarrays `>k` => Num of subarrays `<=N` - Num of subarrays `<=k` 
+    - => `n*(n+1)//2` - Num of subarrays `<=k`
+3. **Follow up: `== k`**
+    - Num of subarrays `==k` => Num of subarrays `<=k` - Num of subarrays `<=k-1` 
+    - => Num of subarrays `<=k` - Num of subarrays `<=k-1`
+4. 💡 **Sum of length of all possible subarrays each having distinct numbers <=k**
+    - In the existing code, after we move the `right` pointer as much as possible, we then get the `len` = `right`-`left`=1
+    - This means that we have `len` number of subarrays answers
+    - SIMILARLY, `length of all these possible subarrays` = `len*(len+1)/2` ( so you do ans+=len*(len+1)//2 in each answer addition)
+    - **Why?** You have `len` number of possible subarrays, first one will have size 1, second as size 2 so on and last one will have size = `len` => 1+2+3+.....+`len`  = **len*(len+1)//2**
