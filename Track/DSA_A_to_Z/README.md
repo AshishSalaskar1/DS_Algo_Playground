@@ -130,3 +130,7 @@ def countPairs(root: TreeNode, max_distance: int) -> int:
 - `input()` is slower, so use `sys.stdin.readline()`. (`sys.stdin.read()` is fastest, but it reads all input at once)
 - Puttting your code in a function and calling it is 1.5-3x better than putting in outside ( Something to do with Python interpreter reserving Memory)
 - For strings, `s1 += s2` is faster than doing `s1 = s1+s2`
+
+## TODO Problems
+- [ ] https://leetcode.com/problems/digit-operations-to-make-two-integers-equal/description/ ( Dijkstras )
+- [ ] https://leetcode.com/problems/maximum-subarray-sum-with-length-divisible-by-k/ (Prefix Sum + Smart Mods) 

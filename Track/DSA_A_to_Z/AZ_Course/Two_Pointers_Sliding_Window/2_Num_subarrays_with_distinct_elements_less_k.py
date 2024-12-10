@@ -29,7 +29,7 @@ def distinct_eles_less_than_k(arr: list[int], k: int) -> int:
             if hmap[arr[l]] == 0:
                 hmap.pop(arr[l])
             l += 1
-        
+            
         print("<=", l, r, hmap)
     
     return res
