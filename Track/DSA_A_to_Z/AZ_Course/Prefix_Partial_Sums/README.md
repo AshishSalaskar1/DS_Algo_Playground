@@ -4,16 +4,14 @@
 
 
 ## Partial Sums
-- Given any array, you build a `prefix array`. Where `prefix[i]` = sum(`arr[0]`+..+`arr[i]`)
-- Now you have `Q` queries where you add a certain number to range [`start`, `end`]
+- You have `Q` queries where you add a certain number to range [`start`, `end`]
 - Now answer the same query as prefix sum -> SUM(L,R)
 ### Solution:
-1. Create prefix sum array
-2. For each query (`start`,`end`,`add_val`) ->  `prefix[start] += add_val`, `prefix[end+1] -= add_val`
-3. SUM(L,R) -> **RECALCULATE PREFIX SUM -> GET SUM(L,R)**
+1. For each query (`start`,`end`,`add_val`) ->  `prefix[start] += add_val`, `prefix[end+1] -= add_val`
+2. SUM(L,R) -> **RECALCULATE PREFIX SUM -> GET SUM(L,R)**
 
-- Why `prefix[start] += add_val`? All numbers after `start` will have the additional value added to it
-- Why `prefix[end+1] -= add_val`? Till end, you want the `add_val` to be added to each item till `end` ( this is already done). But after this val, you dont want this val to be added
+- Why `arr[start] += add_val`? All numbers after `start` will have the additional value added to it
+- Why `arr[end+1] -= add_val`? Till end, you want the `add_val` to be added to each item till `end` ( this is already done). But after this val, you dont want this val to be added
 
 
 ### 💡 **Note**: 
@@ -43,14 +41,14 @@
 ## Partial Sums - 2D
 #### Problem: Given 2D matrix, you need to return the sum bounded by `L`,`R`,`U`,`D` -> These represent the 4 boundaries of the square. In between you have queries Q(L,R,U,D,val) where val is added to each cell in the rectangle formed by `L`,`R`,`U`,`D`
 
-1. Generate the 2D prefix sum matrix
 
-### 2. Updating Vals for each Query
-1. ADD: prefix[U][L] += val
-2. SUB: prefix[U][R+1] -= val
-3. SUB: prefix[D+1][L] -= val
-4. ADD: prefix[D+1][R+1] += val ( this got subtracted twice by `2`,`3`)
+### 1. Updating Vals for each Query
+1. ADD: arr[U][L] += val
+2. SUB: arr[U][R+1] -= val
+3. SUB: arr[D+1][L] -= val
+4. ADD: arr[D+1][R+1] += val ( this got subtracted twice by `2`,`3`)
 
-5. Generate the 2D prefix sum matrix again and use for SUM queries
+### 3. Generate the 2D prefix sum matrix again and use for SUM queries
+
 ![Imgur](https://i.imgur.com/1wrjbjS.png)
 - Ref Video: https://www.youtube.com/watch?v=bprsWuagVlU
