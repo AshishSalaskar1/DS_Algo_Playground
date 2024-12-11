@@ -24,3 +24,4 @@ def get_input():
     return n,q,nodes, queries
 
 print(get_input())
+# sys.stdout.write("\n".join(map(str, results)) + "\n")

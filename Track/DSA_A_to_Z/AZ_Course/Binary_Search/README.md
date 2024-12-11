@@ -1,23 +1,24 @@
 # Binary Search Refresher
 
+### Problem Types 
+1. **Base Variations** - Identify some trends to go left or right
+2. **Binary Search on Answers**
+3. **Third Array Generation Problems**:
+    - This is variation of BS on Answers -> you are given 2 arrays `a`, `b` but are asked to find some answer in another array `c` which is formed by combination of `a` and `b` in some way
+    - **Note**: You cant manually create the `c` array ( YOU WILL GET TLE or Mem Exceeded)
+    - **Ex: Smallest K number in sum**
+4. **Binary Search on every start**
+
 ## 1. Base Variations - Convert to 0s and 1s
 - 💡 Given any array -> **try to convert it to 0s and 1s and then it becomes searching for something in a 0,1 arrays**
 
 
 ### Example 1: Lower and upper bounds
-- LOWER BOUND = number on the immediate left of the given Target (ot it can be target itself)
-- Upper BOUND = number on the immediate right of the given Target (ot it can be target itself)
 
-- `arr` = `[1,2,4,5,10,14,15,18,20]`, **target=6**
-
-1. **LOWER_BOUND**
-   - `[1,2,4,5,10,14,15,18,20]` convert this to 
-   - `[1,1,1,1,0, 0 ,0 ,0 , 0]` ( 1 if `arr[i]`<=`target`, else 0 )
-   - **Find the right most 1 in this**
-3. **UPPER_BOUND**
-    - `[1,2,4,5,10,14,15,18,20]` convert this to 
-    - `[0,0,0,0, 1, 1, 1, 1, 1]` ( 1 if `arr[i]`>=`target`, else 0 )
-    - **Find the left most 1 in this**
+1. **LOWER_BOUND** = first element in array **`>= x`** 
+   - lower_bound(arr, target) =  💡**num elements < x**
+2. **UPPER_BOUND** = first element in array **`> x`** *
+   - upper_bound(arr, target) =  💡**num elements <= x**
 
 ### Example 2: Find how many times sorted array is rotated/shifted to right
 - `[4,5,1,2,3]` -> this is rotated/shifted right 2 times  <br><br>  
