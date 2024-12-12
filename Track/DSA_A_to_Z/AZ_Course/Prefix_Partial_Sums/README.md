@@ -2,6 +2,7 @@
 - Given any array, you build a `prefix array`. Where `prefix[i]` = sum(`arr[0]`+..+`arr[i]`)
 - **SUM(L,R)** = `prefix[r]` - `prefix[l-1]` 
 
+💡**IMP NOTE**: Use 1-based indexing in prefix sums ( So that you dont have to deal with l=0 case )
 
 ## Partial Sums
 - You have `Q` queries where you add a certain number to range [`start`, `end`]
@@ -13,6 +14,9 @@
 - Why `arr[start] += add_val`? All numbers after `start` will have the additional value added to it
 - Why `arr[end+1] -= add_val`? Till end, you want the `add_val` to be added to each item till `end` ( this is already done). But after this val, you dont want this val to be added
 
+#### IMP TO REMEMBER
+- 💡 IMP: If initially all the elements are `0` then after performing UDPATE + PREFIX SUM -> `prefix[i]` = num times the index `i` was incremented (Refer `2_Good_Nums_Partial_N_Prefix.py`)
+- But in case initially array wasnt `0` then to get count ele you need to do `prefix[i]`-`prefix[i-1]` ( this is doing SUM(L,L))
 
 ### 💡 **Note**: 
   1. This method is fine, in case you have `Q` range add/sub queries and then a final sum(l,r) query
@@ -52,3 +56,10 @@
 
 ![Imgur](https://i.imgur.com/1wrjbjS.png)
 - Ref Video: https://www.youtube.com/watch?v=bprsWuagVlU
+
+- 💡Problem solved using this: `3_Max_Value_in_Rectangle_after_updates.py`
+
+### References
+- https://leetcode.com/problem-list/prefix-sum/
+- [ ] https://leetcode.com/problems/range-sum-query-2d-immutable/description/
+- [ ] https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/description/?envType=problem-list-v2&envId=prefix-sum

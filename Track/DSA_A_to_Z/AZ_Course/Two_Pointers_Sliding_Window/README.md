@@ -62,3 +62,9 @@ def largest_subarray_1_with_k_flips(arr, k):
     - This means that we have `len` number of subarrays answers
     - SIMILARLY, `length of all these possible subarrays` = `len*(len+1)/2` ( so you do ans+=len*(len+1)//2 in each answer addition)
     - **Why?** You have `len` number of possible subarrays, first one will have size 1, second as size 2 so on and last one will have size = `len` => 1+2+3+.....+`len`  = **len*(len+1)//2**
+
+
+## Practice Problems
+- https://leetcode.com/problems/maximum-beauty-of-an-array-after-applying-operation/solutions/3771308/java-c-python-sliding-window/?envType=daily-question&envId=2024-12-11
+- https://leetcode.com/discuss/study-guide/3630462/Top-20-Sliding-Window-Problems-for-beginners
+- https://leetcode.com/problem-list/two-pointers/
