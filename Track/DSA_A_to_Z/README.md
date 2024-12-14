@@ -11,6 +11,9 @@
 
 ## Python References
 
+## Handling mod(-ve) numbers
+- res = (a+b-c **+ MOD) % MOD**
+
 ## Bisect
 This works with the concept of Binary Search.
 

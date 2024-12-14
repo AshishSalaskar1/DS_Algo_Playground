@@ -57,9 +57,35 @@
 ![Imgur](https://i.imgur.com/1wrjbjS.png)
 - Ref Video: https://www.youtube.com/watch?v=bprsWuagVlU
 
+### Notes
+- Since you do `index`+1 and `index`-1. just using 1-based indexing work. 
+  1. Either handle edge cases in if condition
+  2. 1-Based indexing but `arr` size = `[nr+2]``[nc+2]` ( so that 1 padding is done before and after )
 - 💡Problem solved using this: `3_Max_Value_in_Rectangle_after_updates.py`
+
+
+## AP on Prefix Sums ( Any series types )
+- Given `arr` and `q` queries `<L,R>` 
+- `query(l,r)`= `arr[l]` + `arr[l+1]x`2 + `arr[l+2]`x3 + .... + `arr[r]`x(r-l+1) 
+
+![Imgur](https://i.imgur.com/Cbxe38R.png)
+
+### Solution: `4_AP_on_prefix_sum.py`
+
+## GP on Prefix Sums ( Any series types )
+- Given `arr` and `q` queries `<L,R>` 
+- `query(l,r)`= `arr[l]` + `arr[l+1]`x`k`<sup>`1`</sup> + `arr[l+2]`x`k`<sup>`2`</sup> + .... + `arr[r]`x`k`<sup>`(r-l+1)`</sup> 
+
+![Imgur](https://i.imgur.com/bc7TVtv.png)
+
+### Note:
+- You need to handle mod inverse specially in this solution (NOT DONE)
+### Solution: `5_GP_on_prefix_sum.py`
+
 
 ### References
 - https://leetcode.com/problem-list/prefix-sum/
-- [ ] https://leetcode.com/problems/range-sum-query-2d-immutable/description/
+- [x] https://leetcode.com/problems/range-sum-query-2d-immutable/description/
 - [ ] https://leetcode.com/problems/max-sum-of-rectangle-no-larger-than-k/description/?envType=problem-list-v2&envId=prefix-sum
+
+
