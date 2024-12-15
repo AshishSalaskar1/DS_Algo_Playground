@@ -11,8 +11,35 @@
 
 ## Python References
 
-## Handling mod(-ve) numbers
-- res = (a+b-c **+ MOD) % MOD**
+## Handling MOD
+### Mod of negative numbers
+- Ref: https://www.youtube.com/watch?v=AbGVbgQre7I
+- `-x` mod `M` = `-x` - (highest number `smaller than -x` which is `multiple of M`)
+- Ex: -6 % 5 = 4
+    1. multiples of 5 smaller than -6 => -10, -15, -20 ( _**-5 cant be taken since -5>-6**_ )
+    2. Highest = -10 
+    3. -6-(-10) = 4  
+   
+### Mod Rules with operations
+1. (`a+b`) % `m` = (`a%m` + `b%m`) % `m` 
+2. (`a-b`) % `m` = (`a%m` - `b%m` + `m`) % `m` (_**Extra `+m` since (a-b) can become negative**_)
+3. (`a/b`) % `m` = ((`a%m`)*(`b`<sup>-1</sup>`%m`))%`m` NOTE: (_`b`<sup>-1</sup> -> mod inverse of b_)
+4. **IMP**: (`a`<sup>-1</sup>)`%m` = (`a`<sup>m-2</sup>)`%m`
+    - You need to include MOD in power function also
+    ```cpp
+        ll power(ll x,ll y)
+        {
+            ll res = 1;
+            while(y)
+            {
+                if(y&1) 
+                    res = (res*x)%mod;
+                y=y/2,x=(x*x)%mod;
+            }
+            return res%mod;
+        }
+        ans = ans*power(powerK[l],mod-2)%mod;
+    ```
 
 ## Bisect
 This works with the concept of Binary Search.
