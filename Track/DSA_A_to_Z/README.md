@@ -56,6 +56,9 @@ This works with the concept of Binary Search.
 ### @cache
 - `@cache` works in Python > 3.9
 - `@lru_cache` for lower versions < 3.9 
+
+**NOTE**: 
+1. You can only pass tuples, int as arguments when using `@cache` or `@lru_cache`
 ```python
 from functools import cache, lru_cache 
 
