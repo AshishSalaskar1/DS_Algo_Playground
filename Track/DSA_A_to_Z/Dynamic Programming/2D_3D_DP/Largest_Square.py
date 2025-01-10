@@ -11,7 +11,7 @@ SOLUTION: https://leetcode.com/problems/maximal-square/solutions/600149/python-t
 
 """
 class Solution:
-    def maximalSquare(self, arr: List[List[str]]) -> int:
+    def maximalSquare(self, arr: list[list[str]]) -> int:
         arr = [[int(x) for x in row] for row in arr]
         nr, nc = len(arr), len(arr[0])
         dp = arr.copy()

@@ -44,8 +44,31 @@
 ## Bisect
 This works with the concept of Binary Search.
 
-1. `bisect.bisect_right(arr, x)` -> UPPER BOUND
-2. `bisect.bisect_left(arr, x)` -> LOWER BOUND
+0. `bisect.bisect(arr,<num>)` -> Returns the right most index
+1. `bisect.bisect_right(arr, x)` -> UPPER BOUND ( incase of multiple matches, insert at right most position )
+2. `bisect.bisect_left(arr, x)` -> LOWER BOUND  ( incase of multiple matches, insert at left most position )
+
+```py
+import bisect
+#      0 1 2 3 4 5 6 7  8
+arr = [1,2,2,2,5,6,7,89,100]
+
+# MATCH BEING FOUND
+bisect.bisect(arr,2) # 4
+bisect.bisect_left(arr,2) # 1
+bisect.bisect_right(arr,2) # 4
+
+# NO MATCH BEING FOUND -> ALL ARE SAME
+bisect.bisect(arr,3) # 4
+bisect.bisect_left(arr,3) # 4
+bisect.bisect_right(arr,3) # 4
+
+# USING KEYS
+arr = [(0,1),(10,12)]
+bisect.bisect(arr,3,key=lambda x:x[0])
+
+```
+<hr>
 
 - `bisect.bisect(arr,<num>)` -> Returns the right most index(in case ele is already present) where the element can be inserted is returned
 - `bisect.bisect_left(arr,<num>)` -> Returns the left most index in case ele is already present
@@ -66,6 +89,10 @@ from functools import cache, lru_cache
 @cache
 def fn():
     pass
+
+
+# CLEARING CACHE -> ONLY FOR LRU_CACHE (@lru_cache(None))
+fn.cache_clear()
 ```
 
 ## PriorityQueue
