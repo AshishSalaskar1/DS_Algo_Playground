@@ -1,3 +1,31 @@
+"""
+PROBLEM:
+You have a grid, you need to travel from (0,0) to (n,m). At each point you can lose/gain energgy (Including first and last cell)
+-> Need minimum energy that you need to start such that you reach (n,m) from (0,0)
+
+
+SOLUTION:
+
+dp[i][j] = minimum energy needed to reach (n,m) from (0,0)
+
+1. If you are in last row -> you can only move right
+2. If you are in Right most col -> you can only move down
+3. Other cells, you can go RIGHT or DOWN
+
+RECURSIVE CALCULATION
+- How to calculate dp[i][j]? We need to check 2 options dp[i+1][j] and dp[i][j+1]
+    1. dp[i+1][j] - dungeon[i][j]
+    2. dp[i][j+1] - dungeon[i][j]
+- Why? 
+    - To move from next to end you need dp[i+1][j] or dp[i][j+1] energy
+    - Plus you need dungeon[i][j] to exit from current note
+    - So dp[i+1][j]/dp[i][j+1] - dungeon[i][j] (if dungeon[i][j] is -ve, you add it to next steps else if its +ve you subtract it)
+- Answers from both options?
+    1. Both are negative? You dont need excess energy to move -> Means you only need unit energy to move (i.e 1)
+    2. Both are positive? You need excess energy -> But TAKE MINIMUM OF BOTH OPTIONS
+
+"""
+
 def minInitialHealth(dungeon, n, m):
     # Create a DP table to store the minimum health needed at each cell
     dp = [[0] * m for _ in range(n)]
@@ -38,3 +66,4 @@ def main():
 # Run the main function to handle input and output
 if __name__ == "__main__":
     main()
+
