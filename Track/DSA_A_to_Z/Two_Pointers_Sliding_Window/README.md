@@ -3,6 +3,8 @@
 2. Two Pointers Independent -> There are two pointers and they can move left/right independently
 
 
+## Best Resource
+- https://leetcode.com/discuss/interview-question/3722472/mastering-sliding-window-technique-a-comprehensive-guide
 
 ## Main Template - For (2) pattern - Mostly Asked
 **Important things to remember here** <br>

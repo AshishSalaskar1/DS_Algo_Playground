@@ -42,12 +42,12 @@ class Solution:
         elif buy == 0: # You can SELL
             self.dp[idx] =  max(
                 self.fn(cur_day+1, 0), # do nothing
-                self.arr[cur_day] + self.fn(cur_day+1, buy=1) # BUY (-ve arr since buying is loss for now)
-            )
+                self.arr[cur_day] + self.fn(cur_day+1, buy=1) # SELL (+ve will offset previous buys)
         else: # You can BUY
             self.dp[idx] =  max(
                 self.fn(cur_day+1, 1), # do nothing
-                -self.arr[cur_day] + self.fn(cur_day+1, buy=0) # SELL (+ve will offset previous buys)
+                -self.arr[cur_day] + self.fn(cur_day+1, buy=0)  # BUY (-ve arr since buying is loss for now)
+            )
             )
         
         return self.dp[idx]
