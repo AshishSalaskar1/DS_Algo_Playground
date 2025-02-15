@@ -11,6 +11,20 @@
 
 ## Python References
 
+## Custom `cmp` function for sorting
+- https://stackoverflow.com/questions/5213033/sort-a-list-of-lists-with-a-custom-compare-function
+```py
+import functools
+
+lst = [list(range(i, i+5)) for i in range(5, 1, -1)]
+
+def fitness(item):
+    return item[0]+item[1]+item[2]+item[3]+item[4]
+def compare(item1, item2):
+    return fitness(item1) - fitness(item2)
+
+sorted(lst, key=functools.cmp_to_key(compare))
+
 ## Handling MOD
 ### Mod of negative numbers
 - Ref: https://www.youtube.com/watch?v=AbGVbgQre7I
