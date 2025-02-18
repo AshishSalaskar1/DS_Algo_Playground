@@ -41,4 +41,4 @@ class Solution:
                 res += i**2
         
         return res
-        
+        Push
