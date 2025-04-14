@@ -62,6 +62,7 @@ This works with the concept of Binary Search.
 0. `bisect.bisect(arr,<num>)` -> Returns the right most index
 1. `bisect.bisect_right(arr, x)` -> UPPER BOUND ( incase of multiple matches, insert at right most position )
 2. `bisect.bisect_left(arr, x)` -> LOWER BOUND  ( incase of multiple matches, insert at left most position )
+3. `bisect.insort(arr, x) ` -> INSERT AND SORT ( this is same as arr.append(x) -> arr.sort())
 
 ```py
 import bisect
