@@ -24,6 +24,7 @@ def compare(item1, item2):
     return fitness(item1) - fitness(item2)
 
 sorted(lst, key=functools.cmp_to_key(compare))
+```
 
 ## Handling MOD
 ### Mod of negative numbers
