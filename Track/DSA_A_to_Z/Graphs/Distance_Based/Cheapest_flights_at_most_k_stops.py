@@ -24,6 +24,7 @@ ANS: no coz in the queue we store the distance coming from a specific parent nod
 
 """
 
+# THIS DOESNT WORK --> TLE
 class Solution:
     def create_adj(self, V, edges):
         adj = [[] for _ in range(V)]
@@ -51,3 +52,29 @@ class Solution:
         return dist[dest] if dist[dest] != float("inf") else -1
 
 
+# WORKING SOLUTIOn
+"""
+WHY IT WORKS?
+Bellman Ford: You allow V-1 iterations/hops. Ideally means you want to allow each node to connect to all possible nodes
+
+HERE -> You limit it to K
+THAT MEANS: You are allowing only K hops/flights. Now each of them minimized will add up to minimized cost too
+
+
+"""
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]],
+                          src: int, dst: int, K: int) -> int:
+        INF = float('inf')
+        cost = [INF] * n
+        cost[src] = 0
+
+        # Allow up to K + 1 flights (i.e., K stops)
+        for _ in range(K + 1):
+            tmp = cost[:]  # snapshot of current best costs
+            for u, v, w in flights:
+                if cost[u] != INF and cost[u] + w < tmp[v]:
+                    tmp[v] = cost[u] + w
+            cost = tmp
+
+        return -1 if cost[dst] == INF else cost[dst]
