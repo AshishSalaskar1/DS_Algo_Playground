@@ -6,6 +6,15 @@
 ## Best Resource
 - https://leetcode.com/discuss/interview-question/3722472/mastering-sliding-window-technique-a-comprehensive-guide
 
+
+- Tips on l,r = 0,0 method
+
+#### Counting Problems
+- When you are counting something, the as-is approach would only count subarrays/lengths ending at r (L<->R).
+- But then you might have to consider this as one res BUT then look on the RIGHT SIDE also to extend
+- LEFT SIDE considerations are already made - YOU SHRINK the left pointer in the while loop
+- NOTE: Usually you can do this easily using Prefix Sum + Hashmap ( because you can keep count of occurences of csum-target)
+
 ## Main Template - For (2) pattern - Mostly Asked
 **Important things to remember here** <br>
 1. INIT ->  `l,r = 0, -1  # WINDOW LENGTH = 0`

@@ -9,6 +9,11 @@
 - Sweep Line: https://leetcode.com/problem-list/o1qf3c31/
 - Rolling Hash: https://leetcode.com/problem-list/rolling-hash/ 
 
+## Good Leetcode Articles
+- 2 pointer/Sliding Window: https://leetcode.com/discuss/post/3722472/sliding-window-technique-a-comprehensive-ix2k/
+- Binary Search: https://leetcode.com/discuss/post/3726061/binary-search-a-comprehensive-guide-by-i-3nxx/
+- Bit Manipulation: https://leetcode.com/discuss/post/3695233/all-types-of-patterns-for-bits-manipulat-qezp/
+
 ## Python References
 
 ## Custom `cmp` function for sorting
