@@ -1,6 +1,11 @@
 """
 BFS - USE QUEUE or FIFO
 
+LOGIC OF USING 0-1 BFS
+- Lets say you are given a graph with only 0/1 weights and asked to find shortest path from some Node
+- You just use DJIKSTRAS -> but this is said to be faster [DONT BOTHER MUCH]
+
+
 - Here we are using adjacency list for representing a graph which is a BiDirectional graph
 - Also keep track of visited nodes since Graph may have cycle
 

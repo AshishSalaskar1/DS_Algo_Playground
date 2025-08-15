@@ -15,6 +15,26 @@ SOLUTION: Monotonic increasing stack/queue (NOT STRICTLY)
 """
 
 class Solution:
+    def removeKdigits(self, num: str, k: int) -> str:
+        st = []
+        for digit in num:
+            while st and k > 0 and st[-1] > digit:
+                st.pop()
+                k -= 1
+            st.append(digit)
+        
+        # If we still have k > 0, remove from the end
+        while k > 0 and st:
+            st.pop()
+            k -= 1
+        
+        # Build result string and remove leading zeros
+        res = "".join(st).lstrip("0")
+        
+        # If string is empty, return "0"
+        return res if res else "0"
+
+class Solution:
     def removeKdigits(self, arr: str, k: int) -> str:
         stack = []
         for ch in arr:

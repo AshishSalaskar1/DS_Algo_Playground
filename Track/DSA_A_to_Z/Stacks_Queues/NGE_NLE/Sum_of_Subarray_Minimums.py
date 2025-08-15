@@ -8,6 +8,15 @@ PROBLEM: Given an array of integers arr, find the sum of min(b), where b ranges 
 2 -> [2], [2,4]
 4 -> [4]
 
+
+INTUITION
+- Flip the thought process, instead of things of 1)Create Subarrrays -> 2) Find min in each do this
+    - For each element, in how many subarrays it can be the minimum
+- Now with this, assume you are at arr[i] = x
+    - LEFT Side: First element <= arr[i]. Because once u pick that ele in subarray arr[i] will no longer be a min ( and any longer subrray)
+    - RIGHT SIDE: First element >= arr[i]
+- EDGE CASE: Double counting equal elements
+
 - Treat this a Largest rectangle area
 - For each number find the boundary on left and right
     1. Left boundary: first num on left which is lesser than arr[i]
@@ -25,7 +34,7 @@ Num subarrays including 1 ->
 -> {} + [1], [12], [124] => 1, 12, 124
 
 
-HUGE EDGE CASE 
+DOUBLE COUNTING --> HUGE EDGE CASE 
 [2,2] -> ANSWER=6 -> [2], [2], [2,2] => 2+2+2 = 6
 # res_count = (i-lsb+1)*(rsb-i+1)
 left_small = [-1,-1]
