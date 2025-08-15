@@ -13,7 +13,7 @@
 | Floyd–Warshall    | Yes (negative edges OK, no negative cycles) | Iterative DP; no concept of "revisit" | No | Computes all-pairs shortest paths |
 | BFS (unweighted)  | Yes (if unweighted graph) | Visit once and mark `visited` | Yes | Avoids infinite loops by marking visited nodes |
 
-  - Why Dijstras work for positive cycles and not for negative ones?
+  - **Why Dijstras works for positive cycles and not for negative ones?**
     - In Dijstras, you dont have a VIS set but YOU DONT visit a node `IF ITS DIST IS NOT LESSER`.
     - So with +ve cycles, the dist to nodes in cycle will always be more and hence Dikjstras wont visit it
     - BUT, with -ve weights the nodes in cycle may have lesser distance n hence it wont work for -ve weighted cycles
