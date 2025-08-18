@@ -145,6 +145,18 @@ pq.put(-x)
 | `peek()` or `queue[0]`    | O(1)    |
 |`heapify()`| O(n) |
 
+### Frozen Set vs Set
+| When you want to put a set into another set => FROZENSET
+1. **set**
+    - **Mutable** → you can add, remove, update elements.
+    - **Unhashable** → cannot be used as a key in a dictionary or added to another set.
+    - Typical use: when you need to collect unique items but the collection may change.
+
+1. **frozenset**
+   - **Immutable** → once created, cannot be changed (no .add() or .remove()).
+   - **Hashable** → can be used as a dictionary key or as an element of another set.
+   - Typical use: when you want to store sets inside other sets (like your island shapes).
+
 
 ### Deque
 ```python

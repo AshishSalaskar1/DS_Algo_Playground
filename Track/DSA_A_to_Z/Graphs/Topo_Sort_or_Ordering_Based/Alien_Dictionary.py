@@ -16,63 +16,69 @@ Toposort:
 When you cant create dict
 1. s2 comes after s1, but len(s2)>len(s1) - this doesnt make any sense 
 2. Edge case -> in case some char does have any dependency (it becomes single island in the graph) -> just add it before topo sort order
+   Ex: k=5, so for sure you need to have a,b,c,d,e ( `e` may not be part of any edge, simply put it, indegree==0, will be added to topo sort first)
+   - Why needed? Your answer dict should have first "K" alphabets, doesnt matter if they dont appear in the edges
+
+IMPORTANT NOTE:
+- DONT USE `defaultdict` -> since in that case you wont be able to account "e":[] <or might be used also>
 """
 
 
-def topo_sort(arr, k , adj):
-    n = len(adj)
-    q = []
-    vis = set()
-    indegs = {}
-    res = []
+from collections import defaultdict
+from queue import deque
 
-    for u,vs in adj.items():
-        if u not in indegs:
-            indegs[u] = 0
-        for v in vs:
-            indegs[v] = indegs.get(v,0) + 1
-
-    for node, indegree in indegs.items():
-        if indegree == 0:
-            q.append(node)
-            vis.add(node)
+class Solution:
+    def alien_dict(self, dictionary: list[str], K):
+        adj = {}
+        indegree = {}
 
 
-    while len(q) != 0:
-        node = q.pop(0)
-        res.append(node)
-        for nbr in adj.get(node,[]):
-            indegs[nbr] -= 1
+        adj = defaultdict(list)
+        indegree = defaultdict(int)
+        
+        for i in range(1, len(dictionary)):
+            prevw, curw = dictionary[i-1], dictionary[i]
+            for j in range(min(len(prevw), len(curw))):
+                if prevw[j] != curw[j]:
+                    adj[prevw[j]].append(curw[j])
+                    indegree[curw[j]] += 1
+                    break
+        
+        return adj, indegree
 
-            if indegs[nbr] == 0:
-                q.append(nbr)
-                vis.add(nbr)
-    return res
+
+    def findOrder(self, dictionary, N, K):
+        adj, indegree = self.get_adj(dictionary, K)
+        q = deque()
+
+        for node in adj.keys():
+            if indegree[node]  == 0:
+                q.append(node)
+        
+        res = []
+        while q:
+            node = q.popleft()
+            res.append(node)
+
+            for nbr in adj[node]:
+                indegree[nbr] -= 1
+                if indegree[nbr] == 0:
+                    q.append(nbr)
+        
+        return "".join(res)
+ 
+       
 
 
-def get_adj(arr, k):
-    adj = {}
-    for i in range(len(arr)-1):
-        s1, s2 = arr[i], arr[i+1]
-        # iterate smaller string
-        for i in range(min(len(s1),len(s2))):
-            if s1[i] != s2[i]: #s1[i] > s2[i] in dictionary
-                adj[s1[i]] = [*adj.get(s1[i],[]), s2[i]]
-                break
 
-    return adj
-
-def alien_dict(arr, k):
-    adj = get_adj(arr, k)
-    return topo_sort(arr, k , adj)
-
+sol = Solution()
 
 arr = ["baa","abcd","abca","cab","cad"]
 N = len(arr)
 k = 4 # no of alphabets in the dictionary
-print(alien_dict(arr, k))
+print(sol.alien_dict(arr, k))
 
 arr = ["caa","aaa","aab"]
 N = 3
 K = 3 # no of alphabets in the dictionary
-print(alien_dict(arr, k))
+print(sol.alien_dict(arr, k))

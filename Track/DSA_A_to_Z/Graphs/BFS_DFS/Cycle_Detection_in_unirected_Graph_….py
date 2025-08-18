@@ -20,6 +20,7 @@ SOLUTION
    -  visit same node twice only when u reach there from 2 different paths
 """
 
+
 def detect_cycle(adj):
     V = len(adj)
 
@@ -50,3 +51,29 @@ for _ in range(e):
   adj[dest].append(src)
 
 print(detect_cycle(adj))
+
+
+class Solution:
+    def dfs(self, node, parent):
+        self.vis.add(node)
+
+        for nbr in self.adj[node]:
+            # WHY DIRECT RETURN -> You want to visit all nbrs n if any is LOOP -> Return
+            # If you directly return, if nbr1 is not loop -> U WILL RETURN WITHOUT CHECKING OTHERS
+            if nbr not in self.vis:
+                if self.dfs(nbr, node):  # recurse
+                    return True
+            elif nbr != parent:  # visited but not parent -> cycle
+                return True
+
+        return False
+
+    def isCycle(self, V, adj):
+        self.adj = adj
+        self.vis = set()
+
+        for node in range(V):   # handle disconnected graph
+            if node not in self.vis:
+                if self.dfs(node, -1):
+                    return True
+        return False

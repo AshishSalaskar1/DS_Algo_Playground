@@ -8,9 +8,11 @@ Logic:
 - Else before leaving this DFS call re-set the path_vis 
 """
 
+
+
 class Solution:
 
-    def dfs(self, node):
+    def dfs(self, node: int):
         self.vis.add(node)
         self.cur_path_traversal.add(node)
 
@@ -51,3 +53,5 @@ def isCyclic(edges, v, e):
     
     sol = Solution()
     return sol.check_cycles(adj, v)
+
+
