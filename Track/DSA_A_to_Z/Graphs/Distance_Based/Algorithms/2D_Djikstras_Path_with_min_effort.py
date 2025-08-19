@@ -1,6 +1,18 @@
 """
 PBLM: https://leetcode.com/problems/path-with-minimum-effort/description/
 
+
+PROBLEM:
+- Goal: Find route with the min effort
+- A route's effort is the maximum absolute difference in heights between two consecutive cells of the route.
+
+1. Given a path -> its effort = MAX(abs difference of cell heights)
+    - new_abs_diff = abs(arr[ux][uy]-arr[vx][vy]) # abs diff between U,V
+    - new_max_abs_dist = max(new_abs_diff, u_max_abs_diff) # new MAX ABSOLUTE DISTANCE
+        - This is because Effort = MAX(consecutive of all the consecutive cells)
+2. Minimise this effort
+3. Your DIST array here = Effort for each path
+
 SOLUTION: Dikstras + MAX_ABS_DIST instead of distance
 PQ Entry: (max_abs_distance(src,u), (ux,uy)) - max abs distance from src to ux,uy
 
