@@ -9,3 +9,7 @@ Code_Snippets/LinkedIn_API/UPLOADFILE_API
 dsa.py
 
 *.cph/
+Scripts/update_problem_titles.py
+Track/DSA_A_to_Z/test.py
+Scripts/filter_keep_only_py_solutions.py
+Track/DSA_A_to_Z/test.py
