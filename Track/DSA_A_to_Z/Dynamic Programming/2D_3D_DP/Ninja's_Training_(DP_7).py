@@ -31,3 +31,20 @@ def ninjaTraining(k: int, arr: List[List[int]]) -> int:
 
     # print(dp)
     return max(dp[-1])
+
+
+# REVERSE APPROACH -> Ending at last
+def ninjaTraining(self, arr):
+    arr = arr
+    n = len(arr)
+
+    # dp[i][j] => Max profit you can make starting at day "i" and "picking up jth cost" on day "i"
+    dp = [[float("-inf") for _ in range(3)] for _ in range(n)]
+    dp[-1] = arr[-1].copy() # last day cant move ahead
+
+    for day in range(n-2,-1,-1):
+        for cur_act in range(3):
+            for next_act in range(3):
+                if next_act != cur_act:
+                    dp[day][cur_act] = max(dp[day][cur_act], arr[day][cur_act]+dp[day+1][next_act])
+    return max(dp[0])

@@ -34,9 +34,10 @@ class Solution:
 
         res = 0
         for i in range(n):
+            # Why +1 in RBH and -1 in RBH
+            # Your bounds are one bar/rectangle after the smallest_on_left and one bar/rect before smallest_on_right
             lbh = lsmall[i]+1 if lsmall[i]!=-1 else 0
             rbh = rsmall[i]-1 if rsmall[i]!=-1 else n-1
             res = max(res, (rbh-lbh+1)*arr[i])
         
         return res
-        
