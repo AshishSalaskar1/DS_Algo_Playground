@@ -1,7 +1,8 @@
 ## Algorithm References
 - https://liuzhenglaichn.gitbook.io/algorithm/
 - Notion DSA Tracker: https://languid-knife-878.notion.site/DSA-038b19d91806431ea085bfdc7b11e945?pvs=74
-
+- Mindmaps: https://whimsical.com/problem-types-5CTHziFHocX2JhFPB6CxeS@8ADn3nfZACad1E2znvKvQ98kKV43jQC6e77M
+  
 ## Leetcode Lists
 - Compilation of Topic lists: https://leetcode.com/discuss/study-guide/1612475/all-leetcode-discuss-lists-and-my-lists-so-far-topic-wisedifficulty-wise
   
