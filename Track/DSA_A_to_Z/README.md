@@ -218,6 +218,11 @@ def countPairs(root: TreeNode, max_distance: int) -> int:
 2. **__repr__(self)**:
 - return string representation of your object
 
+### Python Bit Operations
+- Finding bit_length: `num.bit_length()`
+  - This gives you the num of bits needed to represent `num` in binary, ignoring sign bits
+  - Note: Its not number of set bits ( this can be position of right most set bit)
+
 
 ## Docs
 - CSES Problem set: https://cses.fi/problemset/list/
@@ -240,3 +245,212 @@ def countPairs(root: TreeNode, max_distance: int) -> int:
 ## TODO Problems
 - [ ] https://leetcode.com/problems/digit-operations-to-make-two-integers-equal/description/ ( Dijkstras )
 - [ ] https://leetcode.com/problems/maximum-subarray-sum-with-length-divisible-by-k/ (Prefix Sum + Smart Mods) 
+
+# 📘 DSA Maths & Formulae Ready Reckoner
+
+Handy formulas for coding interviews (Google, etc.)
+
+---
+
+## 🔹 Strings
+
+- **Number of substrings of length `n`**
+
+$$
+\frac{n \cdot (n+1)}{2}
+$$
+
+- **Number of subsequences of length `n`**
+
+$$
+2^n
+$$
+
+(Excluding empty subsequence → $2^n - 1$)
+
+---
+
+## 🔹 Arrays / Pairs / Triplets
+
+- **Pairs from `n` elements**
+
+$$
+\binom{n}{2} = \frac{n \cdot (n-1)}{2}
+$$
+
+- **Triplets from `n` elements**
+
+$$
+\binom{n}{3} = \frac{n \cdot (n-1) \cdot (n-2)}{6}
+$$
+
+---
+
+## 🔹 Sums & Series
+
+- **Sum of first `n` natural numbers**
+
+$$
+\frac{n \cdot (n+1)}{2}
+$$
+
+- **Sum of squares**
+
+$$
+\frac{n \cdot (n+1) \cdot (2n+1)}{6}
+$$
+
+- **Sum of cubes**
+
+$$
+\left(\frac{n \cdot (n+1)}{2}\right)^2
+$$
+
+---
+
+## 🔹 Combinatorics
+
+- **Binomial coefficient**
+
+$$
+\binom{n}{r} = \frac{n!}{r!(n-r)!}
+$$
+
+- **Permutations**
+
+$$
+P(n,r) = \frac{n!}{(n-r)!}
+$$
+
+---
+
+## 🔹 Graph Theory
+
+- **Edges in a complete graph with `n` nodes**
+
+$$
+\binom{n}{2} = \frac{n \cdot (n-1)}{2}
+$$
+
+- **Possible undirected graphs with `n` nodes**
+
+$$
+2^{\binom{n}{2}}
+$$
+
+- **Possible directed graphs with `n` nodes (no self-loops)**
+
+$$
+2^{n \cdot (n-1)}
+$$
+
+- **Handshaking Lemma**
+
+$$
+\sum_{v \in V} \deg(v) = 2|E|
+$$
+
+- **Spanning trees in a complete graph (Cayley’s formula)**
+
+$$
+n^{n-2}
+$$
+
+- **Tree with `n` nodes** always has
+
+$$
+n - 1 \text{ edges}
+$$
+
+---
+
+## 🔹 Trees
+
+- **Max nodes at level `l`**
+
+$$
+2^l
+$$
+
+- **Max nodes in a binary tree of height `h`**
+
+$$
+2^{h+1} - 1
+$$
+
+- **Min nodes in a binary tree of height `h`**
+
+$$
+h + 1
+$$
+
+- **Height of complete binary tree with `n` nodes**
+
+$$
+\lfloor \log_2(n) \rfloor
+$$
+
+- **Leaf nodes in a full binary tree with `n` nodes**
+
+$$
+\frac{n+1}{2}
+$$
+
+- **Catalan number (number of BSTs with `n` distinct keys)**
+
+$$
+C_n = \frac{1}{n+1}\binom{2n}{n}
+$$
+
+- **Full Binary Tree Property**  
+  If a binary tree has `I` internal nodes, leaves =
+
+$$
+L = I + 1
+$$
+
+- **Heap Height with `n` nodes**
+
+$$
+\lfloor \log_2(n) \rfloor
+$$
+
+---
+
+## 🔹 Probability & Counting
+
+- **Pigeonhole Principle**  
+  If `n` items are put into `m` containers, at least one container has
+
+$$
+\lceil n/m \rceil
+$$
+
+items.
+
+- **Birthday Paradox rule**  
+  With
+
+$$
+\sqrt{365} \approx 23
+$$
+
+people, collision probability > 50%.
+
+---
+
+## 🔹 Logs (Handy for Time Complexity)
+
+- **Change of base**
+
+$$
+\log_a b = \frac{\log_c b}{\log_c a}
+$$
+
+- **Stirling’s Approximation**
+
+$$
+\log(n!) \approx n \log n - n
+$$
+
+---
