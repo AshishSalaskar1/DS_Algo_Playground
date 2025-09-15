@@ -1,6 +1,7 @@
 # Bit Manipulation Practice
 ### Reference Formulae
-- 
+
+- `MOST IMPORTANT`: You can **NEVER SAY SOME BIT_OPS == 1** | Its **!=0**
     
 - General Trends to look out for
     - `AND` always `decreases` the number
