@@ -24,3 +24,4 @@
         - Divide by 2<sup>i</sup> = `n >> i` # LEFT SHIT
         - Multiple by 2<sup>i</sup> = `n << i` # RIGHT SHIFT
     - **Remove last/right most set bit**: `n -= (n & -i)`
+    - **Set first k bits**: `mask = (1 << k) - 1`
