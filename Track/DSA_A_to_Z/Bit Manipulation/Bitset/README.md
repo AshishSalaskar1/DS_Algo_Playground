@@ -107,3 +107,87 @@ class Solution:
         return bitset.bit_length() - 1
         
 ```
+
+
+# 3. Minimize Difference between path sum and given target
+```py
+"""
+Minimize Difference between target and chosen elements
+https://leetcode.com/problems/minimize-the-difference-between-target-and-chosen-elements/description/
+
+
+Here why do you use temp bitset?
+- Lets say your bitset = 1 # only 0-sum is possible
+- Row = (1,2,3)
+WRONG: for val in row: bitset |= bitset<<val
+- Here, you add 1 to bitset, then add 2 to the (bitset+1)
+- You want to add all these together
+
+HENCE, tempbitset = 0 -> 
+temp_bitset = (bitset+1) | (bitset+2) | (bitset+3)
+bitset = temp_bitset
+"""
+class Solution:
+    def minimizeTheDifference(self, arr: List[List[int]], target: int) -> int:
+        n = len(arr)
+        bitset = 1
+        MAX_LIMIT = (70**2) + 1
+
+        for row in arr:
+            temp_bitset = 0
+            # add val to each of the previously seen nums
+            for val in set(row):
+                temp_bitset |= bitset<<val
+            
+            bitset = temp_bitset
+            
+        
+        # CAN BE OPTIMIZED: Start searchin LEFT<- TARGET ->RIGHT
+        ans = float("inf")
+        for i in range(MAX_LIMIT, -1, -1):
+            if bitset & (1<<i) != 0:
+                ans = min(ans, abs(i-target))
+        return ans
+```
+
+
+# Comparing Time Complexities with DP
+
+### **1. Subset Sum Queries**
+- **Normal DP:**  
+  - Uses a 2D table `dp[i][sum]` → Time Complexity: **O(N * SUM)**, where `SUM` is the total sum of elements.
+  - For large sums or multiple queries, this becomes expensive because you’d need to rebuild or maintain a big DP table.
+- **Bitset:**  
+  - Each shift and OR operation works on **word-sized chunks** (32 or 64 bits at a time), so complexity is roughly **O(N * SUM / word_size)**.
+  - For Python (arbitrary precision int), it’s still much faster because bit operations are implemented in C and vectorized internally.
+- **Why better:**  
+  Instead of iterating over all sums for every element, you update all possible sums in **one bitwise operation** per element.
+
+---
+
+### **2. Maximum Total Reward**
+- **Normal DP:**  
+  - Similar to subset sum, you’d need to maintain a DP table for all sums up to the maximum possible reward → **O(N * MAX_REWARD)**.
+- **Bitset:**  
+  - Achieves the same effect by shifting and masking in **O(N * MAX_REWARD / word_size)**.
+  - The mask trick ensures only valid ranges are updated without looping through them.
+- **Why better:**  
+  Bitset compresses the state space into bits and updates them in bulk, avoiding nested loops over sums.
+
+---
+
+### **3. Minimize Difference Between Path Sum and Target**
+- **Normal DP:**  
+  - For `m` rows and max sum `S`, complexity is **O(m * S * row_size)** because for each row you iterate over all achievable sums and all elements in the row.
+- **Bitset:**  
+  - Each row update is done by OR-ing shifted versions of the previous bitset → **O(m * S / word_size)**.
+  - No triple nested loops; the entire row update is vectorized at the bit level.
+- **Why better:**  
+  Instead of checking each sum individually, you propagate all possible sums for a row in a few bit operations.
+
+---
+
+### **Summary**
+- **Normal DP:** Iterates over sums explicitly → **O(N * S)** or worse.
+- **Bitset DP:** Uses bitwise shifts and OR → **O(N * S / word_size)**, which is a huge speedup when `S` is large.
+- **Extra Benefit:** Lower memory footprint (bitset vs full DP table).
