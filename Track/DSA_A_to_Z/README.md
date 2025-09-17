@@ -112,6 +112,10 @@ from functools import cache, lru_cache
 def fn():
     pass
 
+@lru_cache(maxsize=None) # Default maxsize param is 128 i.e it will only cache last 128 states and evict if more than that
+def fn():
+    pass
+
 
 # CLEARING CACHE -> ONLY FOR LRU_CACHE (@lru_cache(None))
 fn.cache_clear()

@@ -14,7 +14,31 @@ HENCE, tempbitset = 0 ->
 temp_bitset = (bitset+1) | (bitset+2) | (bitset+3)
 bitset = temp_bitset
 """
-class Solution:
+
+class RecursiveSol:
+    def minimizeTheDifference(self, arr: List[List[int]], target: int) -> int:
+        n = len(arr)
+        @lru_cache(maxsize=None)
+        def solve(row, csum):
+            if row == n:
+                return abs(csum-target)
+            
+            min_diff = float("inf")
+            for cnum in arr[row]:
+                min_diff = min(min_diff,solve(row+1, csum+cnum))
+
+                if csum+cnum > target:
+                    break
+
+            return min_diff
+
+        # OPTIMIZATIONS:
+        for i in range(n):
+            arr[i] = sorted(set(arr[i]))
+        
+        return solve(0,0)
+        
+class BitsetSolution:
     def minimizeTheDifference(self, arr: List[List[int]], target: int) -> int:
         n = len(arr)
         bitset = 1
