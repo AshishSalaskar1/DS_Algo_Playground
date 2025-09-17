@@ -5,6 +5,10 @@
 - So consider each bit as number. 64 63 62 ... 5 4 3 2 1 0. Now in Python int is infinite so you can use it, but in other languages we have separate BITSET
 - TC for operations = `N/32` or `N/64` based on the compiler
 
+💡 **WHEN TO THINK OF THIS**: 
+- You are trying to find max/min sum -> In each step you add current to all existing sums
+- No negative numbers allowed
+- You should know the MAXIMUM SUM that is expected ( this is what you bound your bitset on )
 
 # 1. Subset Sum Queries
 | Doing Subset sum once is easy, but if there any Q queries, you cant build the DP each time

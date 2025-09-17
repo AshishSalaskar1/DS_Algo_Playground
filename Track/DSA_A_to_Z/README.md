@@ -70,6 +70,11 @@ This works with the concept of Binary Search.
 2. `bisect.bisect_left(arr, x)` -> LOWER BOUND  ( incase of multiple matches, insert at left most position )
 3. `bisect.insort(arr, x) ` -> INSERT AND SORT ( this is same as arr.append(x) -> arr.sort())
 
+### Important
+- If <num> is greater than everything, its placed at last -> `n` (**Note its `n` and not `n-1`**)
+- If <num> is lesser than everything, its placed at first -> `0`
+
+
 ```py
 import bisect
 #      0 1 2 3 4 5 6 7  8
