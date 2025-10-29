@@ -10,7 +10,7 @@
 - COMMON OPERATIONS
     - `i` Bit Ops
         - **SET Bit**: `n | (1<<i)`
-        - **UNSET Bit**: `n & | ~(1<<i)`
+        - **UNSET Bit**: `n & ~(1<<i)`
         - **Check if bit it set**: `n & (1<<i)` == 0 then UNSET, if 1 then SET
         - **Toggle Bit**: `n ^ (1<<i)`
     - **Negative of number**: `-n` = `flip_bits(n)+1` # 1s compliment + 1
