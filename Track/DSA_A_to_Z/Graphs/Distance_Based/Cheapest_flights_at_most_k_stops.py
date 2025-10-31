@@ -61,6 +61,32 @@ HERE -> You limit it to K
 THAT MEANS: You are allowing only K hops/flights. Now each of them minimized will add up to minimized cost too
 
 
+
+🚫 MAJOR MAJOR CONSIDERATION 🚫
+- In normal BF, you just keep on updating same dist array. 
+- Here, each iteration is ideally one stop. But, if u let normal BF, then in each iteration you can relax multiple edges -> lead to multiple stops [ HENCE THE K CONCEPT GOES FOR A TOSS]
+- SOLUTION:
+    - In each iteration, you use the prev_step DIST array for relaxations but then update a temp_dist
+    - This way
+        1. You use prev_step_dist for SRC/U -> hence you consider one flight from last step to this
+        2. Update DEST/V in current/temp dist -> this way you dont cause multiple flights/steps/edges in this single iteration
+
+
+💡 Intuitive analogy
+
+Think of it like “waves” spreading outward:
+- dist = what’s been reached in the previous wave.
+- temp = what can be reached in the next wave.
+- After each wave, we move forward one hop (1 edge).
+- If you used just one array, each wave would instantly propagate multiple layers deep — breaking the rule of “K stops”.
+
+✅ Summary
+Concept	Why
+- dist[u]	Holds the previous iteration’s best known distances — used as the source of information.
+- temp[v]	Holds the new distances computed in this iteration — used as the destination of updates.
+- Using one array (dist[v])	Causes chaining → allows more than K stops (WRONG).
+- Using temp[v]	Restricts updates to ≤ K stops (CORRECT).
+
 """
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]],
@@ -71,10 +97,10 @@ class Solution:
 
         # Allow up to K + 1 flights (i.e., K stops)
         for _ in range(K + 1):
-            tmp = cost[:]  # snapshot of current best costs
+            cur_step_dist = cost[:]  # snapshot of current best costs
             for u, v, w in flights:
-                if cost[u] != INF and cost[u] + w < tmp[v]:
-                    tmp[v] = cost[u] + w
-            cost = tmp
+                if cost[u] != INF and cost[u] + w < cur_step_dist[v]:
+                    cur_step_dist[v] = cost[u] + w
+            cost = cur_step_dist
 
         return -1 if cost[dst] == INF else cost[dst]
