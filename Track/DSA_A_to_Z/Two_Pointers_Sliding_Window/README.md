@@ -76,39 +76,6 @@ while r<n:
 - LEFT SIDE considerations are already made - YOU SHRINK the left pointer in the while loop
 - NOTE: Usually you can do this easily using Prefix Sum + Hashmap ( because you can keep count of occurences of csum-target)
 
-## Main Template - For (2) pattern - Mostly Asked
-**Important things to remember here** <br>
-1. INIT ->  `l,r = 0, -1  # WINDOW LENGTH = 0`
-2. RESETTING WINDOW -> `if l>r: l++, r=l-1` ( this is needed in case you cant take anything in the current window )
-   
-```py
-
-def largest_subarray_1_with_k_flips(arr, k):
-    n = len(arr)
-
-    res = 0
-    l,r = 0, -1  # WINDOW LENGTH = 0
-    zero_count = 0
-
-    while r < n:
-        # INCREASE RIGHT AS FAR AS POSSIBLE
-        while r+1<n and (arr[r+1]==1 or zero_count<k):
-            r += 1
-            if arr[r] == 0: zero_count += 1
-        
-        res = max(res, r-l+1)
-
-        if l>r: # 0-ELEMENTS IN WINDOW-> RESET WINDOW
-            l += 1
-            r = l-1
-        else:
-            # INCREMENT LEFT 
-            if arr[l] == 0: zero_count -= 1
-            l += 1
-
-    return res
-         
-```
 
 ## Variations
 |  **PROBLEM**: Given an array, find the number of subarrays having distinct elements <= `k` in them

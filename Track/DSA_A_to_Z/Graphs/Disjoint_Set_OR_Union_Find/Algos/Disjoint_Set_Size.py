@@ -3,6 +3,7 @@ class DSU:
     def __init__(self, V) -> None:
         self.size = [1 for _ in range(V+1)] # 1 based node indexing
         self.parent = [x for x in range(V+1)] # every node is parent is node of itself
+        self.components = V # initially all nodes are islands -> each is a component
 
     def find_par(self, node):
         # return ultimate parent of u and also do path compression in the process
@@ -21,6 +22,9 @@ class DSU:
 
         if upu == upv: # already belong to same component
             return
+
+        self.components -=1  # two islands are joined
+
         if self.size[upu] < self.size[upv]: # if size(u) < size(v) -> attach comp(u) to v
             self.parent[upu] = upv
             self.size[upv] += self.size[upu]
