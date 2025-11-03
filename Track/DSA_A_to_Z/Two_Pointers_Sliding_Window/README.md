@@ -7,9 +7,70 @@
 - https://leetcode.com/discuss/interview-question/3722472/mastering-sliding-window-technique-a-comprehensive-guide
 
 
+### Approach 1: MAXIUMUM/LONGEST
+- **GOAL**: Maximise Valid Window
+- If you find **valid** -> still keep on increasing the window ( `right++` )
+- If you find **invalid** -> decrease window from left till its valid ( `left++` )
+Ex: https://leetcode.com/problems/longest-repeating-character-replacement/description/
+
+```py
+
+l,r = 0,0
+
+res = DEFAULT
+while r<n:
+    wsize = r-l+1
+
+    # include your arr[r] in your hashmap/set/whatever
+
+    if isValidAnswer(arr[l:r]): # VALID: Keep on increasing further on right -> MAXIMISE VALID WINDOW
+        res = update_res
+        r += 1
+    else: # INVALID
+        # SHRINK THE LEFT UNTIL ITS VALID
+        while l<=r and isValidAnswer():
+            Remove arr[l] from your computation
+            wsize = r-l+1
+            l += 1
+        r += 1
+
+```
+
+### Approach 2: MINIMUM/SHORTEST
+- **GOAL**: Minimise Valid Window
+- If you find **invalid** -> still keep on increasing the window ( `right++` ) - this is in hopes of making it valid by taking larger window
+- If you find **valid** -> You keep on shrinking the `left` till its **invalid**. And all `wsize`s in that while loop can be your `res`
+
+
+Ex: https://leetcode.com/problems/minimum-window-substring/
+
+```py
+
+l,r = 0,0
+
+res = DEFAULT
+while r<n:
+    wsize = r-l+1
+
+    # include your arr[r] in your hashmap/set/whatever
+ 
+    if not isValidAnswer(arr[l:r]): # KEEP ON EXPANDING TILL YOU GET VALID
+        r += 1
+    else: # VALID FOUND : DONT INCREASE FURTHER
+        # SHRINK THE LEFT UNTIL ITS INVALID -> MINIMIZE VALID LENGTH
+        while l<=r and isValidAnswer():
+            res = update_res
+            Remove arr[l] from your computation
+            wsize = r-l+1
+            l += 1
+
+        r += 1
+
+```
+
 - Tips on l,r = 0,0 method
 
-#### Counting Problems
+## Counting Problems
 - When you are counting something, the as-is approach would only count subarrays/lengths ending at r (L<->R).
 - But then you might have to consider this as one res BUT then look on the RIGHT SIDE also to extend
 - LEFT SIDE considerations are already made - YOU SHRINK the left pointer in the while loop
