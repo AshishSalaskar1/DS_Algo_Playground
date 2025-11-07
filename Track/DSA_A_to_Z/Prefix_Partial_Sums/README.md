@@ -22,6 +22,8 @@
   1. This method is fine, in case you have `Q` range add/sub queries and then a final sum(l,r) query
   2. If you multiple queries of both types (range add/sub and range_sum) then use SEGMENT TREES
 
+### Interesting Examples
+- `Maximize_Min_Powered_Cities.py` -> here you use partial sums but without recomputing `prefix` arr since its not needed in this particular problem
 
 
 ## Prefix Sums - 2D
