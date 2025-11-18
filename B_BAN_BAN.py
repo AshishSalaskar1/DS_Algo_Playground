@@ -18,9 +18,7 @@ def main():
             print(lo,hi)
             lo += 2
             hi -= 3
-        
-
-        
+    
 
 
 main()
