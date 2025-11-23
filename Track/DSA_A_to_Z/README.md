@@ -17,6 +17,23 @@
 
 ## Python References
 
+## `nonlocal` vs `global`
+- `global` -> Variable is in global scope ( **not in class** )
+- `nonlocal` -> Variable in any scope outside the current scope
+
+```py
+
+global_res = 0
+class Solution:
+    def solve(self,  arr):
+        res = 0
+        n = len(arr)
+        def solve(i,csum):
+            # you want to update res
+            global res # GIVES ERROR
+            nonlocal res # CORRECT
+```
+
 ## Custom `cmp` function for sorting
 - https://stackoverflow.com/questions/5213033/sort-a-list-of-lists-with-a-custom-compare-function
 ```py
