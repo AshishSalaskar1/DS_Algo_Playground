@@ -165,12 +165,43 @@ pq.put(-x)
 -pq.get()
 ```
 
+## Heapq
+- Faster than `PriorityQueue`, but not threadsafe
+```py
+from heapq import heapify, heappush, heappop
+
+pq = [5,1,3]
+heapify(pq)
+
+print(pq) # [1,x,x,x,x,x]
+print(pq[0]) # smallest element
+
+print(heappop(pq)) # 1 #PEEK
+print(heappush(pq, 0))
+print(pq[0]) # 0 
+
+
+pq = []
+heapify(pq)
+print(len(pq), bool(pq)) # 0 False
+
+```
+
 | Operation    | Time Complexity |
 | :-------- | :------- |
 | `put()`  | O(nlogn)    |
 | `get()` | O(logn) - Peek + Delete head     |
 | `peek()` or `queue[0]`    | O(1)    |
 |`heapify()`| O(n) |
+
+| Task | Sorting | Heap |
+|------|--------|------|
+| Get K largest | **O(n log n)** | **O(n log K)** 🚀 |
+| Streaming top K | ❌ Bad | ✔️ Excellent |
+| Always get min/max | ❌ | ✔️ O(1) peek |
+| Insert new items | O(n) (must re-sort) | O(log n) |
+| Remove top | O(n) | O(log n) |
+| Build once | O(n log n) | **O(n)** (heapify) |
 
 ### Frozen Set vs Set
 | When you want to put a set into another set => FROZENSET

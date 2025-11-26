@@ -53,6 +53,33 @@ class Solution:
             k -= 1
 
         return w
+    
+# HERE WE USE 2 HEAPS
+# BUT FIRST SOLUTION IS MORE OPTIMIZED
 
+from queue import PriorityQueue
+class Solution:
+    def findMaximizedCapital(self, k: int, cur_capital: int, profits: List[int], capital: List[int]) -> int:
+        n = len(profits)
+        takenitems = PriorityQueue()
 
+        # taken = set()
+        totakeitems = PriorityQueue()
+
+        for i in range(n): totakeitems.put((capital[i], profits[i]))
+            
+        while len(totakeitems.queue)>0 and totakeitems.queue[0][0] <= cur_capital:
+            nextitem = totakeitems.get()
+            takenitems.put( (-nextitem[1],nextitem[0]) )
+
+        while k>0 and len(takenitems.queue)>0:
+            best_profit, best_i = takenitems.get()
+            cur_capital += -best_profit
+
+            while len(totakeitems.queue)>0 and totakeitems.queue[0][0] <= cur_capital:
+                nextitem = totakeitems.get()
+                takenitems.put( (-nextitem[1],nextitem[0]) )
+            
+            k -= 1
         
+        return cur_capital
