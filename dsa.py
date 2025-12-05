@@ -4,6 +4,7 @@ import time
 counter = 0
 lock = asyncio.Lock()
 
+
 async def do_some_task(id, delay):
     global counter
     async with lock:
@@ -24,8 +25,7 @@ async def main():
     results = [task.result() for task in tasks]
     print(results)
 
-    print(f"Total time taken: {time.time()-start_time}")
-
+    print(f"Total time taken: {time.time() - start_time}")
 
 
 asyncio.run(main())
