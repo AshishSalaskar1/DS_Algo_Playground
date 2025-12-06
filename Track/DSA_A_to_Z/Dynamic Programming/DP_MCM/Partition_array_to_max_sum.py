@@ -1,6 +1,6 @@
 """
 PROBLEM: https://leetcode.com/problems/partition-array-for-maximum-sum/
-- Partition the array into (contiguous) subarrays of length at most k. 
+- Partition the array into (contiguous) subarrays of length at most k.
 - After partitioning, each subarray has their values changed to become the maximum value of that subarray.
 
 
@@ -18,31 +18,28 @@ SOLUTION: FRONT PARTITIONING
 """
 
 from functools import cache
+
+
 class Solution:
     @cache
-    def solve(self, start, k):
+    def solve(self, start: int, k):
         if start == self.n:
             return 0
 
         max_res = float("-inf")
         max_ele = float("-inf")
         part_length = 0
-        for end in range(start, start+k):
+        for end in range(start, start + k):
             if end >= self.n:
                 break
             part_length += 1
             max_ele = max(max_ele, self.arr[end])
-            res = (part_length*max_ele) + self.solve(end+1, k)
+            res = (part_length * max_ele) + self.solve(end + 1, k)
             max_res = max(max_res, res)
-        
+
         return max_res
 
-
-    def maxSumAfterPartitioning(self, arr: List[int], k: int) -> int:
+    def maxSumAfterPartitioning(self, arr: list[int], k: int) -> float:
         self.arr = arr
         self.n = len(arr)
         return self.solve(0, k)
-
-    
-
-        
