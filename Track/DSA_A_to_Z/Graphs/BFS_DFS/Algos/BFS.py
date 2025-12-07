@@ -13,12 +13,11 @@ V = 3, E = 2
 adj = {{1,2},{},{}}
 OUTPUT: 0 1 2
 
-
 """
 
 from typing import List
 
-def bfsOfGraph(self, V: int, adj: List[List[int]]) -> List[int]:
+def bfsOfGraph(V: int, adj: List[List[int]]) -> List[int]:
     bfs = []
     n_nodes = len(adj)
     root_node = 0
@@ -39,3 +38,8 @@ def bfsOfGraph(self, V: int, adj: List[List[int]]) -> List[int]:
                 q.append(nbr)
     
     return bfs
+
+
+V = 5; E = 4
+adj = {0: [1,2,3],1:[],2:[4],3:[],4:[]}
+bfsOfGraph(V, adj)
