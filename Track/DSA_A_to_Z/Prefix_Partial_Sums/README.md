@@ -1,3 +1,10 @@
+## Overall Patterns
+1. **Classic find prefix-sum** = `sum_till_i`
+2. Classic find prefix-sum **with Updates**
+3. **FreqSeenBefore, FreqSeenAfter pattern:** [Leetcode Discussion - Count Triplets](https://leetcode.com/problems/count-special-triplets/solutions/7401382/solve-all-prefix-suffix-problems-instant-2v3l)
+Ref: `Freq_Before_After_Pattern.py`
+
+
 ## Prefix Sums
 - Given any array, you build a `prefix array`. Where `prefix[i]` = sum(`arr[0]`+..+`arr[i]`)
 - **SUM(L,R)** = `prefix[r]` - `prefix[l-1]` 
