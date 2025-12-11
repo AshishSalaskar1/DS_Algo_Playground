@@ -1,3 +1,9 @@
+## 🎯 Quick Reference
+
+**[⚡ Time Complexity Cheat Sheet](TIME_COMPLEXITY.md)** - Complete guide for all data structures & algorithms
+
+---
+
 ## Algorithm References
 - https://liuzhenglaichn.gitbook.io/algorithm/
 - Notion DSA Tracker: https://languid-knife-878.notion.site/DSA-038b19d91806431ea085bfdc7b11e945?pvs=74
