@@ -2,7 +2,9 @@
 1. **Classic find prefix-sum** = `sum_till_i`
 2. Classic find prefix-sum **with Updates**
 3. **FreqSeenBefore, FreqSeenAfter pattern:** [Leetcode Discussion - Count Triplets](https://leetcode.com/problems/count-special-triplets/solutions/7401382/solve-all-prefix-suffix-problems-instant-2v3l)
-Ref: `Freq_Before_After_Pattern.py`
+   - Ref: `Freq_Before_After_Pattern.py`
+5. Using partial sums as update counter ([Example Problem](https://leetcode.com/problems/shifting-letters-ii/?envType=problem-list-v2&envId=o1qf3c31) )
+   - Ref: `Shifting_Letters_2.py`
 
 
 ## Prefix Sums

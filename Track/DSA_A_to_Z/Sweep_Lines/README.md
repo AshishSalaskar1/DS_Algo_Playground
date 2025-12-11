@@ -7,8 +7,33 @@
 
 **Note**
 1. Most of sweep line problems can be done using `Merge Overlap Intervals` using sorting and some sort of combination. But, hard to find a common pattern in this approach and requires ad-hoc thinking
-2. Dont use this to solve `Merge Intervals Problem` - Might become a bit complex. Better to do that using sort + iteration approach
+2. Dont use this to solve `Merge Intervals Problem` - Might become a bit complex. Better to do that using sort + iteration approach ( can be done though)
+   
 
+
+💡 ### **Comparison Trick**
+ - Generally events are in form `(time, start|end)`
+ - Now you need to sort such that if time ties then `start` should be come first and then `end`
+ - Sol1: `sorted(events, lambda x:(x[0],0 if x[1]=="start" else 1))`
+ - Sol2 **Auto tie break**: `events` = `(time, astart, bend)` *(Here start will automatically come before b)*
+
+### 🏮 **Sweepline + Binary Search**
+**REMEMBER**: `bisect.bisect_right(ts)-1` | `if bisect_op > 0`
+
+**Issue**: Lets say you are asked to give the `concurrent` meetings at any index `i`
+- Start: add events -> sort -> run sweepline
+- **Iteration**: At `critical_point` -> wehever the `concurrent` changes save it in a `map` or even better `SortedMap` if possible
+- **Queries**: Now you get `concurrent_at(ts)` queries *( but you  may not have count at exactly k)*
+- **PostProcessing**
+  1. `criticalTsList` = [ `sorted set of all criticalPointTimestamps`] *(I**MP: timestamps not the actual critical point active values**)*
+  2. **concurrent_at(ts)** -> 
+     1. `criticalTsNearest` = `bisect.bisect_right(criticalTsList, ts)-1`
+     2. `res` = `CriticalPointMap[criticalTsNearest]`
+- ❓❓❓ Why `bisect.bisect_right(ts)-1`?
+  - `criticalTsList` = `[0,2,2,2,5]`
+  - In case `ts=1` if `criticalTsList` not in `ts` -> bisect returns ideal place to insert this in the array to mantain sorted order. This means it will insert it after the critical point just before `ts` ===> **res=1**
+  - Now, we know that the value of `active` remains same until another critical point  comes. So the critical point just before `ts` should be my answer ===> **HENCE -1** = `bisect.bisect(ts)-1`
+  - WHY **BISECT_RIGHT**? If the `ts` is already present and multiples then we need the last occurence of the `ts` -> right most ( hence bisect_right). *(You need to make sure in sorting+processing that right most is the last update in case of same critical points)*
 ---
 ## Q1: Meeting room duration with atleast `k` occupancy
 - You have intervals (enter,exit) indicating when a person entered and left the meeting room
@@ -53,6 +78,7 @@
 ---
 ### Question Bank
 - Leetcode Discussion Refs: https://leetcode.com/discuss/study-guide/2166045/line-sweep-algorithms
+- Yt Video Best: https://www.youtube.com/watch?v=QBQvTjNaIRw
 - [SIMPLE] CSES-Restaurant Customers: https://cses.fi/problemset/task/1619
 - [SIMPLE] My Calendar II - https://leetcode.com/problems/my-calendar-ii/description/
 - [SIMPLE] Car Pooling - https://leetcode.com/problems/car-pooling/submissions/1436410743/

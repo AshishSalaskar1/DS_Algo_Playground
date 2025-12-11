@@ -1,3 +1,37 @@
+
+"""
+https://leetcode.com/problems/number-of-flowers-in-full-bloom/?envType=problem-list-v2&envId=o1qf3c31
+
+
+SORTING ORDER:
+1. Time
+2. If time=TIE > start > end > person
+( Person at last, because he sees the flowers after operation )
+"""
+class Solution:
+    def fullBloomFlowers(self, flowers: List[List[int]], people: List[int]) -> List[int]:
+        nf, np = len(flowers), len(people)
+
+        events = []
+        for s,e in flowers:
+            events.append((s,"astart","flower"))
+            events.append((e+1, "bend", "flower"))
+        
+        for time in people:
+            events.append((time, "zperson","zperson"))
+
+        res = {}
+        events.sort()
+
+        active = 0
+        for ts, ops, _ in events:
+            if ops == "astart": active += 1
+            elif ops == "bend": active -= 1
+            if ops == "zperson": res[ts] = active
+        
+        return [res[ts] for ts in people]
+
+
 """
 PROBLEM: https://leetcode.com/problems/number-of-flowers-in-full-bloom/
 
@@ -52,6 +86,5 @@ class Solution:
             res.append(flower_till_day[idx] if idx>=0 else 0)
 
         return res
-
 
         

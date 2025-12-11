@@ -82,10 +82,21 @@ sorted(lst, key=functools.cmp_to_key(compare))
 ## Bisect
 This works with the concept of Binary Search.
 
-0. `bisect.bisect(arr,<num>)` -> Returns the right most index
-1. `bisect.bisect_right(arr, x)` -> UPPER BOUND ( incase of multiple matches, insert at right most position )
-2. `bisect.bisect_left(arr, x)` -> LOWER BOUND  ( incase of multiple matches, insert at left most position )
-3. `bisect.insort(arr, x) ` -> INSERT AND SORT ( this is same as arr.append(x) -> arr.sort())
+### ⭕  Pure Logic  ⭕ 
+- `bisect(arr,x)` ===> **in which position would you insert `x` in `arr` that is still remains sorted** + **When you insert at `i` everything else shifted to right by 1 starting from `i` itself**
+
+- Example:  `a` = `[0,2,2,2,5]`
+1. **Value not found**
+   - `x=3` -> where will you insert`3` in arr so that its sorted
+   - Only 1 option: at `4`
+2. **Value not found**
+   - `x=2` -> where will you insert`2` in arr so that its sorted
+   - There are 4 options: `[1,2,3,4]` -> `[0,2x,2x,2x,5x]`
+   - Now here  
+       1. 💡`bisect_left` gives `2` **(left most index)**
+       2. 💡`bisect_right` gives `5` **(right most index)**
+       3. 💡`bisect` gives `2` == `bisect_right` g
+
 
 ### Important
 - If <num> is greater than everything, its placed at last -> `n` (**Note its `n` and not `n-1`**)
@@ -115,12 +126,12 @@ bisect.bisect(arr,3,key=lambda x:x[0])
 <hr>
 
 - `bisect.bisect(arr,<num>)` -> Returns the right most index(in case ele is already present) where the element can be inserted is returned
-- `bisect.bisect_left(arr,<num>)` -> Returns the left most index in case ele is already present
+- `bisect.bisect_left(arr,<num>)` -> Returns the left most index in case ele is already present = **💡fist occurence of num**
 
-- `bisect.insort(arr,<num>)` -> Inserts the <num> in the right most index in case the num is already present
+- `bisect.bisect_right(arr,<num>)` -> Inserts the <num> in the **💡right most index+1** in case the num is already present
 - `bisect.insort_left(arr,<num>)` -> Inserts num in left most index.
 
-### @cache
+## @cache
 - `@cache` works in Python > 3.9
 - `@lru_cache` for lower versions < 3.9 
 
@@ -203,7 +214,7 @@ print(len(pq), bool(pq)) # 0 False
 | Remove top | O(n) | O(log n) |
 | Build once | O(n log n) | **O(n)** (heapify) |
 
-### Frozen Set vs Set
+## Frozen Set vs Set
 | When you want to put a set into another set => FROZENSET
 1. **set**
     - **Mutable** → you can add, remove, update elements.
@@ -215,8 +226,35 @@ print(len(pq), bool(pq)) # 0 False
    - **Hashable** → can be used as a dictionary key or as an element of another set.
    - Typical use: when you want to store sets inside other sets (like your island shapes).
 
+## Python String Ops Snippets
+### Shift chars left/right
+```py
+"""
+SHIFT RIGHT: (idx+val)%26
+SHIFT LEFT: shift_left(val) = shift_right(26-val)
 
-### Deque
+
+PYTHONIC WAY: (Python Supports MOD of negative numbers)
+next_idx = (idx + (-1 if direction=="left" else 1)*val)%26
+
+"""
+def shift(ch: str, val: int, direction: str,) -> str:
+    """
+    Shift ch by `val` places either left or right
+    """
+    val = val%26
+
+    # CLASSIC LOGICAL WAY
+    if direction == "right": next_idx = (idx+val) % 26
+    else: next_idx = (idx+(26-val)) % 26 
+    
+    # PYTHONIC EASY WAY
+    next_idx = (idx + (-1 if direction=="left" else 1)*val)%26
+    
+    return chr(ord('a')+next_idx)
+```
+
+## Deque
 ```python
 from collections import deque
 
@@ -234,13 +272,13 @@ q[-1] # last element
 len(q) # length of the queue
 ```
 
-### Python STR <-> ASCII VALUE
+## Python STR <-> ASCII VALUE
 ```python
 ord('a') # 97 => CHAR -> ASCII
 chr('97') # a => ASCII -> CHAR
 ```
 
-### Tree to Graph Conversion
+## Tree to Graph Conversion
 - Here we are storing `Node` object and not the `Node` value (since in some cases Node value can repeat)
 ```python
 def countPairs(root: TreeNode, max_distance: int) -> int:
@@ -267,15 +305,15 @@ def countPairs(root: TreeNode, max_distance: int) -> int:
 
 
 
-### Python Magic Methods
+## Python Magic Methods
 1. **__gt__(self, other)**:
-- Compare current object(self) with another object
-- return True if self > other
+   - Compare current object(self) with another object
+   - return True if self > other
 
 2. **__repr__(self)**:
-- return string representation of your object
+   - return string representation of your object
 
-### Python Bit Operations
+## Python Bit Operations
 - Finding bit_length: `num.bit_length()`
   - This gives you the num of bits needed to represent `num` in binary, ignoring sign bits
   - Note: Its not number of set bits ( this can be position of right most set bit)
