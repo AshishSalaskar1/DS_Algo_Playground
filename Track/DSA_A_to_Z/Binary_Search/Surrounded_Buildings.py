@@ -6,6 +6,7 @@ SIMPLE IDEA
 1. There is some x < curx and some x > curx
 2. There is some y < cury and some y > cury
 """
+
 from collections import defaultdict
 import bisect
 class Solution:
@@ -15,10 +16,13 @@ class Solution:
         for r,c in buildings:
             rmap[r].append(c)
             cmap[c].append(r)
+        
+        for r in rmap: rmap[r] = sorted(rmap[r])
+        for c in cmap: cmap[c] = sorted(cmap[c])
 
         res = 0
         for x,y in buildings:
-            yaxis_points, xaxis_points = sorted(rmap[x]), sorted(cmap[y])
+            yaxis_points, xaxis_points = rmap[x], cmap[y]
 
             # check top bottom - if there are `y`s before and after `cur_y`
             yaxis_check = bisect.bisect_left(yaxis_points, y)
