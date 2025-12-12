@@ -1,5 +1,6 @@
 # Sweep Line Algorithms
 
+- **Great Reference**: https://leetcode.com/discuss/post/2166045/line-sweep-algorithms-by-c0d3m-8ebq/
 ### Intuition
 - Consider you have a straight vertical line, you sweep this line from Left -> Right
 - Now, there maybe points of interest where you would want to place this line and check for some properties (ex, how many planks does it intersect. etc)
@@ -28,12 +29,12 @@ When you are doing sweepline -> you only visit the `event_points`. If you need s
 2. **Saving Events in HashMap instead of List**
    - Put all events in dict: `events[time/day]` = `[ events ]`
    - Iterate for each day -> process all events *(sort for ordering)* -> save result for that day
-   - - Ex: `Count_Days_Without_Meetings.py` , `Shifting_Letters_2.py`
-3. **Directly adding each day as dummy event** 
+   - - Ex: `Count_Days_Without_Meetings.py` , `Shifting_Letters_2.py`, `Flight_Bookings.py`
+3. **Directly adding each query as dummy event** 
    - Put all events
    - Then put each day as dummy event which indicates that you need to save result -> but make sure this dummy event comes after every other event type
    - Cons: Might give MLE since you are adding every index to events list -> sorting ( TOO MANY EVENTS TO SORT)
-   - Ex: `Count_Days_Without_Meetings.py`  
+   - Ex: `Count_Days_Without_Meetings.py` , `Flowers_in_bloom.py`
 
 ### 🏮 **Sweepline + Binary Search**
 **REMEMBER**: `bisect.bisect_right(ts)-1` | `if bisect_op > 0`

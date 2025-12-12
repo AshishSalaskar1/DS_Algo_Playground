@@ -2,6 +2,37 @@
 
 A comprehensive reference for time and space complexities of common data structures and algorithms.
 
+
+
+
+## 📝 Notes
+
+- **Best Case**: Minimum time required (often when input is already in desired state)
+- **Average Case**: Expected time for random input
+- **Worst Case**: Maximum time required (often used for analysis)
+- **Space Complexity**: Extra space required (excluding input)
+- **Amortized**: Average time per operation over sequence of operations
+
+### 💡Common Time Complexity Order (Fastest to Slowest)💡
+```
+O(1) < O(log n) < O(√n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)
+```
+
+## 💡When to Use What?💡
+
+| Complexity | Approx Max n | Typical Use | Notes |
+|------------|-------------|-------------|-------|
+| O(1) | Any | Direct access, math formulas | Constant time regardless of input |
+| O(log n) | 10¹⁸ | Binary search, divide & conquer | Halving search space each step |
+| O(√n) | 10¹⁴ | Prime check, factorization | Check up to square root |
+| O(n) | 10⁸ | Single pass, linear scan | Process each element once |
+| O(n log n) | 10⁶ | Sorting, divide & conquer | Most efficient comparison sorts |
+| O(n²) | 10⁴ | Nested loops, simple DP | Check all pairs |
+| O(n³) | 500 | Triple nested loops, Floyd-Warshall | Check all triplets |
+| O(2ⁿ) | 20-25 | Backtracking, subset generation | Exponential growth, all subsets |
+| O(n!) | 10-12 | Permutations, brute force | Factorial growth, try all orders |
+
+
 ## 📊 Data Structures
 
 ### Arrays
@@ -264,30 +295,3 @@ A comprehensive reference for time and space complexities of common data structu
 | Toggle Bit | O(1) | n ^ (1 << i) |
 | Count Set Bits | O(log n) | Brian Kernighan's algorithm |
 | Power of 2 Check | O(1) | n & (n-1) == 0 |
-
-## 📝 Notes
-
-- **Best Case**: Minimum time required (often when input is already in desired state)
-- **Average Case**: Expected time for random input
-- **Worst Case**: Maximum time required (often used for analysis)
-- **Space Complexity**: Extra space required (excluding input)
-- **Amortized**: Average time per operation over sequence of operations
-
-### Common Time Complexity Order (Fastest to Slowest)
-```
-O(1) < O(log n) < O(√n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!)
-```
-
-### When to Use What?
-
-| Complexity | Approx Max n | Typical Use | Notes |
-|------------|-------------|-------------|-------|
-| O(1) | Any | Direct access, math formulas | Constant time regardless of input |
-| O(log n) | 10¹⁸ | Binary search, divide & conquer | Halving search space each step |
-| O(√n) | 10¹⁴ | Prime check, factorization | Check up to square root |
-| O(n) | 10⁸ | Single pass, linear scan | Process each element once |
-| O(n log n) | 10⁶ | Sorting, divide & conquer | Most efficient comparison sorts |
-| O(n²) | 10⁴ | Nested loops, simple DP | Check all pairs |
-| O(n³) | 500 | Triple nested loops, Floyd-Warshall | Check all triplets |
-| O(2ⁿ) | 20-25 | Backtracking, subset generation | Exponential growth, all subsets |
-| O(n!) | 10-12 | Permutations, brute force | Factorial growth, try all orders |
