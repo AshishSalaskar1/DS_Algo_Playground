@@ -8,14 +8,32 @@
 **Note**
 1. Most of sweep line problems can be done using `Merge Overlap Intervals` using sorting and some sort of combination. But, hard to find a common pattern in this approach and requires ad-hoc thinking
 2. Dont use this to solve `Merge Intervals Problem` - Might become a bit complex. Better to do that using sort + iteration approach ( can be done though)
-   
 
 
-💡 ### **Comparison Trick**
+### **Comparison Trick**
  - Generally events are in form `(time, start|end)`
  - Now you need to sort such that if time ties then `start` should be come first and then `end`
  - Sol1: `sorted(events, lambda x:(x[0],0 if x[1]=="start" else 1))`
  - Sol2 **Auto tie break**: `events` = `(time, astart, bend)` *(Here start will automatically come before b)*
+- 💡 **MOST CASES** -> time tie -> Prefer `end` then `start`
+- Great example with lots of camparisons: `Count_Mentions.py`
+
+### ❓ Common Postprocessing ❓
+When you are doing sweepline -> you only visit the `event_points`. If you need some answer for other points in which events havent occured how would you do it?
+1. **Save Critical Points -> SORT -> Some Operation**
+   - Save all your critical point changes to a hashMap -> sort it ( be careful about same day events )
+   - Now you will have all critical points and then you can find the res
+    1. **If needed for all points**: Better to iterate this critical points array and do something to get answers
+    2. **If its point queries** -> better to use binary search
+2. **Saving Events in HashMap instead of List**
+   - Put all events in dict: `events[time/day]` = `[ events ]`
+   - Iterate for each day -> process all events *(sort for ordering)* -> save result for that day
+   - - Ex: `Count_Days_Without_Meetings.py` , `Shifting_Letters_2.py`
+3. **Directly adding each day as dummy event** 
+   - Put all events
+   - Then put each day as dummy event which indicates that you need to save result -> but make sure this dummy event comes after every other event type
+   - Cons: Might give MLE since you are adding every index to events list -> sorting ( TOO MANY EVENTS TO SORT)
+   - Ex: `Count_Days_Without_Meetings.py`  
 
 ### 🏮 **Sweepline + Binary Search**
 **REMEMBER**: `bisect.bisect_right(ts)-1` | `if bisect_op > 0`
