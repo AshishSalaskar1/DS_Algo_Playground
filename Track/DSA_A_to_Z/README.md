@@ -40,6 +40,18 @@ class Solution:
             nonlocal res # CORRECT
 ```
 
+💡**You need nonlocal only if you are re-assigning. Not needed for mutation**
+```py
+def dfs(node):
+    nonlocal timer
+    seen.add(node) # ur modifying it -> no nonlocal needed
+    timer += 1 # timer = timer+1 => reasignment
+    
+    for nbr in node: 
+        if node not in seen: dfs(nbr)
+
+```
+
 ## Custom `cmp` function for sorting
 - https://stackoverflow.com/questions/5213033/sort-a-list-of-lists-with-a-custom-compare-function
 ```py
