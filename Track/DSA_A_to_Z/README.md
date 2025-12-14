@@ -152,6 +152,7 @@ bisect.bisect(arr,3,key=lambda x:x[0])
 ## @cache
 - `@cache` works in Python > 3.9
 - `@lru_cache` for lower versions < 3.9 
+- 💡 Memory Limit Exceeded -> Use `maxsize=1k` instead of `None`
 
 **NOTE**: 
 1. You can only pass tuples, int as arguments when using `@cache` or `@lru_cache`
