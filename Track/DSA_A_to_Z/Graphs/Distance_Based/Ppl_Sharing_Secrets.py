@@ -3,8 +3,14 @@ https://leetcode.com/problems/find-all-people-with-secret/?envType=daily-questio
 
 
 SOLUTIONS:
-1. BFS | DFS - TLE
+1. BFS | BFS+PQ - TLE
 2. UF -> WORKS
+
+IMP: Like in classic BFS we dont have `vis` set -> we can visit a node multiple times
+WHY?
+- Lets say a->b at t1 | but then t1<tFirstSecretShared 
+- But there can be another meeting a->b at t2 where t2>=tFirstSecretShared
+- Hence first time seeing CANT BE MARKED VISITED
 """
 from heapq import heapify, heappush, heappop
 class Solution:
