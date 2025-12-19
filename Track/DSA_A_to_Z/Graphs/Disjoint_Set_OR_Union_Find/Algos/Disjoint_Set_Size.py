@@ -46,3 +46,4 @@ print("SIZES: ", ds.size)
 check_pairs = [(1,3), (4,7), (1,7)]
 for x,y in check_pairs:
     print(x,y,ds.find_par(x) == ds.find_par(y))
+

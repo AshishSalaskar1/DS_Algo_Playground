@@ -36,7 +36,7 @@ class Solution:
             # you dont do anything
             ans = dfs(i + 1, t, state)
 
-            if state == 0: # you care not holding anything
+            if state == 0: # you are not holding anything
                 ans = max(ans, -prices[i] + dfs(i + 1, t, 1) ) # take a short position 
                 ans = max(ans, +prices[i]+ dfs(i + 1, t, 2) ) # take a long position
             elif state == 1 and t < k: # you are holding long position -> can only sell
