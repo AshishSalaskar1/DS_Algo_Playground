@@ -173,6 +173,14 @@ O(1) < O(log n) < O(√n) < O(n) < O(n log n) < O(n²) < O(n³) < O(2ⁿ) < O(n!
 
 *k = range of input, d = number of digits
 
+## Dynamic Programming
+- TC = (number of states) x (1 + Average transition cost per state)
+- **TC = (`number of states`) x (`1` + `Average number of transitions per state`)**
+  - `Average number of transitions per state` -> how many branches does your function for each state split into ( max possiblities for each state)
+- Example:
+  - You have a simple pick/nopick problem with 3 states = index, timetaken, itemstaken. You have `n` elements and can take at max `T` time + `capacity` items
+  - Here TC = `n``T``capacity` x (1+2) = `3``n``T``capacity`
+
 ## 📈 Graph Algorithms
 
 ### Graph Representations
