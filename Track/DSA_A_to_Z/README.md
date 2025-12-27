@@ -201,7 +201,7 @@ pq.put(-x)
 from heapq import heapify, heappush, heappop
 
 pq = [5,1,3]
-heapify(pq)
+heapify(pq) # NEEDED HENCE YOU ALREADY HAVE SOME DATA
 
 print(pq) # [1,x,x,x,x,x]
 print(pq[0]) # smallest element
@@ -212,7 +212,7 @@ print(pq[0]) # 0
 
 
 pq = []
-heapify(pq)
+heapify(pq) #NOT NEEDED IF HEAP IS EMPTY
 print(len(pq), bool(pq)) # 0 False
 
 ```
