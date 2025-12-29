@@ -46,7 +46,11 @@
   - Remeber you can select `0` also -> but when you select `0` the counting needed for problems can get messed up
   - Ex: count number of digit/even-odd digits. In this case `0001` has only 1 digit -> You need to ignore trailing 0s
   - 💡 Use variable `validNum` that is set to True when the first non-zero digit is seen OR `nCount` which is count of digits taken
-  - Check `Num_Beautiful_integers_divisible_by_k.py`, `Count_balanced_integers_in_range.py`
+  - Check 
+    - `Num_Beautiful_integers_divisible_by_k.py`,  -> uses classic isValid boolean 
+    - `Count_balanced_integers_in_range.py` -> uses length ( if len==0 didnt start)
+    - 💡 `Count_Stepping_Numbers.py` -> use prevnum as didstart counter
+    - 💡 `Generate_nums_with_given_digits.py` -> IMP where skipping starting the number is not same as picking 0 and that acting as trailing 0
 
 #### **How does DP help here**
 - TRUST ME BRO ~!!!!
