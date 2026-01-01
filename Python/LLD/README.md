@@ -5,3 +5,5 @@
 - [Reference Docs](https://refactoring.guru/design-patterns)
 - [Awesome LLD Repo](https://github.com/ashishps1/awesome-low-level-design/tree/main/design-patterns/python)
 - [SBCode](https://sbcode.net/python)
+- 💡[NOT SO Great Python Example Playlist](https://www.youtube.com/playlist?list=PLM6furP1T9ouXchvDSr_jkiMOt9qTnevp)
+- [Coder Army LLD](https://www.youtube.com/playlist?list=PLQEaRBV9gAFvzp6XhcNFpk1WdOcyVo9qT)
