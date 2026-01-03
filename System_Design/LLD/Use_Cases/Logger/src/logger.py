@@ -12,6 +12,13 @@ class Logger:
     If logger_chain is provided, uses it. Otherwise creates default chain: DEBUG -> INFO -> WARNING -> ERROR -> CRITICAL
     Appenders should already have their formatters set.
     """
+    _instance = None
+    _isinitialized = False
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
     
     def __init__(
         self, 
@@ -20,6 +27,10 @@ class Logger:
         logger_chain: AbstractLogger = None,
         level: LogLevel = LogLevel.DEBUG
     ) -> None:
+        
+        if self._isinitialized:
+            return
+        
         self.name = name
         self.processor = AsyncLogProcessor()
         self.appenders = appenders or []
