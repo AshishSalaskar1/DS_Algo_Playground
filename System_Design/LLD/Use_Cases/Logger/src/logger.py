@@ -31,6 +31,7 @@ class Logger:
         if self._isinitialized:
             return
         
+        self._isinitialized = True
         self.name = name
         self.processor = AsyncLogProcessor()
         self.appenders = appenders or []
