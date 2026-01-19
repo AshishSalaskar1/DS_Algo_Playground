@@ -17,7 +17,9 @@ SOLUTION: Binary Search on answers
     - Fastest time you can eat all bananas = len(arr) [rememeber you cant eat 2 piles even if you have that speed]
     - For this fastest time, what will be the speed?
     - To make sure you eat each pile in 1 hr, make sure your speed=max(arr) so that you can eat the biggest pile in 1 hr
-
+    - What about case when H < len(arr)?
+        - In that case, its impossible to eat all bananas as you cant eat 2 piles
+        - Ex, even if speed = sum(arr) or INF -> still you can only eat from one pile and cant shift to other pile in same hour
 """
 import math
 class Solution:
