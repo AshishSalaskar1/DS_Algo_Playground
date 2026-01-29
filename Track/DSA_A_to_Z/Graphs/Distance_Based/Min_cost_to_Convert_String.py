@@ -44,3 +44,78 @@ class Solution:
 
         return total_cost
 
+"""
+DIJKSTRAS SOLUTION
+https://leetcode.com/problems/minimum-cost-to-convert-string-i/?envType=daily-question&envId=2026-01-29
+
+How to avoid TLE using Dijstras here?
+- You can precompute the shortest distance from each character to every other character using Dijkstra's algorithm and store these distances in a dictionary.
+"""
+from collections import defaultdict
+from heapq import heappush, heappop, heapify
+class Solution:
+    def minimumCost(self, source: str, target: str, original: List[str], changed: List[str], cost: List[int]) -> int:
+        def dijstras(nodes: list, adj: dict, source: str) -> int:
+            pq = []
+            dist = {  node:float("inf") for node in nodes}
+            print(dist)
+            heappush(pq, (source, 0))
+            dist[source] = 0
+
+            while pq:
+                node, curdist = heappop(pq)
+                
+                for nbr, wt in adj[node]:
+                    newdist = curdist + wt
+                    if newdist < dist[nbr]:
+                        dist[nbr] = newdist
+                        heappush(pq, (nbr, newdist))
+            return dist
+        
+        allnodes = set()
+        adj = defaultdict(list)
+        for i in range(len(original)):
+            u,v = original[i], changed[i]
+            adj[u].append((v, cost[i]))
+            allnodes.add(u);allnodes.add(v)
+        
+        allnodes = list(allnodes)
+        chardistmap = { chr:dijstras(allnodes, adj, chr) for chr in allnodes}
+
+        cost = 0
+
+        if len(source) != len(target):
+            return -1
+
+        for i in range(len(source)):
+            src, dest = source[i], target[i]
+
+            if src == dest: 
+                continue
+            elif src not in adj: 
+                return -1
+            else:
+                mincost = chardistmap[src].get(dest, float('inf'))
+                if mincost == float("inf"):
+                    return -1
+                else:
+                    cost += mincost
+        
+        return cost
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
