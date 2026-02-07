@@ -111,9 +111,9 @@ This works with the concept of Binary Search.
    - `x=2` -> where will you insert`2` in arr so that its sorted
    - There are 4 options: `[1,2,3,4]` -> `[0,2x,2x,2x,5x]`
    - Now here  
-       1. 💡`bisect_left` gives `2` **(left most index)**
-       2. 💡`bisect_right` gives `5` **(right most index)**
-       3. 💡`bisect` gives `2` == `bisect_right` g
+       1. 💡`bisect_left` gives `1` **(left most index)**
+       2. 💡`bisect_right` gives `4` **(right most index)**
+       3. 💡`bisect` gives `4` == `bisect_right` g
 
 
 ### Important
