@@ -100,7 +100,7 @@ sorted(lst, key=functools.cmp_to_key(compare))
 ### Mod Rules with operations
 
 1. (`a+b`) % `m` = (`a%m` + `b%m`) % `m`
-2. (`a-b`) % `m` = (`a%m` - `b%m` + `m`) % `m` (_**Extra**_ _**`+m`****since (a-b) can become negative**_ )
+2. (`a-b`) % `m` = (`a%m` - `b%m` + `m`) % `m` (_**Extra**_ _**`+m`\*\*\*\*since (a-b) can become negative**_ )
 3. (`a/b`) % `m` = ((`a%m`)\*(`b`<sup>-1</sup>`%m`))%`m` NOTE: (_`b`<sup>-1</sup>_ _-> mod inverse of b_)
 4. **IMP**: (`a`<sup>-1</sup>)`%m` = (`a`<sup>m-2</sup>)`%m`
 
