@@ -32,6 +32,42 @@ class DSU:
             self.parent[upv] = upu
             self.size[upu] += self.size[upv]
 
+# When the nodes are dynamic -> cant predefine size and parent array -> use dict instead
+class DSU:
+    def __init__(self):
+        self.par = {}
+        self.size = {}
+
+    def find_par(self, u: int):
+        # Some node that you didnt union -> add it separately
+        if u not in self.par:
+            return u
+
+        if u == self.par[u]:
+            return u
+
+        self.par[u] = self.find_par(self.par[u])
+        return self.par[u]
+
+    def union(self, u:int, v: int ):
+        for node in [u,v]:
+            if node not in self.par:
+                self.par[node] = node
+                self.size[node] = 1
+
+        upu = self.find_par(u)
+        upv = self.find_par(v)
+
+        if upu == upv: # already belong to same component
+            return
+
+
+        if self.size[upu] < self.size[upv]: # if size(u) < size(v) -> attach comp(u) to v
+            self.par[upu] = upv
+            self.size[upv] += self.size[upu]
+        else: # if size(v) < size(u) -> attach component of v to u
+            self.par[upv] = upu
+            self.size[upu] += self.size[upv]
 
 edges = [(1,2), (2,3), (4,5), (6,7), (5,6)]
 

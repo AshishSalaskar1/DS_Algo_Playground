@@ -5,6 +5,10 @@ LOGIC:
 - Same as multi source - but in BFS you only visit node only once
 - HERE, if you reach same node at same time from other node -> pick the bigger color
 
+HACKY+GREAT SOLUTION:
+- Just sort sources by color
+- By this you will always start by largest color n first time u visit cells will always be the largest one
+- No need to worry about it later
 
 SOLUTION:
 - Seen array contains if it was seen, if yes at what time and what color
